@@ -1,0 +1,147 @@
+/* =========================
+   Base Reset + Variables
+   ========================= */
+
+:root {
+  --bg: #f9f9f7;
+  --text: #1c1c1c;
+  --muted: #666;
+  --accent: #2b4cff;
+  --rule: #ddd;
+
+  --body-font: Georgia, "Times New Roman", serif;
+  --heading-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* =========================
+   Page Layout
+   ========================= */
+
+body {
+  margin: 0;
+  padding: 4rem 1.5rem;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--body-font);
+  line-height: 1.65;
+}
+
+body > * {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================
+   Typography
+   ========================= */
+
+h1 {
+  font-family: var(--heading-font);
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+h2 {
+  font-family: var(--heading-font);
+  font-size: 1.6rem;
+  margin-top: 3.5rem;
+  margin-bottom: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+h3 {
+  font-family: var(--heading-font);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin: 0.75rem 0;
+}
+
+/* Intro credit line */
+h1 + p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+/* =========================
+   Lists
+   ========================= */
+
+ol {
+  margin: 1.5rem 0 1.5rem 2rem;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 0.75rem;
+}
+
+li strong {
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+/* =========================
+   Emphasis & Accents
+   ========================= */
+
+strong {
+  color: #000;
+}
+
+em {
+  font-style: italic;
+}
+
+/* Optional subtle highlight for key concepts */
+p strong {
+  background: linear-gradient(
+    transparent 60%,
+    rgba(43, 76, 255, 0.15) 60%
+  );
+}
+
+/* =========================
+   Reading Comfort
+   ========================= */
+
+@media (min-width: 900px) {
+  body {
+    padding: 5rem 2rem;
+  }
+
+  body > * {
+    max-width: 760px;
+  }
+}
+
+/* =========================
+   Print-Friendly
+   ========================= */
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+    padding: 2rem;
+  }
+
+  h2 {
+    border-top: none;
+  }
+}
