@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0e0e0e;
+  font-family: "Garamond", serif;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("Sun ☀️.jpeg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+.hero-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.8s ease;
+}
+
+.hero-link span {
+  font-size: 2.2rem;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0);
+  transition: all 0.8s ease;
+  text-align: center;
+  max-width: 80%;
+}
+
+/* Circular Ruins */
+.ruins:hover {
+  background: radial-gradient(circle,
+    rgba(255,150,90,0.4),
+    rgba(0,0,0,0.2));
+}
+
+.ruins:hover span {
+  color: #fff2df;
+  text-shadow: 0 0 18px rgba(255,180,120,0.9);
+}
+
+/* Book of Sand */
+.sand:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(240,190,130,0.3),
+    rgba(120,80,40,0.2)
+  );
+}
+
+.sand:hover span {
+  color: #ffffff;
+  animation: shimmer 3s infinite;
+}
+
+/* Forking Paths */
+.paths:hover {
+  background: linear-gradient(
+    120deg,
+    rgba(120,170,150,0.35),
+    rgba(0,0,0,0.25)
+  );
+}
+
+.paths:hover span {
+  color: #eafff4;
+  transform: translateY(-6px);
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% { letter-spacing: 1.5px; }
+  50% { letter-spacing: 3px; }
+  100% { letter-spacing: 1.5px; }
+}
