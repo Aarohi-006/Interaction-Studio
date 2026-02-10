@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  background: #000;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("sun.jpg"); /* make sure image is named exactly this */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+.title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.25); /* helps text readability */
+}
