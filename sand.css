@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: "Times New Roman", serif;
+  background: #5e1f1f;
+}
+
+/* Horizontal scroll container */
+.scroll-wrapper {
+  display: flex;
+  width: max-content;
+  height: 100vh;
+}
+
+/* Each book spread */
+.page {
+  display: flex;
+  width: 1200px;
+  padding: 80px;
+  box-sizing: border-box;
+  color: #f4e9e4;
+  position: relative;
+
+  /* subtle texture */
+  background:
+    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    #6b1f1f;
+  background-size: 4px 4px;
+}
+
+/* Columns inside page */
+.column {
+  flex: 1;
+  padding: 40px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* Large bottom title */
+.title {
+  position: absolute;
+  bottom: 40px;
+  right: 80px;
+  font-size: 48px;
+  letter-spacing: 4px;
+  color: #ffffff;
+}
