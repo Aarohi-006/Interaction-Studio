@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <title>The Book of Sand</title>
 
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="sand.css">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400&family=Euphoria+Script&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="sand.css">
 </head>
 
 <body>
@@ -14,21 +15,24 @@
 <div class="sand-overlay"></div>
 
 <div class="scroll-wrapper" id="scrollWrapper">
-  <div class="text" id="textContent">
+  <div class="text">
+
+    <!-- TITLE -->
+    <h1 class="title">The Book of Sand</h1>
 
     <!-- BLOCK 1 -->
     <div class="block">
       <p>The short stories of Jorge Luis Borges, written more than twenty years ago, have become classics of contemporary literature.</p>
-      <p>Like the distinctive stories in Ficciones and The Aleph, these stories artfully blend many genres.</p>
-      <p>The Book of Sand is an important addition to Borges' works.</p>
-      <!-- paste full text here -->
+      <p>Like the distinctive stories in Ficciones and The Aleph, these stories artfully blend many literary genres.</p>
+      <p>The Book of Sand is an important addition to Borges' works, a welcome and unexpected gift.</p>
+      <!-- paste full text -->
     </div>
 
-    <!-- BLOCK 2 (duplicate for loop illusion) -->
+    <!-- BLOCK 2 DUPLICATE -->
     <div class="block">
       <p>The short stories of Jorge Luis Borges, written more than twenty years ago, have become classics of contemporary literature.</p>
-      <p>Like the distinctive stories in Ficciones and The Aleph, these stories artfully blend many genres.</p>
-      <p>The Book of Sand is an important addition to Borges' works.</p>
+      <p>Like the distinctive stories in Ficciones and The Aleph, these stories artfully blend many literary genres.</p>
+      <p>The Book of Sand is an important addition to Borges' works, a welcome and unexpected gift.</p>
     </div>
 
   </div>
@@ -38,22 +42,19 @@
 const wrapper = document.getElementById('scrollWrapper');
 const paragraphs = document.querySelectorAll('p');
 
-// Fade based on position
 wrapper.addEventListener('scroll', () => {
+
   paragraphs.forEach(p => {
     const rect = p.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    const center = windowHeight / 2;
+    const center = window.innerHeight / 2;
     const distance = Math.abs(center - rect.top);
 
-    let opacity = 1 - (distance / center);
+    let opacity = 1 - Math.pow(distance / center, 1.4);
     opacity = Math.max(0, Math.min(1, opacity));
 
     p.style.opacity = opacity;
   });
 
-  // Infinite loop reset
   if (wrapper.scrollTop >= wrapper.scrollHeight / 2) {
     wrapper.scrollTop = 0;
   }
@@ -62,3 +63,4 @@ wrapper.addEventListener('scroll', () => {
 
 </body>
 </html>
+
