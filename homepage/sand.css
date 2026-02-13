@@ -4,9 +4,14 @@
   box-sizing: border-box;
 }
 
+/* PAPER / SAND BACKGROUND */
 body {
-  font-family: 'EB Garamond', serif;
-  background-color: #e8dcc8;
+  font-family: 'Exo', sans-serif;
+  background:
+    radial-gradient(circle at 30% 20%, #f3ead7 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, #e6d8be 0%, transparent 40%),
+    #e9dcc6;
+  color: #2b2620;
   overflow: hidden;
 }
 
@@ -14,61 +19,54 @@ body {
 .scroll-wrapper {
   height: 100vh;
   overflow-y: scroll;
-  padding: 120px 0;
-
-  /* Fade top + bottom like erosion */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20%,
-    black 80%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20%,
-    black 80%,
-    transparent 100%
-  );
+  padding: 140px 0;
 }
 
 /* TEXT COLUMN */
 .text {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 60px;
 }
 
-.block {
-  margin-bottom: 200px;
+/* TITLE */
+.title {
+  font-family: 'Euphoria Script', cursive;
+  font-size: 56px;
+  text-align: center;
+  margin-bottom: 80px;
+  color: #3a3228;
+  opacity: 0.85;
 }
 
-/* Typography */
+/* BLOCK SPACING */
+.block {
+  margin-bottom: 240px;
+}
+
+/* BODY TEXT */
 p {
   font-size: 18px;
   line-height: 1.9;
   text-align: justify;
   margin-bottom: 32px;
-  color: #2b2620;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-/* SAND OVERLAY */
+/* SAND TEXTURE OVERLAY */
 .sand-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
   background: url("https://www.transparenttextures.com/patterns/sandpaper.png");
-  opacity: 0.25;
-  animation: drift 20s linear infinite;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  animation: drift 30s linear infinite;
 }
 
-/* Slow drifting sand */
 @keyframes drift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 600px;
-  }
+  from { background-position: 0 0; }
+  to   { background-position: 0 800px; }
 }
+
