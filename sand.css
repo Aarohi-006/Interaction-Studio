@@ -1,48 +1,94 @@
-body {
+/* RESET */
+* {
   margin: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  font-family: "Times New Roman", serif;
-  background: #5e1f1f;
-}
-
-/* Horizontal scroll container */
-.scroll-wrapper {
-  display: flex;
-  width: max-content;
-  height: 100vh;
-}
-
-/* Each book spread */
-.page {
-  display: flex;
-  width: 1200px;
-  padding: 80px;
+  padding: 0;
   box-sizing: border-box;
-  color: #f4e9e4;
-  position: relative;
-
-  /* subtle texture */
-  background:
-    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    #6b1f1f;
-  background-size: 4px 4px;
 }
 
-/* Columns inside page */
-.column {
-  flex: 1;
-  padding: 40px;
-  line-height: 1.6;
-  font-size: 15px;
+body {
+  font-family: 'EB Garamond', serif;
+  background-color: #efe6d8;
+  overflow-x: hidden;
 }
 
-/* Large bottom title */
-.title {
-  position: absolute;
-  bottom: 40px;
-  right: 80px;
+/* Paper texture overlay */
+.texture {
+  position: fixed;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Book container */
+.book {
+  max-width: 720px;
+  margin: 120px auto;
+}
+
+/* Page styling */
+.page {
+  background: rgba(255, 252, 245, 0.92);
+  padding: 100px 80px;
+  margin-bottom: 180px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  border-radius: 2px;
+
+  /* Scroll animation */
+  animation: pageFade linear;
+  animation-timeline: view();
+  animation-range: entry 10% cover 40%;
+}
+
+/* Page fade animation */
+@keyframes pageFade {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typography */
+h1 {
   font-size: 48px;
-  letter-spacing: 4px;
-  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
 }
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 28px;
+
+  /* Text reveal animation */
+  animation: textReveal linear;
+  animation-timeline: view();
+  animation-range: entry 20% cover 50%;
+}
+
+/* Paragraph reveal */
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
