@@ -1,0 +1,89 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'EB Garamond', serif;
+  background-color: #efe6d8;
+  overflow-x: hidden;
+}
+
+/* Paper texture */
+.texture {
+  position: fixed;
+  inset: 0;
+  background: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Book container */
+.book {
+  max-width: 720px;
+  margin: 150px auto;
+}
+
+/* Page design */
+.page {
+  background: rgba(255, 252, 245, 0.95);
+  padding: 100px 80px;
+  margin-bottom: 200px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+  border-radius: 3px;
+
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInPage 1.2s ease forwards;
+}
+
+/* Stagger animation */
+.page:nth-child(1) { animation-delay: 0.2s; }
+.page:nth-child(2) { animation-delay: 0.6s; }
+.page:nth-child(3) { animation-delay: 1s; }
+.page:nth-child(4) { animation-delay: 1.4s; }
+
+@keyframes fadeInPage {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typography */
+h1 {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 28px;
+}
+
+/* Top + bottom fade */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(239,230,216,0.9) 0%,
+    transparent 15%,
+    transparent 85%,
+    rgba(239,230,216,0.9) 100%
+  );
+  pointer-events: none;
+}
