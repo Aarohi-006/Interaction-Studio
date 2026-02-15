@@ -1,12 +1,24 @@
+const orbits = document.querySelectorAll(".orbit");
 const world = document.querySelector(".world");
 
-let scale = 1;
+let depth = 0;
 
-window.addEventListener("wheel", (e)=>{
-  e.preventDefault();
+function updateFocus(){
+  orbits.forEach((o,i)=>{
+    o.classList.toggle("active", i === depth);
+  });
 
-  scale += e.deltaY * -0.0005;
-  scale = Math.min(Math.max(0.6, scale), 2.5);
-
+  const scale = 1 + depth * 0.22;
   world.style.transform = `translate(-50%,-50%) scale(${scale})`;
-}, { passive:false });
+}
+
+updateFocus();
+
+window.addEventListener("wheel",(e)=>{
+  if(e.deltaY > 0){
+    depth = Math.min(depth + 1, orbits.length - 1);
+  } else {
+    depth = Math.max(depth - 1, 0);
+  }
+  updateFocus();
+},{passive:true});
