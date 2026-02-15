@@ -1,16 +1,1 @@
-const svg = document.querySelector(".ruins-svg");
 
-let rotation = 0;
-let scale = 1;
-
-function animate(){
-  rotation += 0.05;
-  svg.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-  requestAnimationFrame(animate);
-}
-animate();
-
-window.addEventListener("wheel",(e)=>{
-  scale += e.deltaY * -0.0005;
-  scale = Math.min(Math.max(0.6, scale), 2.5);
-});
