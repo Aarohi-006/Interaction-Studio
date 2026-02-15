@@ -1,24 +1,16 @@
-const orbits = document.querySelectorAll(".orbit");
-const world = document.querySelector(".world");
+const svg = document.querySelector(".ruins-svg");
 
-let depth = 0;
+let rotation = 0;
+let scale = 1;
 
-function updateFocus(){
-  orbits.forEach((o,i)=>{
-    o.classList.toggle("active", i === depth);
-  });
-
-  const scale = 1 + depth * 0.22;
-  world.style.transform = `translate(-50%,-50%) scale(${scale})`;
+function animate(){
+  rotation += 0.05;
+  svg.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+  requestAnimationFrame(animate);
 }
-
-updateFocus();
+animate();
 
 window.addEventListener("wheel",(e)=>{
-  if(e.deltaY > 0){
-    depth = Math.min(depth + 1, orbits.length - 1);
-  } else {
-    depth = Math.max(depth - 1, 0);
-  }
-  updateFocus();
-},{passive:true});
+  scale += e.deltaY * -0.0005;
+  scale = Math.min(Math.max(0.6, scale), 2.5);
+});
