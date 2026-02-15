@@ -1,14 +1,15 @@
 body{
   margin:0;
-  background:#e6e6e6;
+  background:#ececec;
   display:flex;
   align-items:center;
   justify-content:center;
   height:100vh;
+  overflow:hidden;
   font-family:Georgia, serif;
 }
 
-.wrapper{
+.container{
   width:90vmin;
   height:90vmin;
 }
@@ -16,18 +17,27 @@ body{
 .ruins-svg{
   width:100%;
   height:100%;
+  transition:transform .7s cubic-bezier(.22,.61,.36,1);
 }
 
-/* TEXT STYLE */
-.ringText{
-  fill:#111;
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-/* INNER EMPHASIS */
-.inner{
-  fill:#8f2f2f;
+/* BASE TEXT */
+.ring{
+  fill:#222;
   font-size:20px;
+  letter-spacing:2px;
+  opacity:.25;
+  transition:opacity .4s ease, fill .4s ease;
+  cursor:pointer;
 }
 
+/* ACTIVE RING */
+.ring.active{
+  opacity:1;
+  fill:#8f2f2f;
+}
+
+/* HOVER */
+.ring:hover{
+  opacity:1;
+  fill:#000;
+}
