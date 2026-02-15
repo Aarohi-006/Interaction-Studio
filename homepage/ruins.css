@@ -7,7 +7,7 @@ body{
   background:#d8cfbf;
 }
 
-/* VIEWPORT (camera) */
+/* VIEWPORT */
 .viewport{
   width:100vw;
   height:100vh;
@@ -15,82 +15,79 @@ body{
   position:relative;
 }
 
-/* WORLD (scaled on scroll) */
+/* WORLD */
 .world{
   position:absolute;
-  width:200vmin;
-  height:200vmin;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%) scale(1);
-  transition:transform .2s linear;
+  transition:transform .7s cubic-bezier(.22,.61,.36,1);
 }
 
-/* CENTER */
+/* CORE */
 .core{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:28px;
+  font-size:26px;
   letter-spacing:4px;
   color:#222;
+  pointer-events:none;
 }
 
-/* RINGS */
-.ring{
+/* ORBITS */
+.orbit{
   position:absolute;
   top:50%;
   left:50%;
   border-radius:50%;
-  transform:translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform-origin:center;
 }
 
 /* different radii */
-.ring1{ width:40vmin; height:40vmin; animation:spin 120s linear infinite; }
-.ring2{ width:70vmin; height:70vmin; animation:spinReverse 160s linear infinite; }
-.ring3{ width:100vmin; height:100vmin; animation:spin 200s linear infinite; }
-.ring4{ width:130vmin; height:130vmin; animation:spinReverse 260s linear infinite; }
+.orbit[data-depth="0"]{ width:40vmin; height:40vmin; margin:-20vmin; animation:spin 18s linear infinite; }
+.orbit[data-depth="1"]{ width:60vmin; height:60vmin; margin:-30vmin; animation:spinReverse 22s linear infinite; }
+.orbit[data-depth="2"]{ width:80vmin; height:80vmin; margin:-40vmin; animation:spin 26s linear infinite; }
+.orbit[data-depth="3"]{ width:100vmin; height:100vmin; margin:-50vmin; animation:spinReverse 30s linear infinite; }
+.orbit[data-depth="4"]{ width:120vmin; height:120vmin; margin:-60vmin; animation:spin 34s linear infinite; }
+.orbit[data-depth="5"]{ width:140vmin; height:140vmin; margin:-70vmin; animation:spinReverse 38s linear infinite; }
 
-/* TEXT NODES */
+/* TEXT */
 .node{
-  position:absolute;
-  width:220px;
-  top:50%;
-  left:50%;
-  transform-origin:center;
-  color:#8f2f2f;
-  font-size:13px;
-  line-height:1.4;
+  width:320px;
   text-align:center;
-  opacity:.4;
-  transition:opacity .3s ease, transform .3s ease;
-  cursor:pointer;
-}
-
-/* distribute nodes around circle */
-.ring .node:nth-child(1){ transform:rotate(0deg) translate(50%) rotate(0deg); }
-.ring .node:nth-child(2){ transform:rotate(120deg) translate(50%) rotate(-120deg); }
-.ring .node:nth-child(3){ transform:rotate(240deg) translate(50%) rotate(-240deg); }
-
-.final{
+  color:#8f2f2f;
   font-size:15px;
-  opacity:.6;
+  line-height:1.45;
+  opacity:.25;
+  transition:all .5s ease;
 }
 
-/* hover */
-.node:hover{
+/* ACTIVE ORBIT */
+.orbit.active{
+  animation-play-state:paused;
+}
+
+.orbit.active .node{
   opacity:1;
-  transform:scale(1.12) !important;
+  transform:scale(1.25);
 }
 
-/* rotations */
+/* ROTATIONS */
 @keyframes spin{
-  from{ transform:translate(-50%,-50%) rotate(0deg); }
-  to{ transform:translate(-50%,-50%) rotate(360deg); }
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
 }
 
 @keyframes spinReverse{
-  from{ transform:translate(-50%,-50%) rotate(360deg); }
-  to{ transform:translate(-50%,-50%) rotate(0deg); }
+  from{ transform:rotate(360deg); }
+  to{ transform:rotate(0deg); }
+}
+
+.final{
+  font-size:18px;
 }
