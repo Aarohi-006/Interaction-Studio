@@ -1,1 +1,32 @@
+const svg = document.querySelector(".ruins-svg");
+const rings = document.querySelectorAll(".ring");
+
+let depth = 0;
+let rotation = 0;
+let paused = false;
+
+function animate(){
+  if(!paused){
+    rotation += 0.05;
+    svg.style.transform = `rotate(${rotation}deg) scale(${1 + depth*0.15})`;
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+function setDepth(d){
+  depth = Math.max(0, Math.min(rings.length-1, d));
+  rings.forEach((r,i)=> r.classList.toggle("active", i===depth));
+}
+
+window.addEventListener("wheel",(e)=>{
+  if(e.deltaY > 0) setDepth(depth+1);
+  else setDepth(depth-1);
+});
+
+/* HOVER PAUSES ROTATION */
+rings.forEach(r=>{
+  r.addEventListener("mouseenter", ()=> paused = true);
+  r.addEventListener("mouseleave", ()=> paused = false);
+});
 
