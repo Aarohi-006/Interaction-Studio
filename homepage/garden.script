@@ -1,53 +1,144 @@
+const fullText = `
+To Victoria Ocampo
+
+In his A History of the World War (page 212), Captain Liddell Hart reports that a planned offensive by thirteen British divisions, supported by fourteen hundred artillery pieces, against the German line at Serre-Montauban, scheduled for July 24, 1916, had to be postponed until the morning of the 29th. He comments that torrential rain caused this delay - which lacked any special significance. The following deposition, dictated by, read over, and then signed by Dr. Yu Tsun, former teacher of English at the Tsingtao Hochschule, casts unsuspected light upon this event. The first two pages are missing.
+
+... and I hung up the phone. Immediately I recollected the voice that had spoken in German. It was that of Captain Richard Madden. Madden, in Viktor Runeberg's office, meant the end of all our work and of our lives also.
+
+I went up to my bedroom. Absurd though the gesture was, I closed and locked the door. I threw myself down on my narrow iron bed and waited.
+
+Then I reflected that all things happen, happen to one, precisely now. Century follows century, and things happen only in the present.
+
+In the midst of my hatred and terror, I knew that the fast-moving soldier did not suspect that I possessed the Secret — the name of the exact site of the new British artillery park.
+
+I said aloud, "I must flee."
+
+I emptied my pockets: the watch, the chain, the coins, the keys, the notebook, the revolver with a single bullet.
+
+In ten minutes I had developed my plan. The telephone directory gave me the name of the one person capable of passing on the information.
+
+I am a timorous man. It was not easy to bring about my plan, and I know that its execution was terrible.
+
+I carried out my plan because I wished to prove that a man of my race could save his armies.
+
+Silently, I dressed and went out. The station was not far from my house.
+
+At last the train pulled out. A man I recognized ran along the platform. It was Captain Richard Madden.
+
+From terror I passed into a state of almost abject happiness. I told myself the duel had already started.
+
+Thus I proceeded, with the eyes of a man already dead, contemplating the day.
+
+The train slowed down and stopped in the middle of a field. "Ashgrove?" I asked. "Ashgrove," they replied.
+
+The road ran downhill beneath intermingled branches, while a round moon hung low in the sky.
+
+I know something about labyrinths. Not for nothing am I the great-grandson of Ts’ui Pen.
+
+Under the trees of England I meditated on this lost labyrinth. I imagined it infinite, made of rivers, provinces, kingdoms.
+
+Lost in these illusions I forgot my destiny — that of the hunted.
+
+Meditating thus I arrived at a high, rusty iron gate.
+
+"The garden of forking paths," he said.
+
+Something stirred in my memory. "The garden of my ancestor Ts’ui Pen."
+
+We went into a library filled with books from both East and West.
+
+Stephen Albert told me of Ts’ui Pen’s strange destiny — governor, poet, and creator of a labyrinth.
+
+"Here is the labyrinth," he said. "An invisible labyrinth of time."
+
+He showed me the fragment of the letter: "I leave to various future times, but not to all, my garden of forking paths."
+
+The Garden of Forking Paths is a chaotic novel where all possible outcomes occur.
+
+He explained the network of diverging, converging, and parallel times.
+
+"In one timeline you are my enemy, in another my friend."
+
+At that moment I felt something infinite around me.
+
+"The future exists now," I replied.
+
+I fired. Albert fell without a murmur.
+
+I have been condemned to hang. Abominably, I have yet triumphed.
+
+The name of the city was Albert. Yesterday it was bombed.
+
+No one can know my infinite penitence and sickness of heart.
+`;
+
+const paragraphs = fullText
+  .split(/\n\s*\n/)
+  .map(p => p.trim())
+  .filter(p => p.length > 0);
+
+const nodesGroup = document.getElementById("nodes");
+const branchesGroup = document.getElementById("branches");
 const panel = document.getElementById("panel");
 const content = document.getElementById("content");
 const closeBtn = document.getElementById("close");
 
-const story = {
+const centerX = 600;
+const startY = 740;
+const levelHeight = 110;
+const spread = 420;
 
-intro: `
-Captain Liddell Hart records a delayed offensive in 1916.
-Yu Tsun reveals the hidden cause behind the event.
-He learns Captain Madden is coming — meaning capture or death.
-`,
+let index = 0;
+const levels = 6;
 
-escape: `
-I went up to my bedroom… I threw myself down on my narrow iron bed…
-It seemed incredible that this day might be that of my death.
-`,
+for (let level = 0; level < levels; level++) {
 
-mission: `
-I possessed the secret — the name of the artillery park.
-If only my voice could reach Berlin before I was silenced.
-`,
+  const nodesInLevel = Math.pow(2, level);
+  const y = startY - level * levelHeight;
 
-train: `
-From utter terror I passed into a state of almost abject happiness.
-I believed the small victory of time foretold total victory.
-`,
+  for (let i = 0; i < nodesInLevel; i++) {
 
-labyrinth: `
-I thought of a maze of mazes — a labyrinth of time.
-A sinuous ever-growing network taking in past and future.
-`,
+    if (index >= paragraphs.length) break;
 
-revelation: `
-Ts’ui Pen believed in infinite, diverging times.
-A web of possibilities where we exist differently in each.
-`,
+    const x =
+      centerX +
+      (i - (nodesInLevel - 1) / 2) *
+      (spread / (level + 1));
 
-murder: `
-I fired with the utmost care.
-The name “Albert” reached Berlin.
-Abominably, I had triumphed.
-`
-};
+    if (level > 0) {
+      const parentIndex = Math.floor(i / 2);
+      const parentNodes = Math.pow(2, level - 1);
+      const parentX =
+        centerX +
+        (parentIndex - (parentNodes - 1) / 2) *
+        (spread / level);
+      const parentY = startY - (level - 1) * levelHeight;
 
-document.querySelectorAll(".node").forEach(node => {
-  node.addEventListener("click", () => {
-    panel.classList.remove("hidden");
-    content.textContent = story[node.dataset.node];
-  });
-});
+      const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+      line.setAttribute("x1", parentX);
+      line.setAttribute("y1", parentY);
+      line.setAttribute("x2", x);
+      line.setAttribute("y2", y);
+      line.setAttribute("class", "branch");
+      branchesGroup.appendChild(line);
+    }
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", 7);
+    circle.setAttribute("class", "node");
+    circle.dataset.index = index;
+
+    circle.addEventListener("click", () => {
+      content.textContent = paragraphs[circle.dataset.index];
+      panel.classList.remove("hidden");
+    });
+
+    nodesGroup.appendChild(circle);
+    index++;
+  }
+}
 
 closeBtn.addEventListener("click", () => {
   panel.classList.add("hidden");
