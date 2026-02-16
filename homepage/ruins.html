@@ -2,87 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Circular Ruins</title>
+<title>Circular Ruins</title>
 <link rel="stylesheet" href="ruins.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Euphoria+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div class="stage" id="stage">
 
-<!-- RING 1 -->
-<div class="layer l1">
-<svg width="900" height="900" viewBox="0 0 900 900">
-<defs>
-<path id="r1" d="M450,450 m-380,0 a380,380 0 1,1 760,0 a380,380 0 1,1 -760,0"/>
-</defs>
-<text><textPath href="#r1">
-No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South and that his home had been one of those numberless villages upstream in the deeply cleft side of the mountain, where the Zend language has not been contaminated by Greek and where leprosy is infrequent. What is certain is that the grey man kissed the mud, climbed up the bank pushing aside the blades which were lacerating his flesh, and crawled up to the circular enclosure crowned with a stone tiger or horse.
-</textPath></text>
-</svg>
+<div class="viewport" id="viewport">
+  <div class="scene" id="scene">
+
+    <!-- RING 1 -->
+    <div class="ring ring1">
+      <svg viewBox="0 0 900 900">
+        <defs>
+          <path id="circle1" d="M450,450 m-380,0 a380,380 0 1,1 760,0 a380,380 0 1,1 -760,0"/>
+        </defs>
+        <text><textPath href="#circle1">
+        No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South...
+        </textPath></text>
+      </svg>
+    </div>
+
+    <!-- RING 2 -->
+    <div class="ring ring2">
+      <svg viewBox="0 0 760 760">
+        <defs>
+          <path id="circle2" d="M380,380 m-300,0 a300,300 0 1,1 600,0 a300,300 0 1,1 -600,0"/>
+        </defs>
+        <text><textPath href="#circle2">
+        Toward midnight he was awakened by the inconsolable shriek of a bird. Tracks of bare feet, some figs and a jug warned him that the men of the region had been spying respectfully...
+        </textPath></text>
+      </svg>
+    </div>
+
+    <!-- RING 3 -->
+    <div class="ring ring3">
+      <svg viewBox="0 0 620 620">
+        <defs>
+          <path id="circle3" d="M310,310 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0"/>
+        </defs>
+        <text><textPath href="#circle3">
+        The purpose which guided him was not impossible, though supernatural. He wanted to dream a man; he wanted to dream him in minute entirety and impose him on reality...
+        </textPath></text>
+      </svg>
+    </div>
+
+    <!-- RING 4 -->
+    <div class="ring ring4">
+      <svg viewBox="0 0 500 500">
+        <defs>
+          <path id="circle4" d="M250,250 m-180,0 a180,180 0 1,1 360,0 a180,180 0 1,1 -360,0"/>
+        </defs>
+        <text><textPath href="#circle4">
+        He understood that modeling the incoherent matter of dreams was the most difficult task that a man could undertake...
+        </textPath></text>
+      </svg>
+    </div>
+
+    <!-- RING 5 -->
+    <div class="ring ring5">
+      <svg viewBox="0 0 380 380">
+        <defs>
+          <path id="circle5" d="M190,190 m-130,0 a130,130 0 1,1 260,0 a130,130 0 1,1 -260,0"/>
+        </defs>
+        <text><textPath href="#circle5">
+        He dreamed a heart, warm and secret, and slowly formed a complete man. The god of Fire revealed to him that he would magically animate the dreamed phantom...
+        </textPath></text>
+      </svg>
+    </div>
+
+    <!-- RING 6 -->
+    <div class="ring ring6">
+      <svg viewBox="0 0 260 260">
+        <defs>
+          <path id="circle6" d="M130,130 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
+        </defs>
+        <text><textPath href="#circle6">
+        Fire surrounded the ruins. He walked into the flames; they did not burn him. With relief and terror he understood that he also was an illusion.
+        </textPath></text>
+      </svg>
+    </div>
+
+  </div>
 </div>
 
-<!-- RING 2 -->
-<div class="layer l2">
-<svg width="760" height="760" viewBox="0 0 760 760">
-<defs>
-<path id="r2" d="M380,380 m-300,0 a300,300 0 1,1 600,0 a300,300 0 1,1 -600,0"/>
-</defs>
-<text><textPath href="#r2">
-Toward midnight he was awakened by the inconsolable shriek of a bird. Tracks of bare feet, some figs and a jug warned him that the men of the region had been spying respectfully on his sleep, soliciting his protection or afraid of his magic. He felt a chill of fear, and sought out a sepulchral niche in the dilapidated wall where he concealed himself among unfamiliar leaves.
-</textPath></text>
-</svg>
-</div>
-
-<!-- RING 3 -->
-<div class="layer l3">
-<svg width="620" height="620" viewBox="0 0 620 620">
-<defs>
-<path id="r3" d="M310,310 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0"/>
-</defs>
-<text><textPath href="#r3">
-The purpose which guided him was not impossible, though supernatural. He wanted to dream a man; he wanted to dream him in minute entirety and impose him on reality. At first, his dreams were chaotic; then they became dialectic. The stranger dreamed that he was in the center of a circular amphitheater filled with taciturn students.
-</textPath></text>
-</svg>
-</div>
-
-<!-- RING 4 -->
-<div class="layer l4">
-<svg width="500" height="500" viewBox="0 0 500 500">
-<defs>
-<path id="r4" d="M250,250 m-180,0 a180,180 0 1,1 360,0 a180,180 0 1,1 -360,0"/>
-</defs>
-<text><textPath href="#r4">
-He understood that modeling the incoherent matter of dreams was the most difficult task that a man could undertake. He swore he would forget the enormous hallucination and sought another method of work. He purified himself, worshiped the planetary gods, pronounced the syllables of a mighty name, and went to sleep. He dreamed almost immediately, with his heart throbbing.
-</textPath></text>
-</svg>
-</div>
-
-<!-- RING 5 -->
-<div class="layer l5">
-<svg width="380" height="380" viewBox="0 0 380 380">
-<defs>
-<path id="r5" d="M190,190 m-130,0 a130,130 0 1,1 260,0 a130,130 0 1,1 -260,0"/>
-</defs>
-<text><textPath href="#r5">
-He dreamed a heart, warm and secret, and slowly formed a complete man. In the Gnostic cosmogonies, demiurges fashion a red Adam who cannot stand; as clumsy and elemental as this Adam of dust was the Adam of dreams forged by the wizard's nights. The god of Fire revealed to him that he would magically animate the dreamed phantom.
-</textPath></text>
-</svg>
-</div>
-
-<!-- RING 6 -->
-<div class="layer l6">
-<svg width="260" height="260" viewBox="0 0 260 260">
-<defs>
-<path id="r6" d="M130,130 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
-</defs>
-<text><textPath href="#r6">
-Gradually he sent his son to the other temple. His victory became blurred with boredom. After many years, fire surrounded the ruins. He walked into the flames; they did not burn him. With relief and terror he understood that he also was an illusion, that someone else was dreaming him.
-</textPath></text>
-</svg>
-</div>
-
-</div>
 <script src="ruins.script"></script>
 </body>
 </html>
