@@ -1,43 +1,33 @@
-body{
-  margin:0;
-  background:#ececec;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  overflow:hidden;
-  font-family:Georgia, serif;
+body {
+  margin: 0;
+  background: #0b0b0b;
+  overflow: hidden;
+  font-family: "Georgia", serif;
+  color: #f2f2f2;
 }
 
-.container{
-  width:90vmin;
-  height:90vmin;
+.stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ruins-svg{
-  width:100%;
-  height:100%;
-  transition:transform .7s cubic-bezier(.22,.61,.36,1);
+svg {
+  width: 95vmin;
+  height: 95vmin;
 }
 
-/* BASE TEXT */
-.ring{
-  fill:#222;
-  font-size:20px;
-  letter-spacing:2px;
-  opacity:.25;
-  transition:opacity .4s ease, fill .4s ease;
-  cursor:pointer;
+.text {
+  fill: #e8e8e8;
+  letter-spacing: 1px;
 }
 
-/* ACTIVE RING */
-.ring.active{
-  opacity:1;
-  fill:#8f2f2f;
-}
+.ring1 { font-size: 15px; opacity: 0.9; }
+.ring2 { font-size: 14px; opacity: 0.85; }
+.ring3 { font-size: 13px; opacity: 0.8; }
+.ring4 { font-size: 12px; opacity: 0.75; }
+.ring5 { font-size: 11px; opacity: 0.7; }
+.ring6 { font-size: 10px; opacity: 0.65; }
 
-/* HOVER */
-.ring:hover{
-  opacity:1;
-  fill:#000;
-}
