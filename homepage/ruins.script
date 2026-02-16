@@ -1,17 +1,8 @@
-let x = 0;
-let y = 0;
-let z = 0;
+let depth = 0;
 const world = document.getElementById("world");
 
 window.addEventListener("wheel", e => {
-  z += e.deltaY * -0.8;
-  z = Math.max(Math.min(z, 400), -1200);
-  world.style.setProperty("--z", z + "px");
-});
-
-window.addEventListener("mousemove", e => {
-  x = (e.clientX - window.innerWidth/2) * -0.02;
-  y = (e.clientY - window.innerHeight/2) * -0.02;
-  world.style.setProperty("--x", x + "px");
-  world.style.setProperty("--y", y + "px");
+  depth += e.deltaY * -0.5;
+  depth = Math.max(Math.min(depth, 300), -1000);
+  world.style.setProperty("--z", depth + "px");
 });
