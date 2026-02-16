@@ -1,0 +1,69 @@
+const svg = document.getElementById("maze");
+const panel = document.getElementById("panel");
+const panelContent = document.getElementById("panelContent");
+const closeBtn = document.getElementById("closeBtn");
+
+/* === FULL TEXT === */
+
+const FULL_TEXT = `
+To Victoria Ocampo
+
+In his A History of the World War... 
+[PASTE OR KEEP YOUR ENTIRE TEXT HERE — unchanged]
+`;
+
+/* === MAZE PATHS (visual labyrinth) === */
+
+const mazeLines = [
+  "M100 100 H900 V700 H100 Z",
+  "M200 200 H800 V600 H200 Z",
+  "M300 100 V700",
+  "M500 100 V700",
+  "M700 100 V700",
+  "M100 350 H900"
+];
+
+mazeLines.forEach(d => {
+  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  path.setAttribute("d", d);
+  svg.appendChild(path);
+});
+
+/* === NODES (parallel timelines) === */
+
+const nodes = [
+  {id:"A1", x:200, y:150, label:"timeline A — escape"},
+  {id:"A2", x:800, y:150, label:"timeline A — train"},
+  {id:"B1", x:200, y:550, label:"timeline B — labyrinth"},
+  {id:"B2", x:800, y:550, label:"timeline B — revelation"},
+  {id:"C", x:500, y:350, label:"convergence — murder"}
+];
+
+nodes.forEach(n => {
+  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+  g.setAttribute("class","node");
+  g.setAttribute("transform",`translate(${n.x},${n.y})`);
+
+  const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  circle.setAttribute("r",18);
+
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.textContent = n.id;
+  text.setAttribute("y",2);
+
+  g.appendChild(circle);
+  g.appendChild(text);
+
+  g.addEventListener("click", () => {
+    panel.classList.remove("hidden");
+    panelContent.innerHTML = `<h3>${n.label}</h3><p>${FULL_TEXT}</p>`;
+  });
+
+  svg.appendChild(g);
+});
+
+/* === PANEL CLOSE === */
+
+closeBtn.addEventListener("click", () => {
+  panel.classList.add("hidden");
+});
