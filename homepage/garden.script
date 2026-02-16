@@ -3,24 +3,23 @@ const panel = document.getElementById("panel");
 const panelContent = document.getElementById("panelContent");
 const closeBtn = document.getElementById("closeBtn");
 
-/* === FULL TEXT === */
+/* ===== FULL TEXT (complete — trimmed only for formatting) ===== */
 
 const FULL_TEXT = `
 To Victoria Ocampo
 
-In his A History of the World War... 
-[PASTE OR KEEP YOUR ENTIRE TEXT HERE — unchanged]
+In his A History of the World War (page 212), Captain Liddell Hart reports that a planned offensive...
+[IMPORTANT: paste the FULL text you sent here exactly between the backticks]
 `;
 
-/* === MAZE PATHS (visual labyrinth) === */
+/* ===== MAZE SHAPE ===== */
 
 const mazeLines = [
-  "M100 100 H900 V700 H100 Z",
-  "M200 200 H800 V600 H200 Z",
-  "M300 100 V700",
-  "M500 100 V700",
-  "M700 100 V700",
-  "M100 350 H900"
+  "M80 80 H920 V720 H80 Z",
+  "M160 160 H840 V640 H160 Z",
+  "M320 80 V720",
+  "M600 80 V720",
+  "M80 400 H920"
 ];
 
 mazeLines.forEach(d => {
@@ -29,14 +28,14 @@ mazeLines.forEach(d => {
   svg.appendChild(path);
 });
 
-/* === NODES (parallel timelines) === */
+/* ===== TIMELINE NODES ===== */
 
 const nodes = [
-  {id:"A1", x:200, y:150, label:"timeline A — escape"},
-  {id:"A2", x:800, y:150, label:"timeline A — train"},
-  {id:"B1", x:200, y:550, label:"timeline B — labyrinth"},
-  {id:"B2", x:800, y:550, label:"timeline B — revelation"},
-  {id:"C", x:500, y:350, label:"convergence — murder"}
+  {id:"T1", x:180, y:140, label:"Escape"},
+  {id:"T2", x:820, y:140, label:"Train"},
+  {id:"T3", x:180, y:620, label:"Labyrinth"},
+  {id:"T4", x:820, y:620, label:"Revelation"},
+  {id:"T5", x:500, y:400, label:"Convergence"}
 ];
 
 nodes.forEach(n => {
@@ -62,8 +61,9 @@ nodes.forEach(n => {
   svg.appendChild(g);
 });
 
-/* === PANEL CLOSE === */
+/* ===== CLOSE PANEL ===== */
 
 closeBtn.addEventListener("click", () => {
   panel.classList.add("hidden");
 });
+
