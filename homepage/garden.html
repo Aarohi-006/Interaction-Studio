@@ -2,72 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>The Garden of Forking Paths — Branch</title>
+  <title>Garden of Forking Paths — Nonlinear Tree</title>
   <link rel="stylesheet" href="garden.css">
 </head>
 
 <body>
 
-<svg viewBox="0 0 1000 700" id="tree">
-
-  <!-- Background -->
-  <rect width="1000" height="700" fill="#5a0f1a"></rect>
+<svg viewBox="0 0 1200 800" id="tree">
+  <rect width="1200" height="800" fill="#5a0f1a"></rect>
 
   <!-- Branch lines -->
-  <line class="branch" x1="500" y1="120" x2="250" y2="280"/>
-  <line class="branch" x1="500" y1="120" x2="750" y2="280"/>
-
-  <line class="branch" x1="250" y1="280" x2="150" y2="480"/>
-  <line class="branch" x1="250" y1="280" x2="350" y2="480"/>
-
-  <line class="branch" x1="750" y1="280" x2="650" y2="480"/>
-  <line class="branch" x1="750" y1="280" x2="850" y2="480"/>
+  <g id="branches"></g>
 
   <!-- Nodes -->
-
-  <g class="node" data-node="intro" transform="translate(500,120)">
-    <circle r="26"></circle>
-    <text y="6">Start</text>
-  </g>
-
-  <g class="node" data-node="escape" transform="translate(250,280)">
-    <circle r="22"></circle>
-    <text y="6">Escape</text>
-  </g>
-
-  <g class="node" data-node="mission" transform="translate(750,280)">
-    <circle r="22"></circle>
-    <text y="6">Mission</text>
-  </g>
-
-  <g class="node" data-node="train" transform="translate(150,480)">
-    <circle r="20"></circle>
-    <text y="6">Train</text>
-  </g>
-
-  <g class="node" data-node="labyrinth" transform="translate(350,480)">
-    <circle r="20"></circle>
-    <text y="6">Labyrinth</text>
-  </g>
-
-  <g class="node" data-node="revelation" transform="translate(650,480)">
-    <circle r="20"></circle>
-    <text y="6">Time</text>
-  </g>
-
-  <g class="node" data-node="murder" transform="translate(850,480)">
-    <circle r="20"></circle>
-    <text y="6">Act</text>
-  </g>
-
+  <g id="nodes"></g>
 </svg>
 
-<!-- Reading Panel -->
 <div id="panel" class="hidden">
   <button id="close">✕</button>
   <div id="content"></div>
 </div>
 
-<script src="garden.script"></script>
+<script src="garden.script.js"></script>
 </body>
 </html>
