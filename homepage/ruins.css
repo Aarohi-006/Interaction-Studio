@@ -1,33 +1,47 @@
-body {
-  margin: 0;
-  background: #0b0b0b;
-  overflow: hidden;
-  font-family: "Georgia", serif;
-  color: #f2f2f2;
+body{
+  margin:0;
+  background:#f6f1e8; /* subtle creme */
+  overflow:hidden;
+  font-family: Georgia, serif;
+  color:#5a0f1b;
 }
 
-.stage {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* DEPTH STAGE */
+.stage{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  perspective:1200px;
+  overflow:hidden;
 }
 
-svg {
-  width: 95vmin;
-  height: 95vmin;
+/* RING LAYERS */
+.ring-layer{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-style:preserve-3d;
+  transition: transform 0.6s ease;
 }
 
-.text {
-  fill: #e8e8e8;
-  letter-spacing: 1px;
+/* TEXT STYLE */
+text{
+  fill:#5a0f1b; /* maroon */
+  letter-spacing:1px;
 }
 
-.ring1 { font-size: 15px; opacity: 0.9; }
-.ring2 { font-size: 14px; opacity: 0.85; }
-.ring3 { font-size: 13px; opacity: 0.8; }
-.ring4 { font-size: 12px; opacity: 0.75; }
-.ring5 { font-size: 11px; opacity: 0.7; }
-.ring6 { font-size: 10px; opacity: 0.65; }
+/* DEPTH POSITIONS */
+.layer1{ transform: translate(-50%,-50%) translateZ(0px); }
+.layer2{ transform: translate(-50%,-50%) translateZ(-200px); }
+.layer3{ transform: translate(-50%,-50%) translateZ(-400px); }
+.layer4{ transform: translate(-50%,-50%) translateZ(-600px); }
+.layer5{ transform: translate(-50%,-50%) translateZ(-800px); }
+.layer6{ transform: translate(-50%,-50%) translateZ(-1000px); }
 
+/* FONT SIZES */
+.layer1 text{ font-size:15px }
+.layer2 text{ font-size:14px }
+.layer3 text{ font-size:13px }
+.layer4 text{ font-size:12px }
+.layer5 text{ font-size:11px }
+.layer6 text{ font-size:10px }
