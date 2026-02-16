@@ -1,38 +1,32 @@
 body {
   margin: 0;
-  background: #5a0f1a; /* maroon */
+  background: #5a0f1a;
   color: white;
   font-family: Georgia, serif;
 }
 
-/* SVG fills screen */
 svg {
   width: 100vw;
   height: 100vh;
   display: block;
 }
 
-/* Maze walls */
 .wall {
   stroke: white;
   stroke-width: 2;
   fill: none;
 }
 
-/* Nodes */
 .node circle {
   fill: white;
   cursor: pointer;
+  transition: transform .2s;
 }
 
-.node text {
-  fill: #5a0f1a;
-  font-size: 12px;
-  text-anchor: middle;
-  pointer-events: none;
+.node:hover circle {
+  transform: scale(1.15);
 }
 
-/* Panel */
 #panel {
   position: fixed;
   top: 8%;
@@ -44,6 +38,7 @@ svg {
   border: 1px solid white;
   padding: 24px;
   overflow-y: auto;
+  line-height: 1.6;
 }
 
 .hidden {
