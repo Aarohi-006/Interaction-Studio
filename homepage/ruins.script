@@ -1,32 +1,17 @@
-const svg = document.querySelector(".ruins-svg");
-const rings = document.querySelectorAll(".ring");
+const svg = document.querySelector(".rings");
 
-let depth = 0;
+let scale = 1;
 let rotation = 0;
-let paused = false;
 
-function animate(){
-  if(!paused){
-    rotation += 0.05;
-    svg.style.transform = `rotate(${rotation}deg) scale(${1 + depth*0.15})`;
-  }
-  requestAnimationFrame(animate);
-}
-animate();
+window.addEventListener("wheel", (e) => {
+  e.preventDefault();
 
-function setDepth(d){
-  depth = Math.max(0, Math.min(rings.length-1, d));
-  rings.forEach((r,i)=> r.classList.toggle("active", i===depth));
-}
+  // zoom
+  scale += e.deltaY * -0.0008;
+  scale = Math.min(Math.max(0.6, scale), 2.5);
 
-window.addEventListener("wheel",(e)=>{
-  if(e.deltaY > 0) setDepth(depth+1);
-  else setDepth(depth-1);
-});
+  // subtle rotation while scrolling
+  rotation += e.deltaY * 0.02;
 
-/* HOVER PAUSES ROTATION */
-rings.forEach(r=>{
-  r.addEventListener("mouseenter", ()=> paused = true);
-  r.addEventListener("mouseleave", ()=> paused = false);
-});
-
+  svg.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+}, { passive: false });
