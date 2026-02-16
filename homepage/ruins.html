@@ -1,86 +1,56 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Circular Ruins</title>
+<title>Circular Ruins Spatial</title>
 <link rel="stylesheet" href="ruins.css">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="viewport" id="viewport">
-  <div class="scene" id="scene">
+<div class="viewport">
+  <div class="world" id="world">
 
-    <!-- RING 1 -->
-    <div class="ring ring1">
-      <svg viewBox="0 0 900 900">
-        <defs>
-          <path id="circle1" d="M450,450 m-380,0 a380,380 0 1,1 760,0 a380,380 0 1,1 -760,0"/>
-        </defs>
-        <text><textPath href="#circle1">
-        No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South...
-        </textPath></text>
+    <div class="ring r1">
+      <svg viewBox="0 0 800 800">
+        <defs><path id="p1" d="M400,400 m-300,0 a300,300 0 1,1 600,0 a300,300 0 1,1 -600,0"/></defs>
+        <text><textPath href="#p1">No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud...</textPath></text>
       </svg>
     </div>
 
-    <!-- RING 2 -->
-    <div class="ring ring2">
-      <svg viewBox="0 0 760 760">
-        <defs>
-          <path id="circle2" d="M380,380 m-300,0 a300,300 0 1,1 600,0 a300,300 0 1,1 -600,0"/>
-        </defs>
-        <text><textPath href="#circle2">
-        Toward midnight he was awakened by the inconsolable shriek of a bird. Tracks of bare feet, some figs and a jug warned him that the men of the region had been spying respectfully...
-        </textPath></text>
+    <div class="ring r2">
+      <svg viewBox="0 0 600 600">
+        <defs><path id="p2" d="M300,300 m-220,0 a220,220 0 1,1 440,0 a220,220 0 1,1 -440,0"/></defs>
+        <text><textPath href="#p2">Toward midnight he was awakened by the inconsolable shriek of a bird...</textPath></text>
       </svg>
     </div>
 
-    <!-- RING 3 -->
-    <div class="ring ring3">
-      <svg viewBox="0 0 620 620">
-        <defs>
-          <path id="circle3" d="M310,310 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0"/>
-        </defs>
-        <text><textPath href="#circle3">
-        The purpose which guided him was not impossible, though supernatural. He wanted to dream a man; he wanted to dream him in minute entirety and impose him on reality...
-        </textPath></text>
-      </svg>
-    </div>
-
-    <!-- RING 4 -->
-    <div class="ring ring4">
+    <div class="ring r3">
       <svg viewBox="0 0 500 500">
-        <defs>
-          <path id="circle4" d="M250,250 m-180,0 a180,180 0 1,1 360,0 a180,180 0 1,1 -360,0"/>
-        </defs>
-        <text><textPath href="#circle4">
-        He understood that modeling the incoherent matter of dreams was the most difficult task that a man could undertake...
-        </textPath></text>
+        <defs><path id="p3" d="M250,250 m-180,0 a180,180 0 1,1 360,0 a180,180 0 1,1 -360,0"/></defs>
+        <text><textPath href="#p3">The purpose which guided him was not impossible, though supernatural...</textPath></text>
       </svg>
     </div>
 
-    <!-- RING 5 -->
-    <div class="ring ring5">
-      <svg viewBox="0 0 380 380">
-        <defs>
-          <path id="circle5" d="M190,190 m-130,0 a130,130 0 1,1 260,0 a130,130 0 1,1 -260,0"/>
-        </defs>
-        <text><textPath href="#circle5">
-        He dreamed a heart, warm and secret, and slowly formed a complete man. The god of Fire revealed to him that he would magically animate the dreamed phantom...
-        </textPath></text>
+    <div class="ring r4">
+      <svg viewBox="0 0 420 420">
+        <defs><path id="p4" d="M210,210 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"/></defs>
+        <text><textPath href="#p4">He understood that modeling the incoherent matter of dreams...</textPath></text>
       </svg>
     </div>
 
-    <!-- RING 6 -->
-    <div class="ring ring6">
-      <svg viewBox="0 0 260 260">
-        <defs>
-          <path id="circle6" d="M130,130 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
-        </defs>
-        <text><textPath href="#circle6">
-        Fire surrounded the ruins. He walked into the flames; they did not burn him. With relief and terror he understood that he also was an illusion.
-        </textPath></text>
+    <div class="ring r5">
+      <svg viewBox="0 0 320 320">
+        <defs><path id="p5" d="M160,160 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0"/></defs>
+        <text><textPath href="#p5">He dreamed a heart, warm and secret, and slowly formed a complete man...</textPath></text>
+      </svg>
+    </div>
+
+    <div class="ring r6">
+      <svg viewBox="0 0 240 240">
+        <defs><path id="p6" d="M120,120 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs>
+        <text><textPath href="#p6">Fire surrounded the ruins. He walked into the flames...</textPath></text>
       </svg>
     </div>
 
@@ -90,3 +60,4 @@
 <script src="ruins.script"></script>
 </body>
 </html>
+
