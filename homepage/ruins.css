@@ -1,47 +1,48 @@
 body{
   margin:0;
-  background:#f6f1e8; /* subtle creme */
+  background:#f5efe6;
   overflow:hidden;
-  font-family: Georgia, serif;
-  color:#5a0f1b;
+  font-family:"Playfair Display", serif;
 }
 
-/* DEPTH STAGE */
 .stage{
   position:relative;
   width:100vw;
   height:100vh;
-  perspective:1200px;
-  overflow:hidden;
+  perspective:1400px;
 }
 
-/* RING LAYERS */
-.ring-layer{
+.layer{
   position:absolute;
   top:50%;
   left:50%;
   transform-style:preserve-3d;
-  transition: transform 0.6s ease;
+  animation:orbit linear infinite;
+  transition:opacity .4s ease, filter .4s ease;
 }
 
-/* TEXT STYLE */
+.l1{transform:translate(-50%,-50%) translateZ(0); animation-duration:120s; opacity:1}
+.l2{transform:translate(-50%,-50%) translateZ(-250px); animation-duration:100s; opacity:.9}
+.l3{transform:translate(-50%,-50%) translateZ(-500px); animation-duration:80s; opacity:.8}
+.l4{transform:translate(-50%,-50%) translateZ(-750px); animation-duration:60s; opacity:.7}
+.l5{transform:translate(-50%,-50%) translateZ(-1000px); animation-duration:45s; opacity:.6}
+.l6{transform:translate(-50%,-50%) translateZ(-1250px); animation-duration:30s; opacity:.5}
+
 text{
-  fill:#5a0f1b; /* maroon */
+  fill:#5a0f1b;
   letter-spacing:1px;
 }
 
-/* DEPTH POSITIONS */
-.layer1{ transform: translate(-50%,-50%) translateZ(0px); }
-.layer2{ transform: translate(-50%,-50%) translateZ(-200px); }
-.layer3{ transform: translate(-50%,-50%) translateZ(-400px); }
-.layer4{ transform: translate(-50%,-50%) translateZ(-600px); }
-.layer5{ transform: translate(-50%,-50%) translateZ(-800px); }
-.layer6{ transform: translate(-50%,-50%) translateZ(-1000px); }
+.layer:hover{
+  opacity:1 !important;
+  filter:brightness(1.1);
+  z-index:10;
+}
+.stage:hover .layer:not(:hover){
+  opacity:.25;
+}
 
-/* FONT SIZES */
-.layer1 text{ font-size:15px }
-.layer2 text{ font-size:14px }
-.layer3 text{ font-size:13px }
-.layer4 text{ font-size:12px }
-.layer5 text{ font-size:11px }
-.layer6 text{ font-size:10px }
+@keyframes orbit{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
