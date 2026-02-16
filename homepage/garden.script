@@ -2,45 +2,50 @@ const panel = document.getElementById("panel");
 const content = document.getElementById("content");
 const closeBtn = document.getElementById("close");
 
-/* STORY FRAGMENTS */
-
 const story = {
 
+intro: `
+Captain Liddell Hart records a delayed offensive in 1916.
+Yu Tsun reveals the hidden cause behind the event.
+He learns Captain Madden is coming — meaning capture or death.
+`,
+
 escape: `
-“I went up to my bedroom… I threw myself down on my narrow iron bed…
-It seemed incredible that this day… might be that of my implacable death.”
+I went up to my bedroom… I threw myself down on my narrow iron bed…
+It seemed incredible that this day might be that of my death.
+`,
+
+mission: `
+I possessed the secret — the name of the artillery park.
+If only my voice could reach Berlin before I was silenced.
 `,
 
 train: `
-“The train pulled out… From utter terror I passed into a state of almost abject happiness…
-I argued that so small a victory prefigured a total victory.”
+From utter terror I passed into a state of almost abject happiness.
+I believed the small victory of time foretold total victory.
 `,
 
 labyrinth: `
-“I thought of a maze of mazes… a sinuous ever-growing maze which would take in both past and future…
-I felt myself cut off from the world, an abstract spectator.”
+I thought of a maze of mazes — a labyrinth of time.
+A sinuous ever-growing network taking in past and future.
 `,
 
 revelation: `
-“Ts’ui Pen believed in an infinite series of times…
-a web of diverging, converging and parallel times…
-In some you exist and not I, in others I do, and you do not.”
+Ts’ui Pen believed in infinite, diverging times.
+A web of possibilities where we exist differently in each.
 `,
 
 murder: `
-“I fired with the utmost care… Albert fell without a murmur.
-The secret name of the city got through to Berlin…
-Abominably, I have yet triumphed.”
+I fired with the utmost care.
+The name “Albert” reached Berlin.
+Abominably, I had triumphed.
 `
 };
 
-/* CLICK EVENTS */
-
 document.querySelectorAll(".node").forEach(node => {
   node.addEventListener("click", () => {
-    const key = node.dataset.node;
     panel.classList.remove("hidden");
-    content.textContent = story[key];
+    content.textContent = story[node.dataset.node];
   });
 });
 
