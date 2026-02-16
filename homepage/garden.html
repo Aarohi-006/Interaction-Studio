@@ -1,18 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Garden of Forking Paths — Maze</title>
-  <link rel="stylesheet" href="garden.css"/>
+  <meta charset="UTF-8">
+  <title>The Garden of Forking Paths </title>
+  <link rel="stylesheet" href="garden.css">
 </head>
+
 <body>
 
-<svg id="maze"></svg>
+<svg id="maze" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
 
+  <!-- Labyrinth walls -->
+  <path class="wall" d="M50 50 H950 V650 H50 Z"/>
+  <path class="wall" d="M150 150 H850 V550 H150 Z"/>
+  <path class="wall" d="M300 50 V650"/>
+  <path class="wall" d="M500 50 V650"/>
+  <path class="wall" d="M700 50 V650"/>
+  <path class="wall" d="M50 350 H950"/>
+
+  <!-- Nodes -->
+  <g class="node" data-id="A" transform="translate(180,140)">
+    <circle r="18"></circle>
+    <text y="4">A</text>
+  </g>
+
+  <g class="node" data-id="B" transform="translate(820,140)">
+    <circle r="18"></circle>
+    <text y="4">B</text>
+  </g>
+
+  <g class="node" data-id="C" transform="translate(180,560)">
+    <circle r="18"></circle>
+    <text y="4">C</text>
+  </g>
+
+  <g class="node" data-id="D" transform="translate(820,560)">
+    <circle r="18"></circle>
+    <text y="4">D</text>
+  </g>
+
+  <g class="node" data-id="E" transform="translate(500,350)">
+    <circle r="20"></circle>
+    <text y="5">E</text>
+  </g>
+
+</svg>
+
+<!-- Reading panel -->
 <div id="panel" class="hidden">
   <button id="closeBtn">✕</button>
-  <div id="panelContent"></div>
+  <div id="text"></div>
 </div>
 
 <script src="garden.script"></script>
