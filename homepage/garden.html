@@ -2,49 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>The Garden of Forking Paths</title>
+  <title>The Garden of Forking Paths — Branch</title>
   <link rel="stylesheet" href="garden.css">
 </head>
 
 <body>
 
-<svg viewBox="0 0 1000 700" id="maze">
+<svg viewBox="0 0 1000 700" id="tree">
 
   <!-- Background -->
   <rect width="1000" height="700" fill="#5a0f1a"></rect>
 
-  <!-- Maze walls -->
-  <path class="wall" d="M50 50 H950 V650 H50 Z"/>
-  <path class="wall" d="M150 150 H850 V550 H150 Z"/>
-  <path class="wall" d="M300 50 V650"/>
-  <path class="wall" d="M500 50 V650"/>
-  <path class="wall" d="M700 50 V650"/>
-  <path class="wall" d="M50 350 H950"/>
+  <!-- Branch lines -->
+  <line class="branch" x1="500" y1="120" x2="250" y2="280"/>
+  <line class="branch" x1="500" y1="120" x2="750" y2="280"/>
 
-  <!-- Nodes with IDs -->
-  <g class="node" data-node="escape" transform="translate(180,140)">
-    <circle r="18"></circle>
+  <line class="branch" x1="250" y1="280" x2="150" y2="480"/>
+  <line class="branch" x1="250" y1="280" x2="350" y2="480"/>
+
+  <line class="branch" x1="750" y1="280" x2="650" y2="480"/>
+  <line class="branch" x1="750" y1="280" x2="850" y2="480"/>
+
+  <!-- Nodes -->
+
+  <g class="node" data-node="intro" transform="translate(500,120)">
+    <circle r="26"></circle>
+    <text y="6">Start</text>
   </g>
 
-  <g class="node" data-node="train" transform="translate(820,140)">
-    <circle r="18"></circle>
+  <g class="node" data-node="escape" transform="translate(250,280)">
+    <circle r="22"></circle>
+    <text y="6">Escape</text>
   </g>
 
-  <g class="node" data-node="labyrinth" transform="translate(180,560)">
-    <circle r="18"></circle>
+  <g class="node" data-node="mission" transform="translate(750,280)">
+    <circle r="22"></circle>
+    <text y="6">Mission</text>
   </g>
 
-  <g class="node" data-node="revelation" transform="translate(820,560)">
-    <circle r="18"></circle>
-  </g>
-
-  <g class="node" data-node="murder" transform="translate(500,350)">
+  <g class="node" data-node="train" transform="translate(150,480)">
     <circle r="20"></circle>
+    <text y="6">Train</text>
+  </g>
+
+  <g class="node" data-node="labyrinth" transform="translate(350,480)">
+    <circle r="20"></circle>
+    <text y="6">Labyrinth</text>
+  </g>
+
+  <g class="node" data-node="revelation" transform="translate(650,480)">
+    <circle r="20"></circle>
+    <text y="6">Time</text>
+  </g>
+
+  <g class="node" data-node="murder" transform="translate(850,480)">
+    <circle r="20"></circle>
+    <text y="6">Act</text>
   </g>
 
 </svg>
 
-<!-- TEXT PANEL -->
+<!-- Reading Panel -->
 <div id="panel" class="hidden">
   <button id="close">✕</button>
   <div id="content"></div>
