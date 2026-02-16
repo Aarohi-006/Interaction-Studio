@@ -1,69 +1,20 @@
-const svg = document.getElementById("maze");
 const panel = document.getElementById("panel");
-const panelContent = document.getElementById("panelContent");
+const textBox = document.getElementById("text");
 const closeBtn = document.getElementById("closeBtn");
 
-/* ===== FULL TEXT (complete — trimmed only for formatting) ===== */
+/* FULL TEXT — paste your entire text between backticks */
 
 const FULL_TEXT = `
-To Victoria Ocampo
-
-In his A History of the World War (page 212), Captain Liddell Hart reports that a planned offensive...
-[IMPORTANT: paste the FULL text you sent here exactly between the backticks]
+PASTE YOUR FULL TEXT HERE
 `;
 
-/* ===== MAZE SHAPE ===== */
-
-const mazeLines = [
-  "M80 80 H920 V720 H80 Z",
-  "M160 160 H840 V640 H160 Z",
-  "M320 80 V720",
-  "M600 80 V720",
-  "M80 400 H920"
-];
-
-mazeLines.forEach(d => {
-  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
-  path.setAttribute("d", d);
-  svg.appendChild(path);
-});
-
-/* ===== TIMELINE NODES ===== */
-
-const nodes = [
-  {id:"T1", x:180, y:140, label:"Escape"},
-  {id:"T2", x:820, y:140, label:"Train"},
-  {id:"T3", x:180, y:620, label:"Labyrinth"},
-  {id:"T4", x:820, y:620, label:"Revelation"},
-  {id:"T5", x:500, y:400, label:"Convergence"}
-];
-
-nodes.forEach(n => {
-  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
-  g.setAttribute("class","node");
-  g.setAttribute("transform",`translate(${n.x},${n.y})`);
-
-  const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
-  circle.setAttribute("r",18);
-
-  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
-  text.textContent = n.id;
-  text.setAttribute("y",2);
-
-  g.appendChild(circle);
-  g.appendChild(text);
-
-  g.addEventListener("click", () => {
+document.querySelectorAll(".node").forEach(node => {
+  node.addEventListener("click", () => {
     panel.classList.remove("hidden");
-    panelContent.innerHTML = `<h3>${n.label}</h3><p>${FULL_TEXT}</p>`;
+    textBox.textContent = FULL_TEXT;
   });
-
-  svg.appendChild(g);
 });
-
-/* ===== CLOSE PANEL ===== */
 
 closeBtn.addEventListener("click", () => {
   panel.classList.add("hidden");
 });
-
