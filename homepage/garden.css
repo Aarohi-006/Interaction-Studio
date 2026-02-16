@@ -1,8 +1,8 @@
 body {
   margin: 0;
   background: #5a0f1a;
-  color: white;
   font-family: Georgia, serif;
+  color: white;
 }
 
 svg {
@@ -11,45 +11,36 @@ svg {
   display: block;
 }
 
-/* Branch lines */
 .branch {
   stroke: white;
   stroke-width: 2;
+  fill: none;
+  opacity: 0.6;
 }
 
-/* Nodes */
-.node circle {
+.node {
   fill: white;
-  stroke: black;
-  stroke-width: 2;
   cursor: pointer;
-  transition: transform .2s;
+  transition: transform .2s, fill .2s;
 }
 
-.node:hover circle {
-  transform: scale(1.12);
+.node:hover {
+  transform: scale(1.7);
+  fill: #ffdede;
 }
 
-.node text {
-  fill: #5a0f1a;
-  font-size: 12px;
-  text-anchor: middle;
-  pointer-events: none;
-}
-
-/* Panel */
 #panel {
   position: fixed;
   top: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
+  width: 55%;
   height: 70%;
   background: #5a0f1a;
   border: 1px solid white;
-  padding: 24px;
+  padding: 26px;
   overflow-y: auto;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 .hidden {
@@ -59,7 +50,7 @@ svg {
 #close {
   position: absolute;
   top: 10px;
-  right: 12px;
+  right: 14px;
   border: none;
   background: none;
   color: white;
