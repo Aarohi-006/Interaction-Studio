@@ -10,12 +10,14 @@ svg {
   height: 100vh;
 }
 
+/* Maze lines */
 path {
   stroke: #444;
   stroke-width: 2;
   fill: none;
 }
 
+/* Nodes */
 .node circle {
   fill: #c9a86a;
   cursor: pointer;
@@ -35,7 +37,6 @@ path {
 }
 
 /* Floating reading panel */
-
 #panel {
   position: absolute;
   top: 8%;
@@ -43,7 +44,7 @@ path {
   transform: translateX(-50%);
   width: 60%;
   height: 70%;
-  background: rgba(0,0,0,0.92);
+  background: rgba(0,0,0,0.94);
   border: 1px solid #333;
   padding: 24px;
   overflow-y: auto;
