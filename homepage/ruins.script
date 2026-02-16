@@ -1,17 +1,8 @@
-const svg = document.querySelector(".rings");
+let depth = 0;
+const stage = document.getElementById("stage");
 
-let scale = 1;
-let rotation = 0;
-
-window.addEventListener("wheel", (e) => {
-  e.preventDefault();
-
-  // zoom
-  scale += e.deltaY * -0.0008;
-  scale = Math.min(Math.max(0.6, scale), 2.5);
-
-  // subtle rotation while scrolling
-  rotation += e.deltaY * 0.02;
-
-  svg.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
-}, { passive: false });
+window.addEventListener("wheel", e => {
+  depth += e.deltaY * 0.6;
+  depth = Math.min(Math.max(depth, -1400), 200);
+  stage.style.transform = `translateZ(${depth}px)`;
+}, { passive:false });
