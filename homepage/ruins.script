@@ -1,8 +1,8 @@
 let depth = 0;
-const world = document.getElementById("world");
+const space = document.getElementById("space");
 
 window.addEventListener("wheel", e => {
-  depth += e.deltaY * -0.5;
-  depth = Math.max(Math.min(depth, 300), -1000);
-  world.style.setProperty("--z", depth + "px");
+  depth += e.deltaY * -0.8;
+  depth = Math.max(Math.min(depth, 400), -1600);
+  space.style.setProperty("--depth", depth + "px");
 });
