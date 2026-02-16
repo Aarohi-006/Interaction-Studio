@@ -11,22 +11,33 @@ svg {
   display: block;
 }
 
-.wall {
+/* Branch lines */
+.branch {
   stroke: white;
   stroke-width: 2;
-  fill: none;
 }
 
+/* Nodes */
 .node circle {
   fill: white;
+  stroke: black;
+  stroke-width: 2;
   cursor: pointer;
   transition: transform .2s;
 }
 
 .node:hover circle {
-  transform: scale(1.15);
+  transform: scale(1.12);
 }
 
+.node text {
+  fill: #5a0f1a;
+  font-size: 12px;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+/* Panel */
 #panel {
   position: fixed;
   top: 8%;
