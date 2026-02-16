@@ -1,54 +1,53 @@
 body{
   margin:0;
   background:#f6f1e8;
-  font-family: Georgia, serif;
+  font-family:Georgia, serif;
+  overflow:hidden;
   color:#5a0f1b;
+}
+
+/* CAMERA */
+.camera{
+  width:100vw;
+  height:100vh;
+  perspective:1200px;
   overflow:hidden;
 }
 
-.viewport{
-  width:100vw;
-  height:100vh;
-  perspective:1000px;
-}
-
-.world{
+/* SPACE */
+.space{
   position:relative;
   width:100%;
   height:100%;
   transform-style:preserve-3d;
-  transform: translateZ(var(--z,0px));
-  transition: transform .2s ease-out;
+  transform:translateZ(var(--depth,0px));
+  transition:transform .15s linear;
 }
 
-/* SPREAD POSITIONS */
-.r1{ position:absolute; top:10%; left:10%; }
-.r2{ position:absolute; top:60%; left:70%; }
-.r3{ position:absolute; top:35%; left:45%; }
-.r4{ position:absolute; top:75%; left:20%; }
-.r5{ position:absolute; top:20%; left:75%; }
-.r6{ position:absolute; top:55%; left:50%; }
+/* RINGS */
+.ring{
+  position:absolute;
+  transform-style:preserve-3d;
+  animation:spin linear infinite;
+}
 
-/* TEXT STYLE */
+/* SPREAD */
+.r1{top:15%;left:20%;animation-duration:120s}
+.r2{top:60%;left:70%;animation-duration:100s}
+.r3{top:40%;left:45%;animation-duration:80s}
+.r4{top:75%;left:25%;animation-duration:70s}
+.r5{top:20%;left:75%;animation-duration:60s}
+.r6{top:55%;left:50%;animation-duration:50s}
+
+/* TEXT */
 text{
   fill:#5a0f1b;
   font-size:14px;
   letter-spacing:1px;
 }
 
-/* ORBIT */
-.ring{
-  animation:spin linear infinite;
-}
-.r1{ animation-duration:120s }
-.r2{ animation-duration:100s }
-.r3{ animation-duration:80s }
-.r4{ animation-duration:70s }
-.r5{ animation-duration:60s }
-.r6{ animation-duration:50s }
-
+/* ROTATION */
 @keyframes spin{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
 }
-
