@@ -8,7 +8,6 @@
 
 <body>
 
-<!-- SVG MAZE -->
 <svg viewBox="0 0 1000 700" id="maze">
 
   <!-- Background -->
@@ -22,30 +21,25 @@
   <path class="wall" d="M700 50 V650"/>
   <path class="wall" d="M50 350 H950"/>
 
-  <!-- Nodes -->
-  <g class="node" transform="translate(180,140)">
+  <!-- Nodes with IDs -->
+  <g class="node" data-node="escape" transform="translate(180,140)">
     <circle r="18"></circle>
-    <text y="4">A</text>
   </g>
 
-  <g class="node" transform="translate(820,140)">
+  <g class="node" data-node="train" transform="translate(820,140)">
     <circle r="18"></circle>
-    <text y="4">B</text>
   </g>
 
-  <g class="node" transform="translate(180,560)">
+  <g class="node" data-node="labyrinth" transform="translate(180,560)">
     <circle r="18"></circle>
-    <text y="4">C</text>
   </g>
 
-  <g class="node" transform="translate(820,560)">
+  <g class="node" data-node="revelation" transform="translate(820,560)">
     <circle r="18"></circle>
-    <text y="4">D</text>
   </g>
 
-  <g class="node" transform="translate(500,350)">
+  <g class="node" data-node="murder" transform="translate(500,350)">
     <circle r="20"></circle>
-    <text y="5">E</text>
   </g>
 
 </svg>
