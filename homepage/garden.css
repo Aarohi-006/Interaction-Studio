@@ -1,48 +1,80 @@
-body {
-  margin: 0;
-  background: #5a0f1a;
-  color: white;
-  font-family: Georgia, serif;
+body{
+  margin:0;
+  background:#5a0f1a;
+  font-family:Georgia, serif;
+  overflow:hidden;
+  color:white;
 }
 
-#container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+#container{
+  width:100vw;
+  height:100vh;
+  position:relative;
 }
 
-#tree {
-  width: 100%;
-  height: 100%;
+#tree{
+  width:100%;
+  height:100%;
 }
 
-.branch {
-  stroke: white;
-  stroke-width: 2;
+/* 🌱 branch growth animation */
+.branches line{
+  stroke:white;
+  stroke-width:2;
+  stroke-linecap:round;
+
+  stroke-dasharray:600;
+  stroke-dashoffset:600;
+  animation:grow 2.2s ease forwards;
 }
 
-.node {
-  fill: white;
-  cursor: pointer;
-  transition: transform 0.2s;
+.branches line:nth-child(2){ animation-delay:.3s; }
+.branches line:nth-child(3){ animation-delay:.3s; }
+.branches line:nth-child(4){ animation-delay:.6s; }
+.branches line:nth-child(5){ animation-delay:.6s; }
+.branches line:nth-child(6){ animation-delay:.6s; }
+.branches line:nth-child(7){ animation-delay:.6s; }
+
+@keyframes grow{
+  to{ stroke-dashoffset:0; }
 }
 
-.node:hover {
-  transform: scale(1.2);
+/* nodes fade in after growth */
+.node{
+  fill:white;
+  opacity:0;
+  animation:appear .6s ease forwards;
 }
 
-#panel {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  width: 320px;
-  height: 80%;
-  background: rgba(0,0,0,0.25);
-  padding: 20px;
-  overflow-y: auto;
-  border-radius: 10px;
+.node:nth-child(1){ animation-delay:1.6s; }
+.node:nth-child(2){ animation-delay:1.7s; }
+.node:nth-child(3){ animation-delay:1.8s; }
+.node:nth-child(4){ animation-delay:1.9s; }
+.node:nth-child(5){ animation-delay:2s; }
+.node:nth-child(6){ animation-delay:2.1s; }
+.node:nth-child(7){ animation-delay:2.2s; }
+.node:nth-child(8){ animation-delay:2.3s; }
+
+@keyframes appear{
+  from{ opacity:0; transform:scale(.5); }
+  to{ opacity:1; transform:scale(1); }
 }
 
-#textContent {
-  line-height: 1.6;
+.node:hover{ opacity:.7; cursor:pointer; }
+
+/* floating text bubble */
+#bubble{
+  position:absolute;
+  max-width:260px;
+  background:rgba(0,0,0,.8);
+  padding:14px 16px;
+  border-radius:10px;
+  line-height:1.5;
+  font-size:14px;
+  pointer-events:none;
+  transform:translate(-50%,-120%);
+  opacity:0;
+  transition:opacity .2s ease;
 }
+
+#bubble.show{ opacity:1; }
