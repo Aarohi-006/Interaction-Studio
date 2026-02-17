@@ -2,7 +2,7 @@ let depth = 0;
 const space = document.getElementById("space");
 
 window.addEventListener("wheel", e => {
-  depth += e.deltaY * -0.8;
-  depth = Math.max(Math.min(depth, 400), -1600);
+  depth += e.deltaY * -0.7;
+  depth = Math.max(Math.min(depth, 300), -1400);
   space.style.setProperty("--depth", depth + "px");
 });
