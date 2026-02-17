@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Garden of Forking Paths — Nonlinear</title>
-  <link rel="stylesheet" href="garden.css" />
+  <meta charset="UTF-8">
+  <title>Garden of Forking Paths</title>
+  <link rel="stylesheet" href="garden.css">
 </head>
 <body>
 
 <div id="container">
 
-  <!-- SVG TREE -->
   <svg id="tree" viewBox="0 0 1000 700">
 
     <!-- branches -->
     <line x1="500" y1="650" x2="500" y2="520" class="branch"/>
     <line x1="500" y1="520" x2="350" y2="400" class="branch"/>
     <line x1="500" y1="520" x2="650" y2="400" class="branch"/>
-
     <line x1="350" y1="400" x2="250" y2="260" class="branch"/>
     <line x1="350" y1="400" x2="420" y2="260" class="branch"/>
-
     <line x1="650" y1="400" x2="580" y2="260" class="branch"/>
     <line x1="650" y1="400" x2="750" y2="260" class="branch"/>
 
@@ -35,16 +32,25 @@
 
   </svg>
 
-  <!-- TEXT PANEL -->
   <div id="panel">
     <div id="textContent">
-      Click a node to enter a moment in the labyrinth.
+      Click a node to enter the labyrinth.
     </div>
   </div>
 
 </div>
 
-<!-- IMPORTANT: specify type -->
-<script src="garden.script" type="text/javascript"></script>
+<!-- external script -->
+<script src="garden.script"></script>
+
+<!-- ✅ FAILSAFE so page never stays blank -->
+<script>
+if (typeof initGarden === "function") {
+  initGarden();
+} else {
+  console.log("garden.script not loaded");
+}
+</script>
+
 </body>
 </html>
