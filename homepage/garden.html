@@ -2,64 +2,46 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Garden of Forking Paths</title>
+<title>The Garden of Forking Paths — Maze</title>
 <link rel="stylesheet" href="garden.css">
 </head>
+
 <body>
-<div id="container">
 
-  <svg id="tree" viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid meet">
-    <g class="branches">
-      <!-- Curved, maze-like branches -->
-      <path d="M600 950 C600 850 500 750 450 650" class="branch"/>
-      <path d="M600 950 C600 850 700 750 750 650" class="branch"/>
-      <path d="M450 650 C430 600 400 550 350 500" class="branch"/>
-      <path d="M450 650 C470 600 500 550 525 500" class="branch"/>
-      <path d="M750 650 C730 600 700 550 675 500" class="branch"/>
-      <path d="M750 650 C770 600 800 550 825 500" class="branch"/>
-      <path d="M350 500 C320 450 300 400 280 350" class="branch"/>
-      <path d="M350 500 C370 450 400 400 425 350" class="branch"/>
-      <path d="M525 500 C510 450 500 400 505 350" class="branch"/>
-      <path d="M675 500 C660 450 650 400 655 350" class="branch"/>
-      <path d="M825 500 C810 450 800 400 790 350" class="branch"/>
-      <path d="M280 350 C270 300 260 270 250 220" class="branch"/>
-      <path d="M425 350 C415 300 410 270 400 220" class="branch"/>
-      <path d="M505 350 C500 300 495 270 500 220" class="branch"/>
-      <path d="M655 350 C650 300 645 270 650 220" class="branch"/>
-      <path d="M790 350 C780 300 770 270 760 220" class="branch"/>
-    </g>
+<div id="mazeWrapper">
+<svg id="maze" viewBox="0 0 2000 1400">
 
-    <g id="nodes">
-      <!-- 25 nodes along the curves -->
-      <circle cx="600" cy="950" r="10" class="node"/>
-      <circle cx="600" cy="850" r="10" class="node"/>
-      <circle cx="450" cy="650" r="10" class="node"/>
-      <circle cx="750" cy="650" r="10" class="node"/>
-      <circle cx="350" cy="500" r="10" class="node"/>
-      <circle cx="525" cy="500" r="10" class="node"/>
-      <circle cx="675" cy="500" r="10" class="node"/>
-      <circle cx="825" cy="500" r="10" class="node"/>
-      <circle cx="280" cy="350" r="10" class="node"/>
-      <circle cx="425" cy="350" r="10" class="node"/>
-      <circle cx="505" cy="350" r="10" class="node"/>
-      <circle cx="655" cy="350" r="10" class="node"/>
-      <circle cx="790" cy="350" r="10" class="node"/>
-      <circle cx="250" cy="220" r="10" class="node"/>
-      <circle cx="400" cy="220" r="10" class="node"/>
-      <circle cx="500" cy="220" r="10" class="node"/>
-      <circle cx="650" cy="220" r="10" class="node"/>
-      <circle cx="760" cy="220" r="10" class="node"/>
-      <circle cx="320" cy="400" r="10" class="node"/>
-      <circle cx="470" cy="400" r="10" class="node"/>
-      <circle cx="525" cy="400" r="10" class="node"/>
-      <circle cx="675" cy="400" r="10" class="node"/>
-      <circle cx="715" cy="400" r="10" class="node"/>
-      <circle cx="780" cy="400" r="10" class="node"/>
-      <circle cx="650" cy="300" r="10" class="node"/>
-    </g>
-  </svg>
+<defs>
+  <path id="p1" d="M100 1200 C 400 1000, 600 1100, 900 1200"/>
+  <path id="p2" d="M150 200 C 500 400, 900 150, 1300 300"/>
+  <path id="p3" d="M100 900 C 500 700, 900 950, 1500 850"/>
+  <path id="p4" d="M300 150 C 700 350, 1200 100, 1700 250"/>
+  <path id="p5" d="M50 600 C 500 800, 900 400, 1500 600"/>
+  <path id="p6" d="M250 1300 C 700 1000, 1000 1200, 1600 1100"/>
+  <path id="p7" d="M400 500 C 800 750, 1200 350, 1700 550"/>
+  <path id="p8" d="M50 300 C 600 100, 1000 350, 1600 200"/>
+  <path id="p9" d="M300 1000 C 700 850, 1100 1050, 1800 950"/>
+  <path id="p10" d="M200 700 C 600 500, 900 650, 1400 700"/>
+  <path id="p11" d="M500 250 C 900 450, 1300 250, 1800 400"/>
+  <path id="p12" d="M100 500 C 400 300, 700 600, 1100 450"/>
+  <path id="p13" d="M600 1200 C 900 1000, 1300 1200, 1800 1150"/>
+  <path id="p14" d="M100 100 C 500 200, 900 50, 1400 150"/>
+  <path id="p15" d="M200 1150 C 600 950, 900 1050, 1400 1150"/>
+  <path id="p16" d="M700 350 C 1000 600, 1400 300, 1800 550"/>
+  <path id="p17" d="M400 800 C 900 600, 1300 850, 1800 800"/>
+  <path id="p18" d="M300 400 C 700 300, 1000 500, 1500 400"/>
+  <path id="p19" d="M150 750 C 500 600, 800 800, 1200 700"/>
+  <path id="p20" d="M800 100 C 1200 250, 1500 100, 1900 200"/>
+  <path id="p21" d="M900 1300 C 1200 1150, 1500 1300, 1900 1200"/>
+  <path id="p22" d="M1200 500 C 1500 700, 1700 600, 1950 750"/>
+  <path id="p23" d="M1000 900 C 1400 700, 1700 900, 1950 850"/>
+  <path id="p24" d="M600 650 C 900 550, 1200 650, 1500 600"/>
+  <path id="p25" d="M700 1050 C 1000 900, 1400 1000, 1800 950"/>
+</defs>
 
-  <div id="bubble"></div>
+<g id="textGroup"></g>
+
+</svg>
 </div>
 
 <script src="garden.script"></script>
