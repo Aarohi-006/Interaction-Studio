@@ -1,52 +1,26 @@
 const wrapper = document.getElementById('scrollWrapper');
-const paragraphs = document.querySelectorAll('.text p');
+const paragraphs = document.querySelectorAll('p');
 
-function updateVisuals() {
-  const wrapperRect = wrapper.getBoundingClientRect();
-  const center = wrapperRect.top + wrapper.clientHeight / 2;
+function updateTextEffects() {
+  const center = window.innerHeight / 2;
 
-  paragraphs.forEach(p => {
+  paragraphs.forEach((p, i) => {
     const rect = p.getBoundingClientRect();
-    const pCenter = rect.top + rect.height / 2;
-    const distance = Math.abs(center - pCenter);
+    const distance = Math.abs(center - rect.top);
 
-    const maxDist = wrapper.clientHeight / 2;
-    let progress = 1 - Math.pow(distance / maxDist, 1.6);
-    progress = Math.max(0, Math.min(1, progress));
+    let visibility = 1 - Math.pow(distance / center, 1.4);
+    visibility = Math.max(0, Math.min(1, visibility));
 
-    const blur = (1 - progress) * 6;
-    const translate = (1 - progress) * 10;
+    p.style.opacity = visibility;
+    p.style.filter = `blur(${6 - visibility * 6}px)`;
 
-    p.style.opacity = progress;
-    p.style.filter = `blur(${blur}px)`;
-    p.style.transform = `translateY(${translate}px)`;
+    const drift = Math.sin((wrapper.scrollTop + i * 50) * 0.002) * 8;
+    p.style.transform = `translateX(${drift}px)`;
   });
 }
 
-let speed = 0.25;
-let targetSpeed = speed;
-let maxSpeed = 2.5;
-
-wrapper.addEventListener('wheel', (e) => {
-  targetSpeed += e.deltaY * 0.002;
-  targetSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, targetSpeed));
+wrapper.addEventListener('scroll', () => {
+  requestAnimationFrame(updateTextEffects);
 });
 
-function animateScroll() {
-  speed += (targetSpeed - speed) * 0.05;
-  targetSpeed *= 0.92;
-
-  wrapper.scrollTop += speed;
-
-  if (wrapper.scrollTop >= wrapper.scrollHeight / 2) {
-    wrapper.scrollTop = 0;
-  }
-  if (wrapper.scrollTop <= 0) {
-    wrapper.scrollTop = wrapper.scrollHeight / 2;
-  }
-
-  updateVisuals();
-  requestAnimationFrame(animateScroll);
-}
-
-animateScroll();
+updateTextEffects();
