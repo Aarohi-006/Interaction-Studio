@@ -1,6 +1,6 @@
 body{
   margin:0;
-  background:#e8e1cf;
+  background:#e6dfcf;
   font-family: "Garamond", serif;
   overflow:hidden;
 }
@@ -8,21 +8,22 @@ body{
 #mazeWrapper{
   width:100vw;
   height:100vh;
-  overflow:auto;
-  cursor:grab;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 #maze{
-  width:2200px;
-  height:1500px;
+  width:95vw;
+  height:95vh;
 }
 
 .mazeText{
   fill:#7a1c1c;
-  font-size:15px;
-  letter-spacing:.4px;
-  opacity:.2;
-  transition:opacity .5s ease, fill .3s ease;
+  font-size:14px;
+  letter-spacing:.35px;
+  opacity:.25;
+  transition:opacity .4s ease, fill .3s ease, transform .4s ease;
 }
 
 .mazeText.active{
