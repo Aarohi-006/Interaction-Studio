@@ -1,31 +1,30 @@
-const chapters = document.querySelectorAll('.chapter');
+const chapters = document.querySelectorAll(".chapter");
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      const current = entry.target;
+function updateChapters() {
+  const triggerPoint = window.innerHeight * 0.55;
 
-      if (entry.isIntersecting) {
+  chapters.forEach((chapter, index) => {
+    const rect = chapter.getBoundingClientRect();
 
-        // Activate current
-        current.classList.add('active');
+    if (rect.top < triggerPoint && rect.bottom > 0) {
+      // Current visible chapter
+      chapter.classList.add("active");
+      chapter.classList.remove("past");
 
-        // Mark all previous as past
-        chapters.forEach(ch => {
-          if (ch.offsetTop < current.offsetTop) {
-            ch.classList.add('past');
-          }
-        });
-
+      // Fade all previous chapters
+      for (let i = 0; i < index; i++) {
+        chapters[i].classList.remove("active");
+        chapters[i].classList.add("past");
       }
-    });
-  },
-  {
-    root: null,
-    rootMargin: "-30% 0px -40% 0px",
-    threshold: 0
-  }
-);
 
-chapters.forEach(chapter => observer.observe(chapter));
+      // Hide future chapters
+      for (let i = index + 1; i < chapters.length; i++) {
+        chapters[i].classList.remove("active");
+        chapters[i].classList.remove("past");
+      }
+    }
+  });
+}
 
+window.addEventListener("scroll", updateChapters);
+window.addEventListener("load", updateChapters);
