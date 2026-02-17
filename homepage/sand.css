@@ -2,51 +2,28 @@ body {
   margin: 0;
   font-family: 'Exo', sans-serif;
   background: #fdf6e3;
-  color: #333;
-  overflow-x: hidden;
+  color: #2a2a2a;
+  line-height: 1.7;
+}
+
+.text {
+  width: 60%;
+  margin: auto;
+  padding: 5rem 2rem;
 }
 
 .title {
   font-family: 'Euphoria Script', cursive;
   text-align: center;
   font-size: 3rem;
-  margin: 60px 0 40px;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
-.text {
-  width: 60%;
-  margin: auto;
-  padding-bottom: 40vh;
-}
-
-/* Chapters */
-
-.chapter {
-  margin: 120px 0;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1.4s ease, transform 1.4s ease, filter 1.4s ease;
-}
-
-/* Active chapter */
-.chapter.active {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0px);
-}
-
-/* Previous chapters fade + soften */
-.chapter.past {
-  opacity: 0.25;
-  transform: translateY(-20px);
-  filter: blur(1px);
-}
-
-/* Paragraph rhythm */
-
+/* --- Paragraph rhythm --- */
 p {
-  line-height: 1.8;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 p.lead {
@@ -57,5 +34,21 @@ p.lead {
 p.spaced {
   margin: 3rem 0;
   font-style: italic;
-  opacity: 0.9;
+}
+
+/* --- Chapter states --- */
+.chapter {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.chapter.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chapter.past {
+  opacity: 0.25;
+  transform: translateY(-20px);
 }
