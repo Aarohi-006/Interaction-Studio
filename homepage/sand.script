@@ -1,31 +1,37 @@
-// --- Scroll-triggered chapter reveal ---
 const chapters = document.querySelectorAll('.chapter');
 const driftParagraphs = document.querySelectorAll('p');
 
-function revealChapters() {
-  const scrollY = window.scrollY + window.innerHeight * 0.75;
+let lastScrollY = window.scrollY;
+let ticking = false;
 
-  chapters.forEach(chapter => {
+// --- Chapter reveal & past fade ---
+function revealChapters() {
+  const scrollY = window.scrollY + window.innerHeight * 0.7;
+
+  chapters.forEach((chapter, i) => {
     if (chapter.offsetTop < scrollY) {
       chapter.classList.add('active');
+      chapter.classList.remove('past');
 
-      // Add drifting effect for visible paragraphs
-      chapter.querySelectorAll('p').forEach(p => p.classList.add('drift'));
+      // Fade previous chapters non-linearly
+      for (let j = 0; j < i; j++) {
+        chapters[j].classList.add('past');
+      }
+
+      chapter.querySelectorAll('p').forEach((p, idx) => {
+        setTimeout(() => p.classList.add('drift'), idx * 200); // staggered paragraph animation
+      });
     }
   });
 }
 
-// --- Adaptive scroll speed (for mouse/trackpad) ---
-let lastScrollY = window.scrollY;
-let ticking = false;
-
+// --- Adaptive horizontal drift ---
 function updateScrollSpeed() {
   const currentY = window.scrollY;
   const delta = currentY - lastScrollY;
 
   driftParagraphs.forEach(p => {
-    // Small horizontal drift proportional to scroll speed
-    p.style.transform = `translateX(${delta * 0.2}px)`;
+    p.style.transform = `translateX(${delta * 0.15}px)`;
   });
 
   lastScrollY = currentY;
@@ -42,3 +48,4 @@ window.addEventListener('scroll', () => {
 
 // Initial reveal
 revealChapters();
+
