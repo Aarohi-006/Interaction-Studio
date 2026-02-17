@@ -2,7 +2,7 @@ let depth = 0;
 const stage = document.getElementById("stage");
 
 window.addEventListener("wheel", e=>{
-  depth += e.deltaY * -0.5;
-  depth = Math.max(-800, Math.min(400, depth));
+  depth += e.deltaY * -0.3;
+  depth = Math.max(-500, Math.min(300, depth));
   stage.style.transform = `translateZ(${depth}px)`;
 });
