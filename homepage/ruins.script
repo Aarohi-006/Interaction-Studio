@@ -1,8 +1,14 @@
-let depth = 0;
-const stage = document.getElementById("stage");
+const reader = document.getElementById("reader");
+const readerText = document.getElementById("readerText");
+const closeReader = document.getElementById("closeReader");
 
-window.addEventListener("wheel", e=>{
-  depth += e.deltaY * -0.3;
-  depth = Math.max(-500, Math.min(300, depth));
-  stage.style.transform = `translateZ(${depth}px)`;
+document.querySelectorAll(".ring").forEach(ring=>{
+  ring.addEventListener("click",()=>{
+    readerText.textContent = ring.dataset.text;
+    reader.classList.add("show");
+  });
+});
+
+closeReader.addEventListener("click",()=>{
+  reader.classList.remove("show");
 });
