@@ -1,59 +1,52 @@
 body {
   margin: 0;
   background: #5a0f1a;
-  font-family: Georgia, serif;
   color: white;
+  font-family: Georgia, serif;
+  overflow: hidden;
 }
 
-svg {
+#container {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  display: block;
+}
+
+#tree {
+  width: 100%;
+  height: 100%;
 }
 
 .branch {
   stroke: white;
   stroke-width: 2;
-  fill: none;
-  opacity: 0.6;
 }
 
 .node {
   fill: white;
   cursor: pointer;
-  transition: transform .2s, fill .2s;
+  transition: transform 0.2s, fill 0.2s;
 }
 
 .node:hover {
-  transform: scale(1.7);
+  transform: scale(1.2);
   fill: #ffdede;
 }
 
 #panel {
-  position: fixed;
-  top: 8%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 55%;
-  height: 70%;
-  background: #5a0f1a;
-  border: 1px solid white;
-  padding: 26px;
-  overflow-y: auto;
-  line-height: 1.7;
-}
-
-.hidden {
-  display: none;
-}
-
-#close {
   position: absolute;
-  top: 10px;
-  right: 14px;
-  border: none;
-  background: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
+  right: 30px;
+  top: 30px;
+  width: 320px;
+  height: 80%;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+#textContent {
+  line-height: 1.6;
+  font-size: 15px;
 }
