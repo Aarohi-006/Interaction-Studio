@@ -1,145 +1,67 @@
-const fullText = `
-To Victoria Ocampo
+const fullText = `To Victoria Ocampo
 
-In his A History of the World War (page 212), Captain Liddell Hart reports that a planned offensive by thirteen British divisions, supported by fourteen hundred artillery pieces, against the German line at Serre-Montauban, scheduled for July 24, 1916, had to be postponed until the morning of the 29th. He comments that torrential rain caused this delay - which lacked any special significance. The following deposition, dictated by, read over, and then signed by Dr. Yu Tsun, former teacher of English at the Tsingtao Hochschule, casts unsuspected light upon this event. The first two pages are missing.
+In his A History of the World War, Captain Liddell Hart reports that a planned offensive...
 
-... and I hung up the phone. Immediately I recollected the voice that had spoken in German. It was that of Captain Richard Madden. Madden, in Viktor Runeberg's office, meant the end of all our work and of our lives also.
+and I hung up the phone. Immediately I recollected the voice that had spoken in German...
 
-I went up to my bedroom. Absurd though the gesture was, I closed and locked the door. I threw myself down on my narrow iron bed and waited.
+I went up to my bedroom. Absurd though the gesture was, I closed and locked the door...
 
-Then I reflected that all things happen, happen to one, precisely now. Century follows century, and things happen only in the present.
+Then I reflected that all things happen, happen to one, precisely now...
 
-In the midst of my hatred and terror, I knew that the fast-moving soldier did not suspect that I possessed the Secret — the name of the exact site of the new British artillery park.
+In the midst of my hatred and terror I knew that I possessed the Secret...
 
-I said aloud, "I must flee."
+I sat up on the bed, in senseless and perfect silence...
 
-I emptied my pockets: the watch, the chain, the coins, the keys, the notebook, the revolver with a single bullet.
+In ten minutes I had developed my plan...
 
-In ten minutes I had developed my plan. The telephone directory gave me the name of the one person capable of passing on the information.
+I am a timorous man...
 
-I am a timorous man. It was not easy to bring about my plan, and I know that its execution was terrible.
+Silently, I dressed and left the house...
 
-I carried out my plan because I wished to prove that a man of my race could save his armies.
+I was going to the village of Ashgrove...
 
-Silently, I dressed and went out. The station was not far from my house.
+From utter terror I passed into a state of almost abject happiness...
 
-At last the train pulled out. A man I recognized ran along the platform. It was Captain Richard Madden.
+The train crept along gently, amid ash trees...
 
-From terror I passed into a state of almost abject happiness. I told myself the duel had already started.
+Lost in imaginary illusions I forgot my destiny...
 
-Thus I proceeded, with the eyes of a man already dead, contemplating the day.
+Meditating thus I arrived at a high, rusty iron gate...
 
-The train slowed down and stopped in the middle of a field. "Ashgrove?" I asked. "Ashgrove," they replied.
+The damp path zigzagged like those of my childhood...
 
-The road ran downhill beneath intermingled branches, while a round moon hung low in the sky.
+We sat down in a library filled with books from East and West...
 
-I know something about labyrinths. Not for nothing am I the great-grandson of Ts’ui Pen.
+A strange destiny, said Stephen Albert...
 
-Under the trees of England I meditated on this lost labyrinth. I imagined it infinite, made of rivers, provinces, kingdoms.
+Here is the Labyrinth...
 
-Lost in these illusions I forgot my destiny — that of the hunted.
+Before I discovered this letter I kept asking myself how a book could be infinite...
 
-Meditating thus I arrived at a high, rusty iron gate.
+The Garden of Forking Paths was the chaotic novel itself...
 
-"The garden of forking paths," he said.
+Fang, let us say, has a secret...
 
-Something stirred in my memory. "The garden of my ancestor Ts’ui Pen."
+The explanation is obvious: a web of diverging times...
 
-We went into a library filled with books from both East and West.
+In all of them I am grateful to you...
 
-Stephen Albert told me of Ts’ui Pen’s strange destiny — governor, poet, and creator of a labyrinth.
+Once again I sensed the pullulation...
 
-"Here is the labyrinth," he said. "An invisible labyrinth of time."
+The future exists now...
 
-He showed me the fragment of the letter: "I leave to various future times, but not to all, my garden of forking paths."
+Albert fell without a murmur...
 
-The Garden of Forking Paths is a chaotic novel where all possible outcomes occur.
+What remains is unreal and unimportant...`;
 
-He explained the network of diverging, converging, and parallel times.
+const paragraphs = fullText.split("\n\n").filter(p => p.trim().length > 0);
 
-"In one timeline you are my enemy, in another my friend."
+const nodes = document.querySelectorAll(".node");
+const panel = document.getElementById("textContent");
 
-At that moment I felt something infinite around me.
-
-"The future exists now," I replied.
-
-I fired. Albert fell without a murmur.
-
-I have been condemned to hang. Abominably, I have yet triumphed.
-
-The name of the city was Albert. Yesterday it was bombed.
-
-No one can know my infinite penitence and sickness of heart.
-`;
-
-const paragraphs = fullText
-  .split(/\n\s*\n/)
-  .map(p => p.trim())
-  .filter(p => p.length > 0);
-
-const nodesGroup = document.getElementById("nodes");
-const branchesGroup = document.getElementById("branches");
-const panel = document.getElementById("panel");
-const content = document.getElementById("content");
-const closeBtn = document.getElementById("close");
-
-const centerX = 600;
-const startY = 740;
-const levelHeight = 110;
-const spread = 420;
-
-let index = 0;
-const levels = 6;
-
-for (let level = 0; level < levels; level++) {
-
-  const nodesInLevel = Math.pow(2, level);
-  const y = startY - level * levelHeight;
-
-  for (let i = 0; i < nodesInLevel; i++) {
-
-    if (index >= paragraphs.length) break;
-
-    const x =
-      centerX +
-      (i - (nodesInLevel - 1) / 2) *
-      (spread / (level + 1));
-
-    if (level > 0) {
-      const parentIndex = Math.floor(i / 2);
-      const parentNodes = Math.pow(2, level - 1);
-      const parentX =
-        centerX +
-        (parentIndex - (parentNodes - 1) / 2) *
-        (spread / level);
-      const parentY = startY - (level - 1) * levelHeight;
-
-      const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-      line.setAttribute("x1", parentX);
-      line.setAttribute("y1", parentY);
-      line.setAttribute("x2", x);
-      line.setAttribute("y2", y);
-      line.setAttribute("class", "branch");
-      branchesGroup.appendChild(line);
-    }
-
-    const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
-    circle.setAttribute("cx", x);
-    circle.setAttribute("cy", y);
-    circle.setAttribute("r", 7);
-    circle.setAttribute("class", "node");
-    circle.dataset.index = index;
-
-    circle.addEventListener("click", () => {
-      content.textContent = paragraphs[circle.dataset.index];
-      panel.classList.remove("hidden");
-    });
-
-    nodesGroup.appendChild(circle);
-    index++;
-  }
-}
-
-closeBtn.addEventListener("click", () => {
-  panel.classList.add("hidden");
+nodes.forEach((node, index) => {
+  node.addEventListener("click", () => {
+    const text = paragraphs[index % paragraphs.length];
+    panel.innerText = text;
+  });
 });
