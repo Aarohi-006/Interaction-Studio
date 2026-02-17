@@ -1,51 +1,31 @@
 const chapters = document.querySelectorAll('.chapter');
-const driftParagraphs = document.querySelectorAll('p');
 
-let lastScrollY = window.scrollY;
-let ticking = false;
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      const current = entry.target;
 
-// --- Chapter reveal & past fade ---
-function revealChapters() {
-  const scrollY = window.scrollY + window.innerHeight * 0.7;
+      if (entry.isIntersecting) {
 
-  chapters.forEach((chapter, i) => {
-    if (chapter.offsetTop < scrollY) {
-      chapter.classList.add('active');
-      chapter.classList.remove('past');
+        // Activate current
+        current.classList.add('active');
 
-      // Fade previous chapters non-linearly
-      for (let j = 0; j < i; j++) {
-        chapters[j].classList.add('past');
+        // Mark all previous as past
+        chapters.forEach(ch => {
+          if (ch.offsetTop < current.offsetTop) {
+            ch.classList.add('past');
+          }
+        });
+
       }
-
-      chapter.querySelectorAll('p').forEach((p, idx) => {
-        setTimeout(() => p.classList.add('drift'), idx * 200); // staggered paragraph animation
-      });
-    }
-  });
-}
-
-// --- Adaptive horizontal drift ---
-function updateScrollSpeed() {
-  const currentY = window.scrollY;
-  const delta = currentY - lastScrollY;
-
-  driftParagraphs.forEach(p => {
-    p.style.transform = `translateX(${delta * 0.15}px)`;
-  });
-
-  lastScrollY = currentY;
-  ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-  revealChapters();
-  if (!ticking) {
-    window.requestAnimationFrame(updateScrollSpeed);
-    ticking = true;
+    });
+  },
+  {
+    root: null,
+    rootMargin: "-30% 0px -40% 0px",
+    threshold: 0
   }
-});
+);
 
-// Initial reveal
-revealChapters();
+chapters.forEach(chapter => observer.observe(chapter));
 
