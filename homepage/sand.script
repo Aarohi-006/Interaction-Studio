@@ -1,7 +1,6 @@
-const wrapper = document.getElementById('scrollWrapper');
 const paragraphs = document.querySelectorAll('p');
 
-function updateTextEffects() {
+function updateText() {
   const center = window.innerHeight / 2;
 
   paragraphs.forEach((p, i) => {
@@ -14,13 +13,13 @@ function updateTextEffects() {
     p.style.opacity = visibility;
     p.style.filter = `blur(${6 - visibility * 6}px)`;
 
-    const drift = Math.sin((wrapper.scrollTop + i * 50) * 0.002) * 8;
+    const drift = Math.sin((window.scrollY + i * 50) * 0.002) * 8;
     p.style.transform = `translateX(${drift}px)`;
   });
 }
 
-wrapper.addEventListener('scroll', () => {
-  requestAnimationFrame(updateTextEffects);
+window.addEventListener('scroll', () => {
+  requestAnimationFrame(updateText);
 });
 
-updateTextEffects();
+updateText();
