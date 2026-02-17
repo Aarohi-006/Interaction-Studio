@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* PAPER / SAND BACKGROUND */
 body {
   font-family: 'Exo', sans-serif;
   background:
@@ -15,21 +14,18 @@ body {
   overflow: hidden;
 }
 
-/* SCROLL AREA */
 .scroll-wrapper {
   height: 100vh;
-  overflow-y: scroll;
+  overflow: hidden;
   padding: 140px 0;
 }
 
-/* TEXT COLUMN */
 .text {
   max-width: 760px;
   margin: 0 auto;
   padding: 0 60px;
 }
 
-/* TITLE */
 .title {
   font-family: 'Euphoria Script', cursive;
   font-size: 56px;
@@ -39,22 +35,26 @@ body {
   opacity: 0.85;
 }
 
-/* BLOCK SPACING */
 .block {
   margin-bottom: 240px;
 }
 
-/* BODY TEXT */
 p {
   font-size: 18px;
   line-height: 1.9;
   text-align: justify;
   margin-bottom: 32px;
+
   opacity: 0;
-  transition: opacity 0.5s ease;
+  filter: blur(6px);
+  transform: translateY(10px);
+
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease,
+    transform 0.6s ease;
 }
 
-/* SAND TEXTURE OVERLAY */
 .sand-overlay {
   position: fixed;
   inset: 0;
@@ -67,6 +67,7 @@ p {
 
 @keyframes drift {
   from { background-position: 0 0; }
-  to   { background-position: 0 800px; }
+  to   { background-position: 100px 800px; }
 }
+
 
