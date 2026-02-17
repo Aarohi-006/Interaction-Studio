@@ -2,74 +2,46 @@ body{
   margin:0;
   background:#5a0f1a;
   font-family:Georgia, serif;
-  overflow:hidden;
+  overflow:auto;
   color:white;
 }
 
-#container{
-  width:100vw;
-  height:100vh;
-  position:relative;
-}
+#container{ width:100vw; height:100vh; position:relative; }
+#tree{ width:100%; height:100%; }
 
-#tree{
-  width:100%;
-  height:100%;
-}
-
-/* 🌱 branch growth animation */
-.branches line{
+.branch{
   stroke:white;
   stroke-width:2;
   stroke-linecap:round;
-
-  stroke-dasharray:600;
-  stroke-dashoffset:600;
-  animation:grow 2.2s ease forwards;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  animation:grow 2s ease forwards;
 }
 
-.branches line:nth-child(2){ animation-delay:.3s; }
-.branches line:nth-child(3){ animation-delay:.3s; }
-.branches line:nth-child(4){ animation-delay:.6s; }
-.branches line:nth-child(5){ animation-delay:.6s; }
-.branches line:nth-child(6){ animation-delay:.6s; }
-.branches line:nth-child(7){ animation-delay:.6s; }
+@keyframes grow{ to{ stroke-dashoffset:0; } }
 
-@keyframes grow{
-  to{ stroke-dashoffset:0; }
-}
-
-/* nodes fade in after growth */
 .node{
   fill:white;
   opacity:0;
   animation:appear .6s ease forwards;
 }
 
-.node:nth-child(1){ animation-delay:1.6s; }
-.node:nth-child(2){ animation-delay:1.7s; }
-.node:nth-child(3){ animation-delay:1.8s; }
-.node:nth-child(4){ animation-delay:1.9s; }
-.node:nth-child(5){ animation-delay:2s; }
-.node:nth-child(6){ animation-delay:2.1s; }
-.node:nth-child(7){ animation-delay:2.2s; }
-.node:nth-child(8){ animation-delay:2.3s; }
+.node:nth-child(n){ animation-delay:2s; }
 
 @keyframes appear{
-  from{ opacity:0; transform:scale(.5); }
-  to{ opacity:1; transform:scale(1); }
+  from{opacity:0; transform:scale(.5);}
+  to{opacity:1; transform:scale(1);}
 }
 
-.node:hover{ opacity:.7; cursor:pointer; }
+.node:hover{opacity:.7; cursor:pointer;}
 
-/* floating text bubble */
 #bubble{
   position:absolute;
-  max-width:260px;
-  background:rgba(0,0,0,.8);
-  padding:14px 16px;
+  max-width:450px;
+  background:rgba(0,0,0,.85);
+  padding:16px;
   border-radius:10px;
-  line-height:1.5;
+  line-height:1.6;
   font-size:14px;
   pointer-events:none;
   transform:translate(-50%,-120%);
