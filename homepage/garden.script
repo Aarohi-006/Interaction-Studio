@@ -30,17 +30,17 @@ const nodes = document.querySelectorAll(".node");
 const bubble = document.getElementById("bubble");
 
 nodes.forEach((node, i) => {
-  node.dataset.index = i;
-  node.addEventListener("click", (e) => {
-    const rect = node.getBoundingClientRect();
-    const index = node.dataset.index;
-    bubble.textContent = paragraphs[index] || "Text missing";
+  node.addEventListener("click", () => {
+    const pt = node.ownerSVGElement.createSVGPoint();
+    pt.x = node.cx.baseVal.value;
+    pt.y = node.cy.baseVal.value;
+    const screenPt = pt.matrixTransform(node.ownerSVGElement.getScreenCTM());
 
-    bubble.style.left = rect.left + rect.width / 2 + "px";
-    bubble.style.top = rect.top + window.scrollY + "px";
-
+    bubble.textContent = paragraphs[i] || "Text missing";
+    bubble.style.left = screenPt.x + "px";
+    bubble.style.top = screenPt.y + "px";
     bubble.classList.add("show");
+
     setTimeout(() => bubble.classList.remove("show"), 12000);
   });
 });
-
