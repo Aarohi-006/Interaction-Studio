@@ -3,15 +3,12 @@ body{
   background:#f6f1e8;
   font-family:Georgia, serif;
   overflow:hidden;
-  color:#5a0f1b;
 }
 
-/* CAMERA */
 .camera{
   width:100vw;
   height:100vh;
   perspective:1200px;
-  overflow:hidden;
 }
 
 /* SPACE */
@@ -21,33 +18,35 @@ body{
   height:100%;
   transform-style:preserve-3d;
   transform:translateZ(var(--depth,0px));
-  transition:transform .15s linear;
+  transition:transform .2s linear;
 }
 
-/* RINGS */
+/* RINGS — responsive */
 .ring{
   position:absolute;
-  transform-style:preserve-3d;
+  width:80vmin;
+  height:80vmin;
+  top:50%;
+  left:50%;
+  transform-origin:center;
   animation:spin linear infinite;
 }
 
-/* SPREAD */
-.r1{top:15%;left:20%;animation-duration:120s}
-.r2{top:60%;left:70%;animation-duration:100s}
-.r3{top:40%;left:45%;animation-duration:80s}
-.r4{top:75%;left:25%;animation-duration:70s}
-.r5{top:20%;left:75%;animation-duration:60s}
-.r6{top:55%;left:50%;animation-duration:50s}
+.ring1{ transform:translate(-50%,-50%) scale(1); animation-duration:120s;}
+.ring2{ transform:translate(-50%,-50%) scale(.85); animation-duration:100s;}
+.ring3{ transform:translate(-50%,-50%) scale(.7); animation-duration:80s;}
+.ring4{ transform:translate(-50%,-50%) scale(.55); animation-duration:70s;}
+.ring5{ transform:translate(-50%,-50%) scale(.4); animation-duration:60s;}
+.ring6{ transform:translate(-50%,-50%) scale(.28); animation-duration:50s;}
 
-/* TEXT */
 text{
   fill:#5a0f1b;
   font-size:14px;
   letter-spacing:1px;
 }
 
-/* ROTATION */
 @keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
+  from{ transform:translate(-50%,-50%) rotate(0deg); }
+  to{ transform:translate(-50%,-50%) rotate(360deg); }
 }
+
