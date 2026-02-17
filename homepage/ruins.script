@@ -1,8 +1,8 @@
 let depth = 0;
-const space = document.getElementById("space");
+const stage = document.getElementById("stage");
 
-window.addEventListener("wheel", e => {
-  depth += e.deltaY * -0.7;
-  depth = Math.max(Math.min(depth, 300), -1400);
-  space.style.setProperty("--depth", depth + "px");
+window.addEventListener("wheel", e=>{
+  depth += e.deltaY * -0.5;
+  depth = Math.max(-800, Math.min(400, depth));
+  stage.style.transform = `translateZ(${depth}px)`;
 });
