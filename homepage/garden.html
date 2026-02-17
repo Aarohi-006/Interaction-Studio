@@ -7,39 +7,70 @@
 </head>
 
 <body>
-
 <div id="container">
 
-<svg id="tree" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
+<svg id="tree" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid meet">
 
-  <g class="branches">
-    <line x1="500" y1="680" x2="500" y2="540"/>
-    <line x1="500" y1="540" x2="300" y2="380"/>
-    <line x1="500" y1="540" x2="700" y2="380"/>
-    <line x1="300" y1="380" x2="180" y2="200"/>
-    <line x1="300" y1="380" x2="420" y2="200"/>
-    <line x1="700" y1="380" x2="580" y2="200"/>
-    <line x1="700" y1="380" x2="820" y2="200"/>
-  </g>
+  <!-- Root -->
+  <circle cx="800" cy="1150" r="10" class="node" data-index="0"/>
 
-  <g id="nodes">
-    <circle cx="500" cy="680" r="10" class="node"/>
-    <circle cx="500" cy="540" r="10" class="node"/>
-    <circle cx="300" cy="380" r="10" class="node"/>
-    <circle cx="700" cy="380" r="10" class="node"/>
-    <circle cx="180" cy="200" r="10" class="node"/>
-    <circle cx="420" cy="200" r="10" class="node"/>
-    <circle cx="580" cy="200" r="10" class="node"/>
-    <circle cx="820" cy="200" r="10" class="node"/>
-  </g>
+  <!-- Level 1 -->
+  <path d="M800 1150 C800 1050, 600 950, 600 850" class="branch"/>
+  <path d="M800 1150 C800 1050, 1000 950, 1000 850" class="branch"/>
+  <circle cx="600" cy="850" r="10" class="node" data-index="1"/>
+  <circle cx="1000" cy="850" r="10" class="node" data-index="2"/>
+
+  <!-- Level 2 -->
+  <path d="M600 850 C550 800, 500 700, 500 600" class="branch"/>
+  <path d="M600 850 C650 800, 700 700, 700 600" class="branch"/>
+  <circle cx="500" cy="600" r="10" class="node" data-index="3"/>
+  <circle cx="700" cy="600" r="10" class="node" data-index="4"/>
+
+  <path d="M1000 850 C950 800, 900 700, 900 600" class="branch"/>
+  <path d="M1000 850 C1050 800, 1100 700, 1100 600" class="branch"/>
+  <circle cx="900" cy="600" r="10" class="node" data-index="5"/>
+  <circle cx="1100" cy="600" r="10" class="node" data-index="6"/>
+
+  <!-- Level 3 -->
+  <path d="M500 600 C480 550, 470 500, 470 450" class="branch"/>
+  <path d="M500 600 C520 550, 530 500, 530 450" class="branch"/>
+  <circle cx="470" cy="450" r="10" class="node" data-index="7"/>
+  <circle cx="530" cy="450" r="10" class="node" data-index="8"/>
+
+  <path d="M700 600 C680 550, 670 500, 670 450" class="branch"/>
+  <path d="M700 600 C720 550, 730 500, 730 450" class="branch"/>
+  <circle cx="670" cy="450" r="10" class="node" data-index="9"/>
+  <circle cx="730" cy="450" r="10" class="node" data-index="10"/>
+
+  <path d="M900 600 C880 550, 870 500, 870 450" class="branch"/>
+  <path d="M900 600 C920 550, 930 500, 930 450" class="branch"/>
+  <circle cx="870" cy="450" r="10" class="node" data-index="11"/>
+  <circle cx="930" cy="450" r="10" class="node" data-index="12"/>
+
+  <path d="M1100 600 C1080 550, 1070 500, 1070 450" class="branch"/>
+  <path d="M1100 600 C1120 550, 1130 500, 1130 450" class="branch"/>
+  <circle cx="1070" cy="450" r="10" class="node" data-index="13"/>
+  <circle cx="1130" cy="450" r="10" class="node" data-index="14"/>
+
+  <!-- Level 4 (final leaves) -->
+  <circle cx="470" cy="350" r="10" class="node" data-index="15"/>
+  <circle cx="530" cy="350" r="10" class="node" data-index="16"/>
+  <circle cx="670" cy="350" r="10" class="node" data-index="17"/>
+  <circle cx="730" cy="350" r="10" class="node" data-index="18"/>
+  <circle cx="870" cy="350" r="10" class="node" data-index="19"/>
+  <circle cx="930" cy="350" r="10" class="node" data-index="20"/>
+  <circle cx="1070" cy="350" r="10" class="node" data-index="21"/>
+  <circle cx="1130" cy="350" r="10" class="node" data-index="22"/>
+  <circle cx="800" cy="250" r="10" class="node" data-index="23"/>
+  <circle cx="800" cy="150" r="10" class="node" data-index="24"/>
 
 </svg>
 
 <div id="bubble"></div>
 
 </div>
-
-<script src="garden.script"></script>
+<script src="garden.script.js"></script>
 </body>
 </html>
+
 
