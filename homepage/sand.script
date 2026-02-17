@@ -1,25 +1,44 @@
-const paragraphs = document.querySelectorAll('p');
+// --- Scroll-triggered chapter reveal ---
+const chapters = document.querySelectorAll('.chapter');
+const driftParagraphs = document.querySelectorAll('p');
 
-function updateText() {
-  const center = window.innerHeight / 2;
+function revealChapters() {
+  const scrollY = window.scrollY + window.innerHeight * 0.75;
 
-  paragraphs.forEach((p, i) => {
-    const rect = p.getBoundingClientRect();
-    const distance = Math.abs(center - rect.top);
+  chapters.forEach(chapter => {
+    if (chapter.offsetTop < scrollY) {
+      chapter.classList.add('active');
 
-    let visibility = 1 - Math.pow(distance / center, 1.4);
-    visibility = Math.max(0, Math.min(1, visibility));
-
-    p.style.opacity = visibility;
-    p.style.filter = `blur(${6 - visibility * 6}px)`;
-
-    const drift = Math.sin((window.scrollY + i * 50) * 0.002) * 8;
-    p.style.transform = `translateX(${drift}px)`;
+      // Add drifting effect for visible paragraphs
+      chapter.querySelectorAll('p').forEach(p => p.classList.add('drift'));
+    }
   });
 }
 
+// --- Adaptive scroll speed (for mouse/trackpad) ---
+let lastScrollY = window.scrollY;
+let ticking = false;
+
+function updateScrollSpeed() {
+  const currentY = window.scrollY;
+  const delta = currentY - lastScrollY;
+
+  driftParagraphs.forEach(p => {
+    // Small horizontal drift proportional to scroll speed
+    p.style.transform = `translateX(${delta * 0.2}px)`;
+  });
+
+  lastScrollY = currentY;
+  ticking = false;
+}
+
 window.addEventListener('scroll', () => {
-  requestAnimationFrame(updateText);
+  revealChapters();
+  if (!ticking) {
+    window.requestAnimationFrame(updateScrollSpeed);
+    ticking = true;
+  }
 });
 
-updateText();
+// Initial reveal
+revealChapters();
