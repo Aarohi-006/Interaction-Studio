@@ -1,29 +1,30 @@
 const paragraphs = [
-  `Captain Liddell Hart reports a delayed offensive due to torrential rain on July 24, 1916.`,
-  `Yu Tsun recalls Captain Madden’s voice and realizes the risk to their mission and lives.`,
-  `He goes to his bedroom, locks the door, and contemplates death.`,
-  `He thinks about how things happen only in the present.`,
-  `He reflects on his father and his childhood in Hai Feng.`,
-  `The memory of Madden's face brings him back to the secret he holds.`,
-  `He visualizes the artillery park and imagines bombing it from above.`,
-  `Yu Tsun realizes he must flee and plans his escape.`,
-  `He inspects his possessions, including a revolver with a single bullet.`,
-  `He develops a plan to transmit the secret using the telephone directory.`,
-  `He leaves home, mindful of his visibility and vulnerability.`,
-  `On the train, he eludes Captain Madden and feels a mix of terror and triumph.`,
-  `He considers that small victories prefigure total victories and draws strength from fear.`,
-  `He thinks about the future of men and the abominations they will commit.`,
-  `Yu Tsun resolves to act as if the terrible act is already accomplished.`,
-  `The train moves through ash trees and slowly approaches a station.`,
-  `He asks children for directions to Dr. Stephen Albert's house.`,
-  `Following their guidance, he walks along a deserted road under the moon.`,
-  `He reflects on labyrinths, remembering his ancestor Ts’ui Pen.`,
-  `He imagines the infinite labyrinth and its impossible scope.`,
-  `Arriving at Albert's house, he notices the Chinese music and the pavilion.`,
-  `Stephen Albert greets him and explains Ts’ui Pen’s works.`,
-  `He learns that the labyrinth and the book are the same entity.`,
-  `Albert describes the infinite structure of Ts’ui Pen’s novel.`,
-  `Yu Tsun shoots Albert, sending the message to Berlin.`
+`To Victoria Ocampo In his A History of the World War (page 212), Captain Liddell Hart reports that a planned offensive...`, 
+`He comments that torrential rain caused this delay - which lacked any special significance...`, 
+`The following deposition, dictated by, read over, and then signed by Dr. Yu Tsun...`, 
+`Immediately I recollected the voice that had spoken in German. It was that of Captain Richard Madden...`, 
+`His being there meant that Runeberg had been arrested or murdered...`,
+`I went up to my bedroom. Absurd though the gesture was, I closed and locked the door...`, 
+`In the midst of my hatred and terror, I knew that the fast-moving and doubtless happy soldier did not suspect that I possessed the Secret...`, 
+`A bird streaked across the misty sky and, absently, I turned it into an airplane...`, 
+`I said aloud, "I must flee." I sat up on the bed, in senseless and perfect silence...`, 
+`In ten minutes I had developed my plan. The telephone directory gave me the name of the one person capable of passing on the information...`, 
+`I am a timorous man. I can say it now, now that I have brought my incredibly risky plan to an end...`, 
+`I left home, mindful of my visibility and vulnerability...`, 
+`On the train I escaped Madden by chance, feeling both terror and triumph...`, 
+`I argued that so small a victory prefigured a total victory...`, 
+`From my weakness I drew strength that never left me...`, 
+`The train crept along gently, amid ash trees...`, 
+`No one called the name of a station. "Ashgrove?" I asked some children on the platform...`, 
+`At once I realized that this would be impossible. The advice about turning always to the left reminded me that such was the common formula for finding the central courtyard of certain labyrinths...`, 
+`I know something about labyrinths. Not for nothing am I the great-grandson of Ts'ui Pen...`, 
+`I imagined the infinite maze — a universe of branching possibilities...`, 
+`He arrives at Stephen Albert’s house, where Chinese music plays in the night...`, 
+`Albert explains Ts’ui Pen’s work: the labyrinth and the book are the same...`, 
+`The novel is an infinite structure where all outcomes occur simultaneously...`, 
+`Yu Tsun shoots Albert, sending the message through the victim’s name...`, 
+`The city of Albert is bombed. Yu Tsun has succeeded.`, 
+`Awaiting execution, he feels infinite penitence and sickness of the heart.`
 ];
 
 const nodes = document.querySelectorAll(".node");
@@ -41,6 +42,6 @@ nodes.forEach((node, i) => {
     bubble.style.top = screenPt.y + "px";
     bubble.classList.add("show");
 
-    setTimeout(() => bubble.classList.remove("show"), 12000);
+    setTimeout(() => bubble.classList.remove("show"), 15000); // keep for 15s
   });
 });
