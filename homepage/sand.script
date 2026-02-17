@@ -7,17 +7,14 @@ function updateChapters() {
     const rect = chapter.getBoundingClientRect();
 
     if (rect.top < triggerPoint && rect.bottom > 0) {
-      // Current visible chapter
       chapter.classList.add("active");
       chapter.classList.remove("past");
 
-      // Fade all previous chapters
       for (let i = 0; i < index; i++) {
         chapters[i].classList.remove("active");
         chapters[i].classList.add("past");
       }
 
-      // Hide future chapters
       for (let i = index + 1; i < chapters.length; i++) {
         chapters[i].classList.remove("active");
         chapters[i].classList.remove("past");
