@@ -1,1 +1,34 @@
+const fullText = `To Victoria Ocampo
+
+I hung up the phone and knew Madden had arrived.
+
+I lay watching the evening sky thinking of death.
+
+All things happen in the present moment.
+
+I possessed the secret name of the city.
+
+I fled toward Ashgrove by train.
+
+The garden is a labyrinth of time.
+
+Infinite futures branch and converge.
+
+Albert fell without a murmur.`;
+
+const paragraphs = fullText.split("\n\n").filter(p => p.trim());
+
+const nodes = document.querySelectorAll(".node");
+const bubble = document.getElementById("bubble");
+
+nodes.forEach((node, i) => {
+  node.addEventListener("click", (e) => {
+    const rect = e.target.getBoundingClientRect();
+
+    bubble.textContent = paragraphs[i % paragraphs.length];
+    bubble.style.left = rect.left + rect.width/2 + "px";
+    bubble.style.top = rect.top + "px";
+    bubble.classList.add("show");
+  });
+});
 
