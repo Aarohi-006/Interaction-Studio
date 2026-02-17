@@ -29,14 +29,18 @@ const paragraphs = [
 const nodes = document.querySelectorAll(".node");
 const bubble = document.getElementById("bubble");
 
-nodes.forEach(node => {
-  node.addEventListener("click", e => {
+nodes.forEach((node, i) => {
+  node.dataset.index = i;
+  node.addEventListener("click", (e) => {
     const rect = node.getBoundingClientRect();
     const index = node.dataset.index;
     bubble.textContent = paragraphs[index] || "Text missing";
-    bubble.style.left = rect.left + rect.width/2 + "px";
+
+    bubble.style.left = rect.left + rect.width / 2 + "px";
     bubble.style.top = rect.top + window.scrollY + "px";
+
     bubble.classList.add("show");
-    setTimeout(() => bubble.classList.remove("show"), 10000);
+    setTimeout(() => bubble.classList.remove("show"), 12000);
   });
 });
+
