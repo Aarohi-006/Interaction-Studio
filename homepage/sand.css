@@ -5,52 +5,40 @@
 }
 
 body {
-  background: #e9dcc6;
+  background: #e8dcc5;
   font-family: Georgia, serif;
-  overflow-x: hidden;
-  color: #2b2620;
+  overflow-y: scroll;
 }
 
-.text-container {
-  width: 60%;
-  margin: 0 auto;
-  padding: 120px 0 300px 0;
+.sand-container {
   position: relative;
-  z-index: 2;
-}
-
-.title {
-  font-size: 52px;
-  text-align: center;
-  margin-bottom: 100px;
-  letter-spacing: 1px;
-}
-
-.block {
-  margin-bottom: 160px;
-}
-
-p {
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: 28px;
-  transition: opacity 0.5s ease;
-}
-
-/* Falling letters */
-.word {
-  display: inline-block;
-  transition: transform 1.5s ease, opacity 1.5s ease;
-}
-
-/* Sand accumulation layer */
-.sand-layer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 0;
-  background: #d6c6a8;
-  z-index: 1;
-  transition: height 1s ease;
+  min-height: 6000px;
+  padding: 200px 0;
 }
+
+.dune {
+  position: relative;
+  width: 120%;
+  left: -10%;
+  margin: 200px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  transition: transform 1.5s ease;
+}
+
+.fragment {
+  max-width: 420px;
+  font-size: 17px;
+  line-height: 1.6;
+  opacity: 0.75;
+  transition: all 0.6s ease;
+}
+
+.fragment:hover {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
