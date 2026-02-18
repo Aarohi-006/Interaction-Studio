@@ -2,7 +2,7 @@ body {
   margin: 0;
   background: #e6dac4;
   font-family: 'Exo', sans-serif;
-  height: 600vh;
+  height: 700vh;
   overflow-y: scroll;
   color: #2b241d;
 }
@@ -19,7 +19,7 @@ body {
 }
 
 .scroll-space {
-  height: 500vh;
+  height: 600vh;
 }
 
 .text-field {
@@ -31,22 +31,15 @@ body {
   pointer-events: none;
 }
 
-.layer {
-  transition: transform 0.4s ease-out;
-}
-
 .fragment {
   font-size: 18px;
-  letter-spacing: 1px;
   fill: #2b241d;
-  opacity: 0.6;
-  transition: opacity 0.4s ease, fill 0.4s ease;
+  opacity: 0.65;
+  letter-spacing: 1px;
+  transition: opacity 0.3s ease;
 }
 
 .fragment:hover {
   opacity: 1;
-  fill: #000;
 }
-
-
 
