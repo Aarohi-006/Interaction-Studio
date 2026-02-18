@@ -1,91 +1,78 @@
 body{
   margin:0;
-  background:#f5efe6;
+  background:url("paper-texture.jpg");
+  background-size:cover;
   font-family:Georgia, serif;
-  color:#6b1f2b;
+  color:#7b1f2b;
   overflow:hidden;
 }
 
-.stage{
+.canvas{
   position:relative;
   width:100vw;
   height:100vh;
 }
 
-/* RINGS */
-.ring{
+/* FRAGMENTS */
+.fragment{
   position:absolute;
-  width:28vmin;
-  height:28vmin;
-  min-width:180px;
-  min-height:180px;
-  max-width:420px;
-  max-height:420px;
-  transform:translate(-50%,-50%);
-  animation:spin 70s linear infinite;
+  width:420px;
+  font-size:14px;
+  line-height:1.6;
+  opacity:.85;
   cursor:pointer;
+  transition:all .6s ease;
 }
 
-.ring svg{
-  width:100%;
-  height:100%;
-}
-
-text{
-  font-size:9px;
-  letter-spacing:1.5px;
-  fill:#6b1f2b;
-}
-
-/* POSITIONS */
-.r1{ top:15%; left:20%; }
-.r2{ top:25%; left:80%; }
-.r3{ top:65%; left:18%; }
-.r4{ top:70%; left:82%; }
-.r5{ top:45%; left:50%; }
-.r6{ top:88%; left:50%; }
-
-@keyframes spin{
-  from{ transform:translate(-50%,-50%) rotate(0deg); }
-  to{ transform:translate(-50%,-50%) rotate(360deg); }
-}
-
-/* READER */
-.reader{
-  position:fixed;
-  inset:0;
-  background:rgba(245,240,232,0.96);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .4s ease;
-}
-
-.reader.show{
+.fragment:hover{
   opacity:1;
-  pointer-events:auto;
+  transform:scale(1.02) rotate(var(--rotation));
 }
 
-.reader-inner{
-  max-width:720px;
-  max-height:80vh;
-  overflow:auto;
-  padding:40px;
-  background:#fffaf3;
-  border-radius:14px;
-  line-height:1.7;
-  box-shadow:0 20px 60px rgba(0,0,0,0.12);
+/* Individual placements */
+
+.f1{
+  top:5%;
+  left:10%;
+  transform:rotate(180deg);
+  --rotation:180deg;
 }
 
-.close{
-  position:absolute;
-  top:30px;
-  right:40px;
-  border:none;
-  background:none;
+.f2{
+  top:15%;
+  left:55%;
+  transform:rotate(270deg);
+  --rotation:270deg;
+}
+
+.f3{
+  top:45%;
+  left:5%;
+  transform:rotate(90deg);
+  --rotation:90deg;
+}
+
+.f4{
+  top:60%;
+  left:60%;
+  transform:rotate(0deg);
+  --rotation:0deg;
+}
+
+.f5{
+  top:35%;
+  left:30%;
+  transform:rotate(180deg);
+  --rotation:180deg;
+}
+
+/* FINAL SECTION */
+.final{
+  bottom:5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:520px;
   font-size:20px;
-  cursor:pointer;
-  color:#6b1f2b;
+  line-height:1.7;
+  opacity:1;
 }
