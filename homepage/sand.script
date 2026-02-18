@@ -1,51 +1,54 @@
 const field = document.getElementById("field");
-const source = document.getElementById("source").innerText;
+const source = document.getElementById("source").innerText.trim();
+
+if (!source) {
+  console.error("Source text missing.");
+}
 
 const fragments = source
   .split(".")
   .map(s => s.trim())
-  .filter(s => s.length > 15);
+  .filter(s => s.length > 10);
 
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const rows = 18;   // number of curved bands
-const perRow = 12; // fragments per band
+const rows = 14;
+const perRow = 10;
 
 let index = 0;
+let elements = [];
 
 for (let r = 0; r < rows; r++) {
 
-  const curveAmplitude = 80 + Math.random() * 120;
-  const baseY = (height / rows) * r;
+  const baseY = (height / rows) * r + 50;
+  const amplitude = 60 + Math.random() * 40;
 
   for (let i = 0; i < perRow; i++) {
 
-    const fragment = document.createElement("div");
-    fragment.className = "fragment";
-
-    const text = fragments[index % fragments.length];
-    fragment.textContent = text;
+    const el = document.createElement("div");
+    el.className = "fragment";
+    el.textContent = fragments[index % fragments.length];
 
     const progress = i / perRow;
 
-    // horizontal distribution
     const x = progress * width;
 
-    // curved vertical wave
-    const y =
-      baseY +
-      Math.sin(progress * Math.PI * 2 + r) * curveAmplitude;
+    const y = baseY + Math.sin(progress * Math.PI * 2) * amplitude;
 
-    // subtle rotation
-    const rotation =
-      Math.sin(progress * Math.PI * 2 + r) * 25;
+    const rotation = Math.sin(progress * Math.PI * 2) * 20;
 
-    fragment.style.left = `${x}px`;
-    fragment.style.top = `${y}px`;
-    fragment.style.transform = `rotate(${rotation}deg)`;
+    el.dataset.baseX = x;
+    el.dataset.baseY = y;
+    el.dataset.baseRot = rotation;
 
-    field.appendChild(fragment);
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.transform = `rotate(${rotation}deg)`;
+
+    field.appendChild(el);
+    elements.push(el);
+
     index++;
   }
 }
@@ -53,20 +56,21 @@ for (let r = 0; r < rows; r++) {
 window.addEventListener("scroll", () => {
 
   const scroll = window.scrollY;
-  const elements = document.querySelectorAll(".fragment");
 
   elements.forEach((el, i) => {
 
+    const baseX = parseFloat(el.dataset.baseX);
+    const baseY = parseFloat(el.dataset.baseY);
+    const baseRot = parseFloat(el.dataset.baseRot);
+
+    const driftY = scroll * 0.2;
     const driftX = Math.sin(i) * scroll * 0.02;
-    const driftY = scroll * 0.15;
 
-    const current = el.style.transform;
+    el.style.left = `${baseX + driftX}px`;
+    el.style.top = `${baseY + driftY}px`;
 
-    el.style.transform =
-      current +
-      ` translate(${driftX}px, ${driftY}px)`;
+    el.style.transform = `rotate(${baseRot}deg)`;
 
   });
 
 });
-
