@@ -1,64 +1,72 @@
-const svg = document.getElementById("field");
+const field = document.getElementById("field");
 const source = document.getElementById("source").innerText;
-
-svg.setAttribute("viewBox", "0 0 1000 800");
 
 const fragments = source
   .split(".")
   .map(s => s.trim())
-  .filter(s => s.length > 10);
+  .filter(s => s.length > 15);
 
-const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-svg.appendChild(defs);
+const width = window.innerWidth;
+const height = window.innerHeight;
 
-fragments.forEach((text, i) => {
+const rows = 18;   // number of curved bands
+const perRow = 12; // fragments per band
 
-  const pathId = "curve" + i;
+let index = 0;
 
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+for (let r = 0; r < rows; r++) {
 
-  const startX = 100;
-  const endX = 900;
+  const curveAmplitude = 80 + Math.random() * 120;
+  const baseY = (height / rows) * r;
 
-  const baseY = 120 + i * 60;
+  for (let i = 0; i < perRow; i++) {
 
-  // STRONG curvature
-  const curveHeight = (i % 2 === 0 ? 200 : -200);
+    const fragment = document.createElement("div");
+    fragment.className = "fragment";
 
-  path.setAttribute(
-    "d",
-    `M${startX},${baseY} Q500,${baseY + curveHeight} ${endX},${baseY}`
-  );
+    const text = fragments[index % fragments.length];
+    fragment.textContent = text;
 
-  path.setAttribute("id", pathId);
-  defs.appendChild(path);
+    const progress = i / perRow;
 
-  const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  textEl.setAttribute("class", "fragment");
+    // horizontal distribution
+    const x = progress * width;
 
-  const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
-  textPath.setAttribute("href", "#" + pathId);
-  textPath.textContent = text + " ";
+    // curved vertical wave
+    const y =
+      baseY +
+      Math.sin(progress * Math.PI * 2 + r) * curveAmplitude;
 
-  textEl.appendChild(textPath);
-  svg.appendChild(textEl);
-});
+    // subtle rotation
+    const rotation =
+      Math.sin(progress * Math.PI * 2 + r) * 25;
+
+    fragment.style.left = `${x}px`;
+    fragment.style.top = `${y}px`;
+    fragment.style.transform = `rotate(${rotation}deg)`;
+
+    field.appendChild(fragment);
+    index++;
+  }
+}
 
 window.addEventListener("scroll", () => {
 
   const scroll = window.scrollY;
-  const texts = document.querySelectorAll(".fragment");
+  const elements = document.querySelectorAll(".fragment");
 
-  texts.forEach((t, i) => {
+  elements.forEach((el, i) => {
 
-    const rotate = (scroll * 0.02) * (i % 2 === 0 ? 1 : -1);
+    const driftX = Math.sin(i) * scroll * 0.02;
     const driftY = scroll * 0.15;
 
-    t.setAttribute(
-      "transform",
-      `translate(0, ${driftY}) rotate(${rotate} 500 400)`
-    );
+    const current = el.style.transform;
+
+    el.style.transform =
+      current +
+      ` translate(${driftX}px, ${driftY}px)`;
 
   });
 
 });
+
