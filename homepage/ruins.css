@@ -6,65 +6,58 @@ body{
   overflow-x:hidden;
 }
 
-/* MacBook Pro 13" width */
+/* Fixed Mac 13" width */
 .artboard{
   position:relative;
-  width:1280px;      /* Fixed width */
-  height:3400px;     /* Long scroll space */
-  margin:0 auto;     /* Center artboard */
+  width:1280px;
+  height:5000px;
+  margin:0 auto;
 }
 
-/* Shared paragraph styling */
-.block{
+/* Fragment blocks */
+.fragment{
   position:absolute;
-  width:420px;
+  width:360px;
   font-size:15px;
   line-height:1.8;
+  opacity:.5;
+  transition:
+    transform 1.2s ease,
+    opacity 1s ease,
+    filter 1s ease;
+  animation:breath 8s ease-in-out infinite;
 }
 
-/* Spatial placements */
-
-/* Upside down */
-.b1{
-  top:120px;
-  left:100px;
-  transform:rotate(180deg);
+/* Subtle breathing */
+@keyframes breath{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(4px); }
+  100%{ transform:translateY(0px); }
 }
 
-/* Vertical right */
-.b2{
-  top:350px;
-  right:120px;
-  transform:rotate(270deg);
+/* Center focus emphasis */
+.fragment.focus{
+  opacity:1;
+  filter:blur(0px);
 }
 
-/* Vertical left */
-.b3{
-  top:1100px;
-  left:160px;
-  transform:rotate(90deg);
+/* De-emphasis */
+.fragment.dim{
+  opacity:.15;
+  filter:blur(1px);
 }
 
-/* Normal */
-.b4{
-  top:1600px;
-  right:200px;
-  transform:rotate(0deg);
-}
-
-/* Upside down lower */
-.b5{
-  top:2200px;
-  left:320px;
-  transform:rotate(180deg);
-}
-
-/* Final centered anchor */
+/* Final fire emphasis */
 .final{
-  top:2850px;
-  left:50%;
-  transform:translateX(-50%);
-  width:620px;
   font-size:22px;
-  line-height:1.9;
+  width:600px;
+  opacity:1;
 }
+
+.fire{
+  color:#a11212;
+  text-shadow:
+    0 0 8px rgba(180,30,30,.4),
+    0 0 16px rgba(180,30,30,.2);
+}
+
