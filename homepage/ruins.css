@@ -3,40 +3,68 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
+  overflow-x:hidden;
 }
 
-/* SCROLL SPACE */
-#scrollField{
+/* MacBook Pro 13" width */
+.artboard{
   position:relative;
-  width:160vw;
-  height:500vh;   /* BIG vertical scroll */
+  width:1280px;      /* Fixed width */
+  height:3400px;     /* Long scroll space */
+  margin:0 auto;     /* Center artboard */
 }
 
-/* Paragraph blocks */
-.node{
+/* Shared paragraph styling */
+.block{
   position:absolute;
-  width:480px;
-  font-size:16px;
+  width:420px;
+  font-size:15px;
   line-height:1.8;
-  opacity:.85;
-  transition:transform .8s ease, opacity .6s ease;
 }
 
-/* Large white space feeling */
-.node p{
-  margin:0;
+/* Spatial placements */
+
+/* Upside down */
+.b1{
+  top:120px;
+  left:100px;
+  transform:rotate(180deg);
 }
 
-/* Hover calm */
-.node:hover{
-  transform:rotate(0deg) scale(1.05);
-  opacity:1;
-  z-index:10;
+/* Vertical right */
+.b2{
+  top:350px;
+  right:120px;
+  transform:rotate(270deg);
 }
 
-/* Final paragraph */
-.node.final{
+/* Vertical left */
+.b3{
+  top:1100px;
+  left:160px;
+  transform:rotate(90deg);
+}
+
+/* Normal */
+.b4{
+  top:1600px;
+  right:200px;
+  transform:rotate(0deg);
+}
+
+/* Upside down lower */
+.b5{
+  top:2200px;
+  left:320px;
+  transform:rotate(180deg);
+}
+
+/* Final centered anchor */
+.final{
+  top:2850px;
+  left:50%;
+  transform:translateX(-50%);
+  width:620px;
   font-size:22px;
-  width:640px;
-  opacity:1;
+  line-height:1.9;
 }
