@@ -1,76 +1,40 @@
-const field = document.getElementById("field");
-const source = document.getElementById("source").innerText.trim();
+const paragraphs = document.querySelectorAll("p");
+const sandLayer = document.getElementById("sandLayer");
 
-if (!source) {
-  console.error("Source text missing.");
-}
+// Wrap words in spans
+paragraphs.forEach(p => {
+  const words = p.innerHTML.split(" ");
+  p.innerHTML = words.map(word => 
+    `<span class="word">${word}</span>`
+  ).join(" ");
+});
 
-const fragments = source
-  .split(".")
-  .map(s => s.trim())
-  .filter(s => s.length > 10);
+function handleScroll() {
+  const viewportHeight = window.innerHeight;
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+  document.querySelectorAll(".word").forEach(word => {
+    const rect = word.getBoundingClientRect();
+    const distanceFromBottom = viewportHeight - rect.top;
 
-const rows = 14;
-const perRow = 10;
+    if (distanceFromBottom < viewportHeight * 0.4) {
+      const erosion = (viewportHeight * 0.4 - distanceFromBottom) / 300;
 
-let index = 0;
-let elements = [];
+      word.style.transform = `
+        translateY(${erosion * 40}px)
+        translateX(${(Math.random() - 0.5) * 10}px)
+        rotate(${(Math.random() - 0.5) * 5}deg)
+      `;
 
-for (let r = 0; r < rows; r++) {
-
-  const baseY = (height / rows) * r + 50;
-  const amplitude = 60 + Math.random() * 40;
-
-  for (let i = 0; i < perRow; i++) {
-
-    const el = document.createElement("div");
-    el.className = "fragment";
-    el.textContent = fragments[index % fragments.length];
-
-    const progress = i / perRow;
-
-    const x = progress * width;
-
-    const y = baseY + Math.sin(progress * Math.PI * 2) * amplitude;
-
-    const rotation = Math.sin(progress * Math.PI * 2) * 20;
-
-    el.dataset.baseX = x;
-    el.dataset.baseY = y;
-    el.dataset.baseRot = rotation;
-
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
-    el.style.transform = `rotate(${rotation}deg)`;
-
-    field.appendChild(el);
-    elements.push(el);
-
-    index++;
-  }
-}
-
-window.addEventListener("scroll", () => {
-
-  const scroll = window.scrollY;
-
-  elements.forEach((el, i) => {
-
-    const baseX = parseFloat(el.dataset.baseX);
-    const baseY = parseFloat(el.dataset.baseY);
-    const baseRot = parseFloat(el.dataset.baseRot);
-
-    const driftY = scroll * 0.2;
-    const driftX = Math.sin(i) * scroll * 0.02;
-
-    el.style.left = `${baseX + driftX}px`;
-    el.style.top = `${baseY + driftY}px`;
-
-    el.style.transform = `rotate(${baseRot}deg)`;
-
+      word.style.opacity = 1 - erosion * 0.7;
+    } else {
+      word.style.transform = "none";
+      word.style.opacity = 1;
+    }
   });
 
-});
+  // Increase sand at bottom
+  const scrollPercent = window.scrollY / (document.body.scrollHeight - viewportHeight);
+  sandLayer.style.height = `${scrollPercent * 200}px`;
+}
+
+window.addEventListener("scroll", handleScroll);
