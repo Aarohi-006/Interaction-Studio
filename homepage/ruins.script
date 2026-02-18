@@ -2,9 +2,9 @@ const reader = document.getElementById("reader");
 const readerText = document.getElementById("readerText");
 const closeReader = document.getElementById("closeReader");
 
-document.querySelectorAll(".ring").forEach(ring=>{
-  ring.addEventListener("click",()=>{
-    readerText.textContent = ring.dataset.text;
+document.querySelectorAll(".fragment").forEach(fragment=>{
+  fragment.addEventListener("click",()=>{
+    readerText.textContent = fragment.dataset.full;
     reader.classList.add("show");
   });
 });
