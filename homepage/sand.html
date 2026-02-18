@@ -10,15 +10,23 @@
 
 <body>
 
-<div class="sand-overlay"></div>
+<h1 class="title">The Book of Sand</h1>
 
-<div class="stage">
+<div class="scroll-space"></div>
 
-  <h1 class="title">The Book of Sand</h1>
+<svg class="text-field" viewBox="0 0 2000 2000">
 
-  <!-- LINEAR SCROLL CHAPTER -->
-  <section class="chapter linear" data-section="intro">
-    <p>The  short  stories  of  Jorge  Luis  Borges,  written 
+  <defs>
+    <path id="curve1" d="M200,800 C600,200 1400,200 1800,800" />
+    <path id="curve2" d="M100,1200 C800,900 1200,1500 1900,1100" />
+    <path id="curve3" d="M300,400 C1000,1000 1200,300 1700,600" />
+    <path id="curve4" d="M400,1600 C900,1200 1100,1800 1600,1500" />
+  </defs>
+
+  <g class="layer layer1">
+    <text class="fragment">
+      <textPath href="#curve1">
+        The  short  stories  of  Jorge  Luis  Borges,  written 
 more  than  twenty  years  ago,  have  become 
 classics  of  contemporary  literature.  In  The 
 Book  of  Sand  are  thirteen  brand-new  stories 
@@ -41,18 +49,12 @@ to  Borges'  works,  a  welcome  and  unexpected
 gift  for  Borges'  host  of  admirers. 
 PRINT    BORGES,  Jorge  Luis 
 F       The  book  of  sand 
-t 
-Copy  1 
 PRINT 
 F 
 BORGES,  Jorge  Luis 
 The  book  of  sand 
 c!977 
-Copy  1 
-
-
 Digitized  by  the  Internet  Archive 
-
 in  2012  with  funding  from 
 
 National  Federation  of  the  Blind  (NFB) 
@@ -101,20 +103,9 @@ Copyright  ©  1971,  1975,  197b,  1977  by  Emece  Editores,  S.A.,  and  Norm
 Thomas  di  Giovanni. 
 
 All  rights  reserved.  Printed  in  the  U.S.A. 
-
 The  original  title  of  this  book  is  El  libro  de  arena,   Copyright  ©    1975  by 
-
 Emece  Editores,  S.A.,  Buenos  Aires. </p>
-    <p>These will scroll normally and fade as they pass.</p>
-  </section>
-
-  <!-- ORBITAL TEXT FIELD -->
-  <section class="chapter orbital" data-section="orbit1">
-
-    <div class="orbit-container">
-
-      <p class="orbit-text" data-speed="1.2">
-        No  part  of  this  publication  may  be  reproduced  or  transmitted  in  any  form 
+ No  part  of  this  publication  may  be  reproduced  or  transmitted  in  any  form 
 or  by  any  means,  electronic  or  mechanical,  including  photocopy,  recording, 
 or  any  information  storage  or  retrieval  system  now  known  or  to  be  in- 
 vented, without  permission  in  writing  from  the  publisher,  except  by  a  re- 
@@ -122,37 +113,24 @@ viewer who  wishes  to  quote  brief  passages  in  connection  with  a  review
 written  for  inclusion  in  a  magazine,  newspaper,  or  broadcast. 
 Published  simultaneously  in  Canada  by  Clarke,  Irwin  &  Company  Limited, 
 Toronto  and  Vancouver. 
-
 Library  of  Congress  Cataloging  in  Publication  Data 
-
 Borges,  Jorge  Luis 
 The  book  of  sand. 
-
 Translation  of  El  libro  de  arena. 
-
 CONTENTS:  The  other.— Ulrike.— The  Congress,  [etc.] 
 I.  Tide. 
 PZ3.B64818B0     [PQ7797.B635]     863         77-8418 
-
 ISBN:  0-525-06992-5 
-
 These  stories  first  appeared  in  the  following  periodicals: 
-
 The  Antiocb  Review.  "The  Bribe" 
-
 The  Atlantic  Monthly:  "There  Are  More  Things" 
-
 The  New  Yorker:  "The  Congress,"  "Utopia  of  a  Tired  Man,"  "The  Disk," 
 "The  Book  of  Sand,"  "The  Mirror  and  the  Mask,"  "Avelino  Arredondo," 
 "Undr,"  "The  Night  of  the  Gifts" 
-
 The  New  York  Times  Magazine:  "The  Sect  of  the  Thirty,"  "Ulrike" 
-
 Playboy:  "The  Other" 
-
 "The  Congress"  has  also  been  published  in  a  limited  edition  by  Enithar- 
 mon  Press,  London,  1974. 
-
 10  98765432    1 
 
 First  Edition 
@@ -397,10 +375,14 @@ went  on.  "As  for  history,  there  was  another  war,
 almost  among  the  same  antagonists.  France  was 
 not    long    in    caving    in;    England    and    America 
 H 
-      </p>
+      </textPath>
+    </text>
+  </g>
 
-      <p class="orbit-text" data-speed="0.8">
-        fought  against  a  German  dictator  named  Hitler — 
+  <g class="layer layer2">
+    <text class="fragment">
+      <textPath href="#curve2">
+       fought  against  a  German  dictator  named  Hitler — 
 the  cyclical  battle  of  Waterloo.  Around  1946, 
 Buenos  Aires  gave  birth  to  another  Rosas,  who 
 bore  a  fair  resemblance  to  our  kinsman.  In  1955, 
@@ -908,12 +890,14 @@ and  are  really  no  more  than  timid  varia-
 tions— neither  interest  nor  distract  me.  When  I 
 was  a  young  man,  I  was  fond  of  sunsets,  the  city's 
 sprawling    slums,    and    of    unhappiness;    now    I 
+27  
+      </textPath>
+    </text>
+  </g>
 
-27 
-
-      </p>
-
-      <p class="orbit-text" data-speed="1.5">
+  <g class="layer layer3">
+    <text class="fragment">
+      <textPath href="#curve3">
         prefer  mornings  and  downtown  and  peace.  I  no 
 longer  play  at  being  Hamlet.  I  have  become  a 
 member  of  the  Conservative  Party  and  of  a  chess 
@@ -1859,16 +1843,15 @@ space  and  which  the  reader  is  meant  to  imagine  by
 means  of  complicated  exercises  with  multicolored 
 cubes.  I  shall  never  forget  the  prisms  and  pyra- 
 mids that  we  erected  on  the  floor  of  his  study. 
-      </p>
+    
+      </textPath>
+    </text>
+  </g>
 
-    </div>
-
-  </section>
-
-  <!-- HYBRID CHAPTER -->
-  <section class="chapter hybrid" data-section="fragment">
-    <p class="hover-fragment">
-51 
+  <g class="layer layer4">
+    <text class="fragment">
+      <textPath href="#curve4">
+        51 
 
 
 My  uncle  was  an  engineer.  Before  retiring  from 
@@ -2577,9 +2560,14 @@ Without  a  sound  I  made  my  way  to  one  of  the
 doors,  which  opened  into  a  narrow  passageway 
 and  a  staircase.  On  the  upper  floor,  I  hid  myself  in 
 a  dark  room.  Apart  from  the  bed,  which  was  very 
+      </textPath>
+    </text>
+  </g>
 
-
-71 
+  <g class="layer layer2">
+    <text class="fragment">
+      <textPath href="#curve2">
+    71 
 
 
 low,  I  never  knew  what  other  furniture  was  there. 
@@ -4642,35 +4630,27 @@ degrees.  Now  in  his  late  seventies  and  almost
 totally  blind,  Borges  continues  to  write,  to 
 travel  and  to  lecture.  He  lives  in  Buenos  Aires 
 and  frequently  visits  the  United  States. 
-
-
 NORMAN  THOMAS  Dl  GIOVANNI,  who  to 
 date  has  produced  English  versions  of  eight 
 books  by  Borges,  lives  in  Devon,  England.  He 
 worked  with  Borges  in  Buenos  Aires  from 
-1968  to  1972. 
-jacket  design  by  Randall  Richmond 
-E.P.  Dutton 
-201  Park  Avenue  South,  New  York,  N.Y.  10003 
+1968  to  1972. jacket  design  by  Randall  Richmond 
+E.P.  Dutton 201  Park  Avenue  South,  New  York,  N.Y.  10003 
 Jacobus  tenBroek  Library 
-101264 
-BY  JORGE  LUIS  BORGES 
-IN  PRAISE  OF  DARKNESS 
+101264 BY  JORGE  LUIS  BORGES IN  PRAISE  OF  DARKNESS 
 A  UNIVERSAL  HISTORY  OF  INFAMY 
 DOCTOR  BRODIE'S  REPORT 
 THE  ALEPH  AND  OTHER  STORIES  1933-1969 
 THE  BOOK  OF  IMAGINARY  BEINGS 
 CHRONICLES  OF  BUSTOS  DOMECQ 
 (with  Adolfo  Bioy-Casares) 
-^BN:  0-525-06992-5 
-1077 </p>
-  </section>
-
-</div>
+^BN:  0-525-06992-5 1077    
+</svg>
 
 <script src="sand.script"></script>
 
 </body>
 </html>
+
 
 
