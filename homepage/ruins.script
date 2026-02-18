@@ -1,14 +1,17 @@
-const reader = document.getElementById("reader");
-const readerText = document.getElementById("readerText");
-const closeReader = document.getElementById("closeReader");
+let aligned = false;
 
-document.querySelectorAll(".fragment").forEach(fragment=>{
-  fragment.addEventListener("click",()=>{
-    readerText.textContent = fragment.dataset.full;
-    reader.classList.add("show");
+document.body.addEventListener("click", () => {
+  aligned = !aligned;
+
+  const layers = document.querySelectorAll(".layer");
+
+  layers.forEach(layer => {
+    if(aligned){
+      layer.style.transform = "rotate(0deg)";
+      layer.style.opacity = "1";
+    } else {
+      layer.style.transform = "";
+      layer.style.opacity = ".85";
+    }
   });
-});
-
-closeReader.addEventListener("click",()=>{
-  reader.classList.remove("show");
 });
