@@ -1,27 +1,68 @@
-const chapters = document.querySelectorAll(".chapter");
+// Fade chapters as they pass
 
-function updateChapters() {
-  const triggerPoint = window.innerHeight * 0.55;
+const chapters = document.querySelectorAll('.chapter');
 
-  chapters.forEach((chapter, index) => {
-    const rect = chapter.getBoundingClientRect();
+window.addEventListener('scroll', () => {
+  const trigger = window.innerHeight * 0.4;
 
-    if (rect.top < triggerPoint && rect.bottom > 0) {
-      chapter.classList.add("active");
-      chapter.classList.remove("past");
+  chapters.forEach(ch => {
+    const rect = ch.getBoundingClientRect();
 
-      for (let i = 0; i < index; i++) {
-        chapters[i].classList.remove("active");
-        chapters[i].classList.add("past");
-      }
-
-      for (let i = index + 1; i < chapters.length; i++) {
-        chapters[i].classList.remove("active");
-        chapters[i].classList.remove("past");
-      }
+    if (rect.top < trigger) {
+      ch.classList.add('past');
+    } else {
+      ch.classList.remove('past');
     }
   });
-}
+});
 
-window.addEventListener("scroll", updateChapters);
-window.addEventListener("load", updateChapters);
+
+// ORBIT POSITIONING
+
+const orbitTexts = document.querySelectorAll('.orbit-text');
+const radius = 220;
+
+orbitTexts.forEach((text, index) => {
+  const angle = (index / orbitTexts.length) * (Math.PI * 2);
+
+  const x = Math.cos(angle) * radius;
+  const y = Math.sin(angle) * radius;
+
+  text.style.left = `calc(50% + ${x}px - 160px)`;
+  text.style.top = `calc(50% + ${y}px - 60px)`;
+});
+
+
+// Subtle orbital motion
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+
+  orbitTexts.forEach(text => {
+    const speed = text.dataset.speed;
+    const rotate = scrollY * 0.02 * speed;
+    text.style.transform = `rotate(${rotate}deg)`;
+  });
+});
+
+
+// Hybrid hover isolation
+
+const hoverFragments = document.querySelectorAll('.hover-fragment');
+
+hoverFragments.forEach(fragment => {
+  fragment.addEventListener('mouseenter', () => {
+    hoverFragments.forEach(f => {
+      if (f !== fragment) {
+        f.classList.add('dimmed');
+      }
+    });
+  });
+
+  fragment.addEventListener('mouseleave', () => {
+    hoverFragments.forEach(f => {
+      f.classList.remove('dimmed');
+    });
+  });
+});
+
