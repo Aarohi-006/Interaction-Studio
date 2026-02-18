@@ -12,7 +12,6 @@ document.querySelector(".stage").addEventListener("click", () => {
     document.querySelector(".level" + currentLevel)
       .classList.add("active");
   } else {
-    // Reset to outer layer
     document.querySelector(".level" + currentLevel)
       .classList.remove("active");
 
