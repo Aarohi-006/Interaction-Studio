@@ -1,47 +1,17 @@
-const source = document.querySelectorAll("#source p");
-const field = document.getElementById("scrollField");
+const blocks = document.querySelectorAll(".block");
 
-const totalHeight = 500; // vh
-const totalWidth = 160;  // vw
-
-source.forEach((p, i) => {
-
-  const node = document.createElement("div");
-  node.classList.add("node");
-  node.innerHTML = p.outerHTML;
-
-  // Spread vertically evenly
-  const verticalSpacing = (totalHeight / source.length) * i;
-
-  // Horizontal variation (big white space)
-  const horizontalOffset = 20 + Math.random() * 100;
-
-  node.style.top = verticalSpacing + "vh";
-  node.style.left = horizontalOffset + "vw";
-
-  // Soft rotation
-  const angle = (Math.random() * 20) - 10;
-  node.dataset.angle = angle;
-  node.style.transform = `rotate(${angle}deg)`;
-
-  // Final paragraph anchor
-  if(i === source.length - 1){
-    node.classList.add("final");
-    node.style.left = "50vw";
-    node.style.transform = "translateX(-50%) rotate(0deg)";
-  }
-
-  field.appendChild(node);
-});
-
-/* Subtle scroll-based drift */
 window.addEventListener("scroll", () => {
   const scrollY = window.scrollY;
 
-  document.querySelectorAll(".node").forEach(node => {
-    const baseAngle = parseFloat(node.dataset.angle || 0);
-    const drift = scrollY * 0.005;
-    node.style.transform = `rotate(${baseAngle + drift}deg)`;
+  blocks.forEach(block => {
+    const rect = block.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if(rect.top < windowHeight - 100){
+      block.style.opacity = "1";
+      block.style.transition = "opacity 1.2s ease";
+    } else {
+      block.style.opacity = "0.2";
+    }
   });
 });
-
