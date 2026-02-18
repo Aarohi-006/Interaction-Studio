@@ -3,61 +3,84 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
-/* Fixed Mac 13" width */
-.artboard{
-  position:relative;
+/* Stage fixed to Mac 13" */
+.stage{
   width:1280px;
-  height:5000px;
+  height:800px;
   margin:0 auto;
+  position:relative;
+  overflow:hidden;
 }
 
-/* Fragment blocks */
-.fragment{
+/* Maze Levels */
+.maze{
   position:absolute;
-  width:360px;
-  font-size:15px;
-  line-height:1.8;
-  opacity:.5;
-  transition:
-    transform 1.2s ease,
-    opacity 1s ease,
-    filter 1s ease;
-  animation:breath 8s ease-in-out infinite;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  border:1px solid #7b1f2b;
+  opacity:0;
+  transition:all 1.2s ease;
 }
 
-/* Subtle breathing */
-@keyframes breath{
-  0%{ transform:translateY(0px); }
-  50%{ transform:translateY(4px); }
-  100%{ transform:translateY(0px); }
-}
+.level1{ width:1100px; height:700px; }
+.level2{ width:900px; height:550px; }
+.level3{ width:700px; height:400px; }
+.level4{ width:400px; height:200px; }
 
-/* Center focus emphasis */
-.fragment.focus{
-  opacity:1;
-  filter:blur(0px);
-}
-
-/* De-emphasis */
-.fragment.dim{
-  opacity:.15;
-  filter:blur(1px);
-}
-
-/* Final fire emphasis */
-.final{
-  font-size:22px;
-  width:600px;
+.active{
   opacity:1;
 }
 
-.fire{
-  color:#a11212;
-  text-shadow:
-    0 0 8px rgba(180,30,30,.4),
-    0 0 16px rgba(180,30,30,.2);
+/* Text sides */
+.side{
+  position:absolute;
+  font-size:14px;
+  line-height:1.6;
+  width:100%;
+  padding:20px;
 }
+
+/* Top */
+.top{
+  top:-50px;
+  text-align:center;
+}
+
+/* Bottom */
+.bottom{
+  bottom:-50px;
+  text-align:center;
+  transform:rotate(180deg);
+}
+
+/* Left */
+.left{
+  left:-150px;
+  top:50%;
+  transform:rotate(-90deg) translateY(-50%);
+  transform-origin:left top;
+  width:400px;
+}
+
+/* Right */
+.right{
+  right:-150px;
+  top:50%;
+  transform:rotate(90deg) translateY(-50%);
+  transform-origin:right top;
+  width:400px;
+}
+
+/* Core */
+.core{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
 
