@@ -1,4 +1,6 @@
-const container = document.getElementById("sandContainer");
+const back = document.getElementById("layerBack");
+const mid = document.getElementById("layerMid");
+const front = document.getElementById("layerFront");
 
 const fullText = `
 The  short  stories  of  Jorge  Luis  Borges,  written 
@@ -4613,38 +4615,25 @@ function splitSentences(text) {
 
 const sentences = splitSentences(fullText);
 
-// number of dunes
-const duneCount = 12;
-const dunes = [];
-
-for (let i = 0; i < duneCount; i++) {
-  const dune = document.createElement("div");
-  dune.classList.add("dune");
-
-  const rotation = (Math.random() - 0.5) * 6;
-  dune.style.transform = `rotate(${rotation}deg)`;
-
-  dunes.push(dune);
-  container.appendChild(dune);
-}
-
-// distribute sentences across dunes
 sentences.forEach((sentence, index) => {
   const fragment = document.createElement("div");
   fragment.classList.add("fragment");
   fragment.textContent = sentence.trim();
 
-  const duneIndex = index % duneCount;
-  dunes[duneIndex].appendChild(fragment);
+  if (index % 3 === 0) {
+    back.appendChild(fragment);
+  } else if (index % 3 === 1) {
+    mid.appendChild(fragment);
+  } else {
+    front.appendChild(fragment);
+  }
 });
 
-// subtle scroll drift
+/* Clean layered horizontal drift */
 window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
+  const y = window.scrollY;
 
-  dunes.forEach((dune, i) => {
-    const speed = (i + 1) * 0.02;
-    dune.style.transform += ` translateX(${scrollY * speed}px)`;
-  });
+  back.style.transform = `translateX(${y * 0.15}px)`;
+  mid.style.transform = `translateX(${y * 0.08}px)`;
+  front.style.transform = `translateX(${y * 0.03}px)`;
 });
-
