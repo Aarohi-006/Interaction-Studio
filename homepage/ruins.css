@@ -1,66 +1,42 @@
 body{
   margin:0;
-  background:#e7dfd4;
+  background:#e8e0d6;
   font-family:Georgia, serif;
-  overflow:hidden;
   color:#7b1f2b;
 }
 
-.scene{
+/* SCROLL SPACE */
+#scrollField{
   position:relative;
-  width:100vw;
-  height:100vh;
-  perspective:1000px;
+  width:160vw;
+  height:500vh;   /* BIG vertical scroll */
 }
 
-/* Shared layer style */
-.text-layer{
+/* Paragraph blocks */
+.node{
   position:absolute;
-  width:80vw;
-  max-width:900px;
-  top:50%;
-  left:50%;
-  transform-style:preserve-3d;
-  transform-origin:center;
-  transition:transform 1s ease, opacity 1s ease;
+  width:480px;
+  font-size:16px;
+  line-height:1.8;
+  opacity:.85;
+  transition:transform .8s ease, opacity .6s ease;
 }
 
-/* Main readable layer */
-.base{
-  transform:translate(-50%, -50%) rotate(0deg);
-  z-index:3;
+/* Large white space feeling */
+.node p{
+  margin:0;
 }
 
-/* Overlay ghost layers */
-.overlay1,
-.overlay2{
-  opacity:.15;
-  pointer-events:none;
-  z-index:1;
+/* Hover calm */
+.node:hover{
+  transform:rotate(0deg) scale(1.05);
+  opacity:1;
+  z-index:10;
 }
 
-/* Slight rotation differences */
-.overlay1{
-  transform:translate(-50%, -50%) rotate(8deg);
+/* Final paragraph */
+.node.final{
+  font-size:22px;
+  width:640px;
+  opacity:1;
 }
-
-.overlay2{
-  transform:translate(-50%, -50%) rotate(-12deg);
-}
-
-/* Text styling */
-.text-content{
-  font-size:17px;
-  line-height:1.75;
-}
-
-/* Focus mode */
-.focused .overlay1,
-.focused .overlay2{
-  opacity:0;
-}
-
-.focused .base{
-  transform:translate(-50%, -50%) scale(1.05);
-}
-
