@@ -1,17 +1,76 @@
-const blocks = document.querySelectorAll(".block");
+const source = document.querySelectorAll("#source p");
+const artboard = document.getElementById("artboard");
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
+let currentY = 200;
 
-  blocks.forEach(block => {
-    const rect = block.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+source.forEach((para, index) => {
 
-    if(rect.top < windowHeight - 100){
-      block.style.opacity = "1";
-      block.style.transition = "opacity 1.2s ease";
-    } else {
-      block.style.opacity = "0.2";
+  const sentences = para.innerText.split(". ");
+
+  sentences.forEach((sentence, i) => {
+
+    const fragment = document.createElement("div");
+    fragment.classList.add("fragment");
+
+    fragment.innerText = sentence.trim() + ".";
+
+    const xPositions = [80, 480, 880];
+    const x = xPositions[i % xPositions.length];
+
+    fragment.style.left = x + "px";
+    fragment.style.top = currentY + "px";
+
+    const rotations = [0, 90, 180, 270];
+    const angle = rotations[(i + index) % rotations.length];
+    fragment.dataset.baseRotation = angle;
+    fragment.style.transform = `rotate(${angle}deg)`;
+
+    if(index === source.length - 1){
+      fragment.classList.add("final");
+      fragment.style.left = "50%";
+      fragment.style.transform = "translateX(-50%) rotate(0deg)";
     }
+
+    artboard.appendChild(fragment);
+
+    currentY += 180;
   });
+
+  currentY += 300; // large white space between paragraphs
+});
+
+/* Scroll-based straightening + center focus */
+window.addEventListener("scroll", () => {
+
+  const fragments = document.querySelectorAll(".fragment");
+  const viewportCenter = window.innerHeight / 2;
+
+  fragments.forEach(fragment => {
+
+    const rect = fragment.getBoundingClientRect();
+    const distance = Math.abs(rect.top + rect.height/2 - viewportCenter);
+
+    const straightenFactor = Math.max(0, 1 - distance / 600);
+    const baseRotation = parseFloat(fragment.dataset.baseRotation || 0);
+
+    const newRotation = baseRotation * (1 - straightenFactor);
+    fragment.style.transform = `rotate(${newRotation}deg)`;
+
+    if(distance < 200){
+      fragment.classList.add("focus");
+      fragment.classList.remove("dim");
+    } else {
+      fragment.classList.remove("focus");
+      fragment.classList.add("dim");
+    }
+
+  });
+
+  /* Fire activation at bottom */
+  if(window.scrollY > 4200){
+    document.querySelectorAll(".final").forEach(f=>{
+      f.classList.add("fire");
+    });
+  }
+
 });
