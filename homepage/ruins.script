@@ -1,44 +1,47 @@
-const base = document.querySelector(".base .text-content");
-const overlay1 = document.querySelector(".overlay1");
-const overlay2 = document.querySelector(".overlay2");
-const scene = document.querySelector(".scene");
+const source = document.querySelectorAll("#source p");
+const field = document.getElementById("scrollField");
 
-/* Duplicate full text into overlays */
-overlay1.innerHTML = `<div class="text-content">${base.innerHTML}</div>`;
-overlay2.innerHTML = `<div class="text-content">${base.innerHTML}</div>`;
+const totalHeight = 500; // vh
+const totalWidth = 160;  // vw
 
-/* Parallax movement */
-document.addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 20;
-  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+source.forEach((p, i) => {
 
-  overlay1.style.transform =
-    `translate(-50%, -50%) rotate(8deg) translate(${x}px, ${y}px)`;
+  const node = document.createElement("div");
+  node.classList.add("node");
+  node.innerHTML = p.outerHTML;
 
-  overlay2.style.transform =
-    `translate(-50%, -50%) rotate(-12deg) translate(${-x}px, ${-y}px)`;
+  // Spread vertically evenly
+  const verticalSpacing = (totalHeight / source.length) * i;
+
+  // Horizontal variation (big white space)
+  const horizontalOffset = 20 + Math.random() * 100;
+
+  node.style.top = verticalSpacing + "vh";
+  node.style.left = horizontalOffset + "vw";
+
+  // Soft rotation
+  const angle = (Math.random() * 20) - 10;
+  node.dataset.angle = angle;
+  node.style.transform = `rotate(${angle}deg)`;
+
+  // Final paragraph anchor
+  if(i === source.length - 1){
+    node.classList.add("final");
+    node.style.left = "50vw";
+    node.style.transform = "translateX(-50%) rotate(0deg)";
+  }
+
+  field.appendChild(node);
 });
 
-/* Slow autonomous rotation */
-let angle1 = 8;
-let angle2 = -12;
+/* Subtle scroll-based drift */
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
 
-function drift(){
-  angle1 += 0.01;
-  angle2 -= 0.008;
-
-  overlay1.style.transform =
-    `translate(-50%, -50%) rotate(${angle1}deg)`;
-
-  overlay2.style.transform =
-    `translate(-50%, -50%) rotate(${angle2}deg)`;
-
-  requestAnimationFrame(drift);
-}
-
-drift();
-
-/* Click for focus mode */
-scene.addEventListener("click", () => {
-  document.body.classList.toggle("focused");
+  document.querySelectorAll(".node").forEach(node => {
+    const baseAngle = parseFloat(node.dataset.angle || 0);
+    const drift = scrollY * 0.005;
+    node.style.transform = `rotate(${baseAngle + drift}deg)`;
+  });
 });
+
