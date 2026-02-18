@@ -1,26 +1,62 @@
-const layers = document.querySelectorAll('.layer');
+const svg = document.getElementById('svgField');
+const textContent = document.getElementById('fullText').innerText;
+
+const fragments = textContent
+  .split(/[.?!]/)
+  .map(s => s.trim())
+  .filter(s => s.length > 20);
+
+let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+svg.appendChild(defs);
+
+fragments.forEach((text, i) => {
+
+  const pathId = "curve" + i;
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+  // random curve
+  const x1 = Math.random() * 1500;
+  const y1 = Math.random() * 1500;
+  const x2 = Math.random() * 1500;
+  const y2 = Math.random() * 1500;
+  const x3 = Math.random() * 1500;
+  const y3 = Math.random() * 1500;
+
+  path.setAttribute("d", `M${x1},${y1} Q${x2},${y2} ${x3},${y3}`);
+  path.setAttribute("id", pathId);
+
+  defs.appendChild(path);
+
+  const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  textEl.setAttribute("class", "fragment");
+
+  const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+  textPath.setAttribute("href", "#" + pathId);
+  textPath.textContent = text + " • ";
+
+  textEl.appendChild(textPath);
+
+  svg.appendChild(textEl);
+
+});
 
 window.addEventListener('scroll', () => {
 
   const scrollY = window.scrollY;
 
-  layers.forEach((layer, index) => {
+  const texts = document.querySelectorAll('.fragment');
 
-    let depth = (index + 1) * 0.05;
-    let rotate = scrollY * (depth * 0.2);
-    let driftX = scrollY * (depth * 0.15);
-    let driftY = scrollY * (depth * 0.05);
+  texts.forEach((t, i) => {
 
-    if(index % 2 === 0){
-      rotate *= -1;
-      driftX *= -1;
-    }
+    const driftX = scrollY * (0.01 + i * 0.0005);
+    const driftY = scrollY * (0.005 + i * 0.0003);
+    const rotate = scrollY * 0.002 * (i % 2 === 0 ? 1 : -1);
 
-    layer.style.transform = `
-      translate(${driftX}px, ${driftY}px)
-      rotate(${rotate}deg)
-    `;
+    t.setAttribute("transform",
+      `translate(${driftX}, ${driftY}) rotate(${rotate} 1000 1000)`
+    );
+
   });
 
 });
-
