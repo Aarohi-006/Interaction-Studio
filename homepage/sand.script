@@ -1,12 +1,14 @@
-const svg = document.getElementById('svgField');
-const textContent = document.getElementById('fullText').innerText;
+const svg = document.getElementById("field");
+const source = document.getElementById("source").innerText;
 
-const fragments = textContent
-  .split(/[.?!]/)
+svg.setAttribute("viewBox", "0 0 1000 800");
+
+const fragments = source
+  .split(".")
   .map(s => s.trim())
-  .filter(s => s.length > 20);
+  .filter(s => s.length > 10);
 
-let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
 svg.appendChild(defs);
 
 fragments.forEach((text, i) => {
@@ -15,17 +17,20 @@ fragments.forEach((text, i) => {
 
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
-  // random curve
-  const x1 = Math.random() * 1500;
-  const y1 = Math.random() * 1500;
-  const x2 = Math.random() * 1500;
-  const y2 = Math.random() * 1500;
-  const x3 = Math.random() * 1500;
-  const y3 = Math.random() * 1500;
+  const startX = 100;
+  const endX = 900;
 
-  path.setAttribute("d", `M${x1},${y1} Q${x2},${y2} ${x3},${y3}`);
+  const baseY = 120 + i * 60;
+
+  // STRONG curvature
+  const curveHeight = (i % 2 === 0 ? 200 : -200);
+
+  path.setAttribute(
+    "d",
+    `M${startX},${baseY} Q500,${baseY + curveHeight} ${endX},${baseY}`
+  );
+
   path.setAttribute("id", pathId);
-
   defs.appendChild(path);
 
   const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -33,28 +38,25 @@ fragments.forEach((text, i) => {
 
   const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
   textPath.setAttribute("href", "#" + pathId);
-  textPath.textContent = text + " • ";
+  textPath.textContent = text + " ";
 
   textEl.appendChild(textPath);
-
   svg.appendChild(textEl);
-
 });
 
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
 
-  const scrollY = window.scrollY;
-
-  const texts = document.querySelectorAll('.fragment');
+  const scroll = window.scrollY;
+  const texts = document.querySelectorAll(".fragment");
 
   texts.forEach((t, i) => {
 
-    const driftX = scrollY * (0.01 + i * 0.0005);
-    const driftY = scrollY * (0.005 + i * 0.0003);
-    const rotate = scrollY * 0.002 * (i % 2 === 0 ? 1 : -1);
+    const rotate = (scroll * 0.02) * (i % 2 === 0 ? 1 : -1);
+    const driftY = scroll * 0.15;
 
-    t.setAttribute("transform",
-      `translate(${driftX}, ${driftY}) rotate(${rotate} 1000 1000)`
+    t.setAttribute(
+      "transform",
+      `translate(0, ${driftY}) rotate(${rotate} 500 400)`
     );
 
   });
