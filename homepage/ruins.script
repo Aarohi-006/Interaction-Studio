@@ -1,17 +1,44 @@
-let aligned = false;
+const base = document.querySelector(".base .text-content");
+const overlay1 = document.querySelector(".overlay1");
+const overlay2 = document.querySelector(".overlay2");
+const scene = document.querySelector(".scene");
 
-document.body.addEventListener("click", () => {
-  aligned = !aligned;
+/* Duplicate full text into overlays */
+overlay1.innerHTML = `<div class="text-content">${base.innerHTML}</div>`;
+overlay2.innerHTML = `<div class="text-content">${base.innerHTML}</div>`;
 
-  const layers = document.querySelectorAll(".layer");
+/* Parallax movement */
+document.addEventListener("mousemove", (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
+  const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
-  layers.forEach(layer => {
-    if(aligned){
-      layer.style.transform = "rotate(0deg)";
-      layer.style.opacity = "1";
-    } else {
-      layer.style.transform = "";
-      layer.style.opacity = ".85";
-    }
-  });
+  overlay1.style.transform =
+    `translate(-50%, -50%) rotate(8deg) translate(${x}px, ${y}px)`;
+
+  overlay2.style.transform =
+    `translate(-50%, -50%) rotate(-12deg) translate(${-x}px, ${-y}px)`;
+});
+
+/* Slow autonomous rotation */
+let angle1 = 8;
+let angle2 = -12;
+
+function drift(){
+  angle1 += 0.01;
+  angle2 -= 0.008;
+
+  overlay1.style.transform =
+    `translate(-50%, -50%) rotate(${angle1}deg)`;
+
+  overlay2.style.transform =
+    `translate(-50%, -50%) rotate(${angle2}deg)`;
+
+  requestAnimationFrame(drift);
+}
+
+drift();
+
+/* Click for focus mode */
+scene.addEventListener("click", () => {
+  document.body.classList.toggle("focused");
 });
