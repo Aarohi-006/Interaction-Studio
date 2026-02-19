@@ -5,70 +5,52 @@
 }
 
 body {
-  background: #e8dcc5;
   font-family: Georgia, serif;
-  overflow-x: hidden;
+  background: #e8dcc5;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 100vh;
 }
 
-.sand-container {
-  position: relative;
+/* Horizontal scroll container */
+.sand-wrapper {
+  height: 100vh;
   width: 100%;
-  min-height: 8000px;
-  padding: 200px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-.layer {
-  position: absolute;
-  width: 200%;
-  left: 0;
+.sand-track {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding: 0 10%;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 120px;
+  padding: 120px 100px;
+  min-width: 8000px;
 }
 
-.layer-back {
-  top: 0;
+/* Columns */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 420px;
 }
 
-.layer-mid {
-  top: 200px;
-}
-
-.layer-front {
-  top: 400px;
-}
-
-/* Depth differences */
-.layer-back .fragment {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  transform: scale(0.9);
-}
-
-.layer-mid .fragment {
-  font-size: 16px;
-  transform: scale(1);
-}
-
-.layer-front .fragment {
-  font-size: 18px;
-  transform: scale(1.1);
+/* Slight vertical offset per column */
+.column:nth-child(even) {
+  margin-top: 120px;
 }
 
 .fragment {
-  max-width: 420px;
+  font-size: 17px;
   line-height: 1.7;
   color: #2b2620;
-  transition: all 0.4s ease;
+  transition: transform 0.3s ease;
   cursor: pointer;
 }
 
-/* Hover reveal */
 .fragment:hover {
-  transform: scale(1.25);
-  letter-spacing: 1px;
-  z-index: 10;
+  transform: translateY(-6px);
 }
 
