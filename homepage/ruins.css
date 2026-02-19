@@ -5,7 +5,7 @@ body{
   color:#7b1f2b;
 }
 
-/* Center stage */
+/* Stage centered */
 .stage{
   width:100vw;
   height:100vh;
@@ -15,18 +15,19 @@ body{
   position:relative;
 }
 
-/* Hide inactive maze levels */
+/* Maze base */
 .maze{
-  display:none;
   position:absolute;
-}
-
-/* Show active level */
-.active{
   display:grid;
+  visibility:hidden;      /* hide safely */
 }
 
-/* Strict geometric proportions */
+/* Active level visible */
+.maze.active{
+  visibility:visible;
+}
+
+/* Strict proportional nesting */
 .level1{ width:900px; height:600px; }
 .level2{ width:750px; height:500px; }
 .level3{ width:600px; height:400px; }
@@ -39,39 +40,32 @@ body{
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 60px 1fr 60px;  /* fixed corridor thickness */
 }
 
-/* Wall text styling */
+/* Wall styling */
 .wall{
-  padding:8px 12px;
-  font-size:11px;
-  line-height:1.25;
+  padding:6px 10px;
+  font-size:10px;
+  line-height:1.2;
   text-align:justify;
+  overflow:hidden;              /* prevents overlap */
+  word-wrap:break-word;
+  box-sizing:border-box;
   cursor:pointer;
-  transition:transform 0.15s ease, color 0.15s ease;
+  transition:transform .15s ease;
 }
 
-/* Hover highlight (safe, no fading) */
+/* Hover (safe) */
 .wall:hover{
-  transform:scale(1.03);
-  color:#000;
-  font-weight:500;
-  z-index:5;
+  transform:scale(1.02);
 }
 
-/* Optional subtle de-emphasis of others */
-.maze:hover .wall{
-  color:#999;
+/* Wall positions */
+.top{
+  grid-area:top;
 }
-
-.maze .wall:hover{
-  color:#000;
-}
-
-/* Wall positioning */
-.top{ grid-area:top; }
 
 .bottom{
   grid-area:bottom;
@@ -89,7 +83,7 @@ body{
   writing-mode:vertical-rl;
 }
 
-/* Core center */
+/* Core */
 .core{
   display:flex;
   align-items:center;
@@ -97,9 +91,7 @@ body{
 }
 
 .center{
-  font-size:12px;
+  font-size:11px;
+  padding:6px;
   text-align:center;
-  padding:8px;
 }
-
-
