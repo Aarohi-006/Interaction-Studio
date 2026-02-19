@@ -5,68 +5,57 @@
 }
 
 body {
-  background: #5a0f1c;   /* deep maroon */
-  color: #f4f1ed;        /* warm white */
+  background: #5a0f1c;
+  color: #f4f1ed;
   font-family: Georgia, serif;
-  overflow: hidden;
   height: 100vh;
+  overflow: hidden;
 }
 
-/* Horizontal viewport */
-.sand-wrapper {
+/* Horizontal scroll container */
+.wrapper {
   width: 100vw;
   height: 100vh;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   scroll-behavior: smooth;
 }
 
-/* Horizontal field */
-.sand-track {
+/* Horizontal content */
+.track {
   display: flex;
   align-items: flex-start;
-  gap: 140px;
-  padding: 120px 120px;
+  padding: 100px 120px;
+  gap: 120px;
   min-width: max-content;
 }
 
-/* Columns */
-.column {
+/* Paragraph chunk column */
+.chunk {
+  width: 500px;
   display: flex;
   flex-direction: column;
   gap: 28px;
-  width: 420px;
-  transition: transform 0.4s ease;
 }
 
-/* Density variation */
-.column:nth-child(3n) {
-  margin-top: 100px;
-}
-
-.column:nth-child(4n) {
-  margin-top: 180px;
-}
-
+/* Individual paragraph */
 .fragment {
-  font-size: 17px;
-  line-height: 1.7;
-  opacity: 0.9;
+  font-size: 18px;
+  line-height: 1.8;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   cursor: pointer;
-  transition: transform 0.35s ease, opacity 0.35s ease;
 }
 
-/* Subtle drift on hover */
+/* Hover interaction */
 .fragment:hover {
-  transform: translateX(8px);
+  transform: translateX(10px);
   opacity: 1;
 }
 
-/* Depth reveal */
-.fragment.expanded {
-  font-size: 19px;
-  opacity: 1;
+/* Click expand */
+.fragment.active {
   transform: translateX(20px);
 }
+
 
