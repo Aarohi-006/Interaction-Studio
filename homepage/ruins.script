@@ -1,36 +1,52 @@
-let current = 1;
-const max = 5;
+document.addEventListener("DOMContentLoaded", function(){
 
-const stage = document.querySelector(".stage");
+  let current = 1;
+  const max = 5;   // adjust if needed
 
-/* Level switching */
-stage.addEventListener("click", (e) => {
+  const stage = document.querySelector(".stage");
 
-  if(e.target.classList.contains("wall")) return;
-  if(e.target.classList.contains("focused")) return;
+  /* LEVEL SWITCHING */
+  stage.addEventListener("click", function(e){
 
-  document.querySelector(".level" + current).classList.remove("active");
+    if(e.target.closest(".wall")) return;
+    if(e.target.closest(".focused")) return;
 
-  current++;
-  if(current > max) current = 1;
+    const currentLevel = document.querySelector(".level" + current);
+    if(currentLevel){
+      currentLevel.classList.remove("active");
+    }
 
-  document.querySelector(".level" + current).classList.add("active");
-});
+    current++;
+    if(current > max) current = 1;
 
-/* Focus interaction */
-document.querySelectorAll(".wall").forEach(wall => {
-
-  wall.addEventListener("click", (e) => {
-
-    e.stopPropagation();
-
-    if(wall.classList.contains("focused")){
-      wall.classList.remove("focused");
-    } else {
-      document.querySelectorAll(".wall").forEach(w => w.classList.remove("focused"));
-      wall.classList.add("focused");
+    const nextLevel = document.querySelector(".level" + current);
+    if(nextLevel){
+      nextLevel.classList.add("active");
     }
 
   });
 
+  /* WALL EXPAND */
+  document.querySelectorAll(".wall").forEach(function(wall){
+
+    wall.addEventListener("click", function(e){
+
+      e.stopPropagation();
+
+      if(wall.classList.contains("focused")){
+        wall.classList.remove("focused");
+        return;
+      }
+
+      document.querySelectorAll(".wall.focused").forEach(function(w){
+        w.classList.remove("focused");
+      });
+
+      wall.classList.add("focused");
+
+    });
+
+  });
+
 });
+
