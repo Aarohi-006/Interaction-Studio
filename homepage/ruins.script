@@ -3,42 +3,33 @@ const max = 5;
 
 const stage = document.querySelector(".stage");
 
-/* LEVEL SWITCHING */
+/* Level switching */
 stage.addEventListener("click", (e) => {
 
-  // if clicking expanded wall, do nothing
+  if(e.target.classList.contains("wall")) return;
   if(e.target.classList.contains("focused")) return;
 
-  // if clicking a wall, don't switch level
-  if(e.target.classList.contains("wall")) return;
-
-  const currentLevel = document.querySelector(".level" + current);
-  if(currentLevel) currentLevel.classList.remove("active");
+  document.querySelector(".level" + current).classList.remove("active");
 
   current++;
   if(current > max) current = 1;
 
-  const nextLevel = document.querySelector(".level" + current);
-  if(nextLevel) nextLevel.classList.add("active");
+  document.querySelector(".level" + current).classList.add("active");
 });
 
-/* WALL EXPAND */
+/* Focus interaction */
 document.querySelectorAll(".wall").forEach(wall => {
 
   wall.addEventListener("click", (e) => {
 
     e.stopPropagation();
 
-    // collapse if already focused
     if(wall.classList.contains("focused")){
       wall.classList.remove("focused");
-      return;
+    } else {
+      document.querySelectorAll(".wall").forEach(w => w.classList.remove("focused"));
+      wall.classList.add("focused");
     }
-
-    // remove any other focus
-    document.querySelectorAll(".wall").forEach(w => w.classList.remove("focused"));
-
-    wall.classList.add("focused");
 
   });
 
