@@ -22,15 +22,15 @@ body {
     z-index: 0;
 }
 
-/* Layout container */
+/* Layout */
 .field {
     position: relative;
     z-index: 1;
     min-height: 100vh;
-    padding: 70px 80px 120px;
+    padding: 80px 90px 140px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 70px 90px;
+    gap: 70px 100px;
 }
 
 /* Fragment */
@@ -52,8 +52,8 @@ body {
         box-shadow 0.4s ease;
 }
 
-/* Start upside down */
-.flipped .fragment-inner {
+/* Only some fragments flipped */
+.fragment.flipped .fragment-inner {
     transform: rotateX(180deg);
 }
 
@@ -64,7 +64,7 @@ body {
     box-shadow: 0 0 18px rgba(255,255,255,0.15);
 }
 
-/* Active clicked */
+/* Active */
 .fragment.active .fragment-inner {
     transform: rotateX(0deg);
     background: rgba(255,255,255,0.08);
@@ -80,3 +80,4 @@ body {
 html {
     scroll-behavior: smooth;
 }
+
