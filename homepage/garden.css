@@ -22,28 +22,31 @@ svg{
   overflow:visible;
 }
 
+/* Branch lines */
+path{
+  stroke:#ffffff33;
+  stroke-width:1.2;
+  fill:none;
+  stroke-dasharray:400;
+  stroke-dashoffset:400;
+  animation: grow 0.6s ease forwards;
+}
+
+@keyframes grow{
+  to{ stroke-dashoffset:0; }
+}
+
+/* Text */
 .mazeText{
-  font-size:18px;
+  font-size:17px;
   letter-spacing:.6px;
   fill:#f5e6a9;
-  opacity:.35;
-  transition:opacity .4s ease, fill .3s ease;
-  text-shadow: 0 0 6px rgba(0,0,0,0.35);
+  opacity:.85;
+  text-shadow:0 0 6px rgba(0,0,0,0.4);
   cursor:pointer;
 }
 
 .mazeText.active{
-  fill:#ffffff !important;
-  opacity:1;
+  fill:#ffffff;
   font-weight:bold;
 }
-
-.mazeText.visited{
-  opacity:.6;
-}
-
-.hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
