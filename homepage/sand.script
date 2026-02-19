@@ -1,59 +1,72 @@
-const track = document.getElementById("sandTrack");
+document.addEventListener("DOMContentLoaded", function () {
 
-const fullText = `
+  const track = document.getElementById("sandTrack");
+
+  const fullText = `
 The short stories of Jorge Luis Borges, written more than twenty years ago, have become classics of contemporary literature.
+
 In The Book of Sand are thirteen brand-new stories rivaling those that established Borges’ worldwide reputation.
+
 At my age, I cannot promise more than these variations on favorite themes.
+
 I write for myself and for my friends, and I write to ease the passing of time.
+
 It was in Cambridge, back in February 1969, that the event took place.
+
 The river made me think about time — Heraclitus’ image.
+
 All at once I had the impression of having lived that moment once before.
-“Sir,” I said, “are you an Uruguayan or an Argentine?”
-“In that case,” I said, “your name is Jorge Luis Borges.”
+
 The king spoke to the bard.
+
 The bard recited the poem. It consisted of a single line.
-“The sin of having known Beauty,” the king whispered.
+
+The sin of having known Beauty.
+
 The poetry of the Urns consists of a single word.
-In the course of time I have been many men.
+
 He uttered the word undr, which means wonder.
+
 He called it Utopia, a Greek word meaning there is no such place.
-“We receive such visits from century to century,” he said.
-“Facts matter to no one anymore.”
-“Man is master of his life. He is also master of his death.”
-My story is about two men.
+
+Facts matter to no one anymore.
+
+Man is master of his life. He is also master of his death.
+
 The event took place in Montevideo in 1897.
-Arredondo drew a revolver and opened fire.
+
 I am a woodcutter.
-I killed the king for Odin’s disk.
-The line is made up of an infinite number of points.
+
 The book was called the Book of Sand.
+
 None is the first page. None is the last.
+
 The number of pages is infinite.
-Somewhere I recalled reading that the best place to hide a leaf is in a forest.
+
 I lost the Book of Sand on a basement shelf.
 `;
 
-function splitSentences(text) {
-  return text.match(/[^\.!\?]+[\.!\?]+/g) || [];
-}
+  const paragraphs = fullText.trim().split("\n\n");
 
-const sentences = splitSentences(fullText);
-const columnsCount = 18;
-const columns = [];
+  const columnCount = 12;
+  const columns = [];
 
-// Create columns
-for (let i = 0; i < columnsCount; i++) {
-  const column = document.createElement("div");
-  column.classList.add("column");
-  track.appendChild(column);
-  columns.push(column);
-}
+  // Create columns
+  for (let i = 0; i < columnCount; i++) {
+    const col = document.createElement("div");
+    col.className = "column";
+    track.appendChild(col);
+    columns.push(col);
+  }
 
-// Distribute text across columns
-sentences.forEach((sentence, index) => {
-  const fragment = document.createElement("div");
-  fragment.classList.add("fragment");
-  fragment.textContent = sentence.trim();
-  columns[index % columnsCount].appendChild(fragment);
+  // Distribute paragraphs across columns
+  paragraphs.forEach((para, index) => {
+    const div = document.createElement("div");
+    div.className = "fragment";
+    div.textContent = para;
+    columns[index % columnCount].appendChild(div);
+  });
+
 });
+
 
