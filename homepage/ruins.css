@@ -66,12 +66,23 @@ body{
   backface-visibility:hidden;
   transform:translateZ(0);
 
-  transition:transform .25s ease;
+  transition:transform .25s ease, background .25s ease, color .25s ease;
 }
 
-/* Subtle hover lift */
+/* Hover subtle lift */
 .wall:hover{
   transform:scale(1.03) translateZ(0);
+}
+
+/* ================================= */
+/* WALL CLICK HIGHLIGHT */
+/* ================================= */
+
+.wall.focused{
+  background:#f3e6db;
+  color:#5a2d1f;
+  transform:scale(1.05) translateZ(0);
+  z-index:5;
 }
 
 /* ================================= */
@@ -179,6 +190,7 @@ body{
 .level14 .center::after,
 .level14 .maze-lines::before,
 .level14 .maze-lines::after{
-  background:#7a1e12;   /* deeper fire tone */
+  background:#7a1e12;
 }
+
 
