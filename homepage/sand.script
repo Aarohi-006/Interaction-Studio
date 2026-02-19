@@ -4611,9 +4611,9 @@ const sentences = fullText.split(/\.\s+/);
 const field = document.getElementById("field");
 
 const columns = 4;
-const colWidth = 20;
-const gap = 5;
-const rowHeight = 170;
+const colWidth = 21;
+const gap = 4;
+const rowHeight = 160;
 
 let row = 0;
 
@@ -4622,7 +4622,17 @@ sentences.forEach((sentence, index) => {
 
     const fragment = document.createElement("div");
     fragment.classList.add("fragment");
-    fragment.innerText = sentence.trim() + ".";
+
+    const inner = document.createElement("div");
+    inner.classList.add("fragment-inner");
+    inner.innerText = sentence.trim() + ".";
+
+    fragment.appendChild(inner);
+
+    // 50% start flipped
+    if (Math.random() < 0.5) {
+        fragment.classList.add("flipped");
+    }
 
     const col = index % columns;
 
@@ -4633,49 +4643,23 @@ sentences.forEach((sentence, index) => {
 
     field.appendChild(fragment);
 
-    /* CLICK EXPAND */
+    // click flip
     fragment.addEventListener("click", () => {
-        const isActive = fragment.classList.contains("active");
-
-        document.querySelectorAll(".fragment").forEach(f => {
-            f.classList.remove("active");
-            f.classList.remove("dimmed");
-        });
-
-        if (!isActive) {
-            fragment.classList.add("active");
-            document.querySelectorAll(".fragment").forEach(f => {
-                if (f !== fragment) {
-                    f.classList.add("dimmed");
-                }
-            });
-        }
+        fragment.classList.toggle("active");
     });
 });
 
 field.style.height = row * rowHeight + 400 + "px";
 
-/* CURSOR PROXIMITY DRIFT */
-document.addEventListener("mousemove", e => {
-    const fragments = document.querySelectorAll(".fragment");
+/* subtle scroll parallax (stable, no flicker) */
+const container = document.querySelector(".scroll-container");
 
-    fragments.forEach(fragment => {
-        const rect = fragment.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        const distance = Math.sqrt(dx * dx + dy * dy);
+container.addEventListener("scroll", () => {
+    const scrollY = container.scrollTop;
 
-        const maxDistance = 400;
-
-        if (distance < maxDistance) {
-            const force = (maxDistance - distance) / maxDistance;
-            const moveX = dx * 0.02 * force;
-            const moveY = dy * 0.02 * force;
-
-            fragment.style.transform = `translate(${moveX}px, ${moveY}px)`;
-        } else {
-            fragment.style.transform = `translate(0, 0)`;
-        }
+    document.querySelectorAll(".fragment").forEach((fragment, i) => {
+        const depth = (i % 3) * 0.15; 
+        fragment.style.transform = `translateY(${scrollY * depth}px)`;
     });
 });
 
