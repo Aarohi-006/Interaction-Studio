@@ -406,15 +406,12 @@ invisible people. All were Albert and myself, secretive, busy and multiform in o
 dimensions of time. I lifted my eyes and the short nightmare disappeared. In the 
 black and yellow garden there was only a single man, but this man was as strong as a 
 statue and this man was walking up the path and he was Captain Richard Madden. 
-
 "The future exists now," I replied. "But I am your friend. Can I take another look at 
 the letter?" 
-
 Albert rose from his seat. He stood up tall as he opened the top drawer of the high 
 writing cabinet. For a moment his back was again turned to me. I had the revolver 
 ready. I fired with the utmost care: Albert fell without a murmur, at once. I swear 
 that his death was instantaneous, as if he had been struck by lightning. 
-
 What remains is unreal and unimportant. Madden broke in and arrested me. I have 
 been condemned to hang. Abominably, I have yet triumphed! The secret name of the 
 city to be attacked got through to Berlin. Yesterday it was bombed. I read the news 
@@ -424,92 +421,87 @@ however, had already solved this mystery. He knew that my problem was to shout,
 with my feeble voice, above the tumult of war, the name of the city called Albert, 
 and that I had no other course open to me than to kill someone of that name. He 
 does not know, for no one can, of my infinite penitence and sickness of the heart. 
-
-
 ' A malicious and outlandish statement. In point of fact, Captain Richard Madden had been attacked by the 
 Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol when Madden appeared with 
 orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. - Note by 
 the manuscript editor. 
+8 
+`;
 
+const segments = splitIntoChunks(fullText, 420);
 
-8 `;
-
-const segments = splitIntoChunks(fullText, 450);
 const textGroup = document.getElementById("textGroup");
+const defs = document.querySelector("defs");
 
-segments.slice(0,25).forEach((segment,i)=>{
+segments.forEach((segment, i) => {
 
-  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
-  text.setAttribute("class","mazeText");
+  // Create curved path dynamically
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 
-  // Thematic color assignment
-  let color = "#f5e6a9"; 
+  const angle = (i / segments.length) * Math.PI * 2;
+  const radius = 350 + (i % 5) * 30;
+  const centerX = 500;
+  const centerY = 500;
 
-  if(segment.match(/Madden|war|bullet|death/i)){
-    color = "#ffd166";
-  }
-  else if(segment.match(/train|escape|flee/i)){
-    color = "#fff3c4";
-  }
-  else if(segment.match(/labyrinth|maze|Ts'ui Pen|time/i)){
-    color = "#e6d6ff";
-  }
-  else if(segment.match(/Albert|future|infinite/i)){
-    color = "#fff8dc";
-  }
+  const startX = centerX + radius * Math.cos(angle);
+  const startY = centerY + radius * Math.sin(angle);
 
-  text.style.fill = color;
+  const endX = centerX + radius * Math.cos(angle + 0.6);
+  const endY = centerY + radius * Math.sin(angle + 0.6);
 
-  if(i>3) text.classList.add("hidden");
+  const controlX = centerX;
+  const controlY = centerY;
 
-  const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
-  textPath.setAttributeNS("http://www.w3.org/1999/xlink","href",`#p${i+1}`);
+  path.setAttribute("id", "path" + i);
+  path.setAttribute(
+    "d",
+    `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`
+  );
+
+  defs.appendChild(path);
+
+  // Create text element
+  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("class", "mazeText");
+
+  const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+  textPath.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#path" + i);
   textPath.textContent = segment;
 
   text.appendChild(textPath);
   textGroup.appendChild(text);
 
-  text.addEventListener("click",()=>{
-    text.classList.add("active","visited");
+  // Reveal interaction
+  if (i > 4) text.classList.add("hidden");
+
+  text.addEventListener("click", () => {
+    text.classList.add("active", "visited");
     revealNearby(i);
   });
 });
 
-
-function splitIntoChunks(text, maxLength){
-  const paragraphs = text.split(/\n+/);
+function splitIntoChunks(text, maxLength) {
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
   const chunks = [];
+  let current = "";
 
-  paragraphs.forEach(p => {
-    if(p.length <= maxLength){
-      chunks.push(p.trim());
+  sentences.forEach(sentence => {
+    if ((current + sentence).length < maxLength) {
+      current += sentence;
     } else {
-      const sentences = p.match(/[^.!?]+[.!?]+/g) || [p];
-      let current = "";
-
-      sentences.forEach(sentence => {
-        if((current + sentence).length < maxLength){
-          current += sentence;
-        } else {
-          chunks.push(current.trim());
-          current = sentence;
-        }
-      });
-
-      if(current.length > 0){
-        chunks.push(current.trim());
-      }
+      chunks.push(current.trim());
+      current = sentence;
     }
   });
+
+  if (current.length > 0) chunks.push(current.trim());
 
   return chunks;
 }
 
-function revealNearby(index){
-  const texts=document.querySelectorAll(".mazeText");
-  for(let i=index-3;i<=index+3;i++){
-    if(texts[i]) texts[i].classList.remove("hidden");
+function revealNearby(index) {
+  const texts = document.querySelectorAll(".mazeText");
+  for (let i = index - 4; i <= index + 4; i++) {
+    if (texts[i]) texts[i].classList.remove("hidden");
   }
 }
-
-
