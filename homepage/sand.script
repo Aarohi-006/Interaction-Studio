@@ -4610,14 +4610,7 @@ CHRONICLES  OF  BUSTOS  DOMECQ
 const sentences = fullText.split(/\.\s+/);
 const field = document.getElementById("field");
 
-const columns = 4;
-const colWidth = 21;
-const gap = 4;
-const rowHeight = 160;
-
-let row = 0;
-
-sentences.forEach((sentence, index) => {
+sentences.forEach(sentence => {
     if (!sentence.trim()) return;
 
     const fragment = document.createElement("div");
@@ -4629,37 +4622,17 @@ sentences.forEach((sentence, index) => {
 
     fragment.appendChild(inner);
 
-    // 50% start flipped
+    // random initial flip
     if (Math.random() < 0.5) {
         fragment.classList.add("flipped");
     }
 
-    const col = index % columns;
-
-    fragment.style.left = 6 + col * (colWidth + gap) + "%";
-    fragment.style.top = row * rowHeight + 100 + "px";
-
-    if (col === columns - 1) row++;
-
-    field.appendChild(fragment);
-
-    // click flip
     fragment.addEventListener("click", () => {
         fragment.classList.toggle("active");
     });
+
+    field.appendChild(fragment);
 });
 
-field.style.height = row * rowHeight + 400 + "px";
 
-/* subtle scroll parallax (stable, no flicker) */
-const container = document.querySelector(".scroll-container");
-
-container.addEventListener("scroll", () => {
-    const scrollY = container.scrollTop;
-
-    document.querySelectorAll(".fragment").forEach((fragment, i) => {
-        const depth = (i % 3) * 0.15; 
-        fragment.style.transform = `translateY(${scrollY * depth}px)`;
-    });
-});
 
