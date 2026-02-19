@@ -3,8 +3,8 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
-  overflow:hidden;
   height:100vh;
+  overflow:hidden;
 }
 
 /* Stage */
@@ -14,20 +14,19 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
 }
 
-/* Maze */
+/* Maze layout */
 .maze{
-  width:78vmin;
-  height:78vmin;
+  width:75vmin;
+  height:75vmin;
   display:grid;
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 26% 1fr 26%;  /* thicker vertical */
-  grid-template-rows: 22% 1fr 22%;     /* thicker horizontal */
+  grid-template-columns: 24% 1fr 24%;
+  grid-template-rows: 20% 1fr 20%;
   position:absolute;
   visibility:hidden;
 }
@@ -36,73 +35,68 @@ body{
   visibility:visible;
 }
 
-/* WALL BASE */
+/* Wall base */
 .wall{
-  padding:2.5vmin;
-  font-size:1.15vmin;      /* slightly smaller to avoid clipping */
+  padding:2vmin;
+  font-size:1.2vmin;
   line-height:1.6;
   box-sizing:border-box;
   white-space:normal;
   word-break:normal;
-  overflow:visible;        /* IMPORTANT: no cutting */
+  overflow:hidden;
+  text-align:center;
   cursor:pointer;
-  transition:transform .2s ease;
+  transition:transform .2s ease, background .2s ease;
 }
 
 /* Hover */
 .wall:hover{
+  background:rgba(0,0,0,0.04);
   transform:scale(1.02);
 }
 
-/* TOP */
+/* Top */
 .top{
   grid-area:top;
-  text-align:center;
 }
 
-/* BOTTOM */
+/* Bottom (no rotation anymore) */
 .bottom{
   grid-area:bottom;
-  transform:rotate(180deg);
-  text-align:center;
 }
 
-/* LEFT */
+/* Left (vertical writing stays) */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
-  text-align:center;
 }
 
-/* RIGHT */
+/* Right (vertical but flipped direction naturally) */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
   text-orientation:mixed;
-  transform:rotate(180deg);
-  text-align:center;
 }
 
-/* CENTER */
+/* Center */
 .center{
   grid-area:center;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:3vmin;
-  font-size:1.3vmin;
+  font-size:1.4vmin;
   text-align:center;
 }
 
-/* Focus */
+/* Focus mode */
 .wall.focused{
   grid-area:center !important;
   writing-mode:horizontal-tb !important;
-  transform:rotate(0deg) scale(1.05) !important;
+  transform:scale(1.05) !important;
   background:#ffffff;
   padding:4vmin;
   box-shadow:0 2vmin 5vmin rgba(0,0,0,.2);
-  z-index:10;
+  z-index:5;
 }
-
