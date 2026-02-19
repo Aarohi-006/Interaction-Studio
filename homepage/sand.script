@@ -4610,61 +4610,72 @@ CHRONICLES  OF  BUSTOS  DOMECQ
 const sentences = fullText.split(/\.\s+/);
 const field = document.getElementById("field");
 
-const columns = 4;                     // number of horizontal lanes
-const columnWidth = 22;                // percent width
-const columnGap = 6;                   // percent gap
-const rowHeight = 160;                 // vertical spacing
-let rowIndex = 0;
+const columns = 4;
+const colWidth = 20;
+const gap = 5;
+const rowHeight = 170;
+
+let row = 0;
 
 sentences.forEach((sentence, index) => {
     if (!sentence.trim()) return;
 
     const fragment = document.createElement("div");
     fragment.classList.add("fragment");
-
-    // Random upside fragments
-    if (Math.random() < 0.25) {
-        fragment.classList.add("upside");
-    }
-
     fragment.innerText = sentence.trim() + ".";
 
-    // Distribute horizontally in columns
-    const columnIndex = index % columns;
-    const leftPosition = 5 + columnIndex * (columnWidth + columnGap);
+    const col = index % columns;
 
-    fragment.style.left = leftPosition + "%";
-    fragment.style.top = (rowIndex * rowHeight + 80) + "px";
+    fragment.style.left = 6 + col * (colWidth + gap) + "%";
+    fragment.style.top = row * rowHeight + 100 + "px";
 
-    // Every full row, increase vertical index
-    if (columnIndex === columns - 1) {
-        rowIndex++;
-    }
-
-    fragment.dataset.base = rowIndex * rowHeight;
+    if (col === columns - 1) row++;
 
     field.appendChild(fragment);
-});
 
-// Set total height (much shorter now)
-field.style.height = (rowIndex * rowHeight + 300) + "px";
-
-/* Click flip */
-document.querySelectorAll(".fragment").forEach(fragment => {
+    /* CLICK EXPAND */
     fragment.addEventListener("click", () => {
-        fragment.classList.toggle("active");
+        const isActive = fragment.classList.contains("active");
+
+        document.querySelectorAll(".fragment").forEach(f => {
+            f.classList.remove("active");
+            f.classList.remove("dimmed");
+        });
+
+        if (!isActive) {
+            fragment.classList.add("active");
+            document.querySelectorAll(".fragment").forEach(f => {
+                if (f !== fragment) {
+                    f.classList.add("dimmed");
+                }
+            });
+        }
     });
 });
 
-/* Smooth subtle vertical drift */
-const container = document.querySelector(".scroll-container");
+field.style.height = row * rowHeight + 400 + "px";
 
-container.addEventListener("scroll", () => {
-    const scrollTop = container.scrollTop;
+/* CURSOR PROXIMITY DRIFT */
+document.addEventListener("mousemove", e => {
+    const fragments = document.querySelectorAll(".fragment");
 
-    document.querySelectorAll(".fragment").forEach(fragment => {
-        const base = parseFloat(fragment.style.top);
-        fragment.style.transform += ` translateY(${scrollTop * 0.01}px)`;
+    fragments.forEach(fragment => {
+        const rect = fragment.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + rect.width / 2);
+        const dy = e.clientY - (rect.top + rect.height / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDistance = 400;
+
+        if (distance < maxDistance) {
+            const force = (maxDistance - distance) / maxDistance;
+            const moveX = dx * 0.02 * force;
+            const moveY = dy * 0.02 * force;
+
+            fragment.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        } else {
+            fragment.style.transform = `translate(0, 0)`;
+        }
     });
 });
 
