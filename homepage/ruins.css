@@ -112,7 +112,7 @@ body{
 }
 
 /* ================================= */
-/* CENTER COMPLEX MAZE CORE */
+/* CENTER CLEAN MAZE CORE */
 /* ================================= */
 
 .center{
@@ -129,12 +129,11 @@ body{
   content:"";
   position:absolute;
   width:2px;
-  height:80%;
+  height:70%;
   background:#5a2d1f;
+  top:15%;
   left:50%;
-  top:10%;
   transform:translateX(-50%);
-  opacity:0.8;
 }
 
 /* Main horizontal corridor */
@@ -142,44 +141,11 @@ body{
   content:"";
   position:absolute;
   height:2px;
-  width:80%;
-  background:#5a2d1f;
-  top:50%;
-  left:10%;
-  transform:translateY(-50%);
-  opacity:0.8;
-}
-
-/* Inner broken maze fragments */
-.center .maze-lines{
-  position:absolute;
   width:70%;
-  height:70%;
-  pointer-events:none;
-}
-
-/* Inner vertical broken segment */
-.center .maze-lines::before{
-  content:"";
-  position:absolute;
-  width:2px;
-  height:40%;
   background:#5a2d1f;
-  left:30%;
-  top:0;
-  opacity:0.7;
-}
-
-/* Inner horizontal broken segment */
-.center .maze-lines::after{
-  content:"";
-  position:absolute;
-  height:2px;
-  width:40%;
-  background:#5a2d1f;
-  right:0;
-  bottom:30%;
-  opacity:0.7;
+  left:15%;
+  top:50%;
+  transform:translateY(-50%);
 }
 
 /* ================================= */
@@ -187,10 +153,7 @@ body{
 /* ================================= */
 
 .level14 .center::before,
-.level14 .center::after,
-.level14 .maze-lines::before,
-.level14 .maze-lines::after{
-  background:#7a1e12;
+.level14 .center::after{
+  background:#7a1e12; /* deeper fire tone */
 }
-
 
