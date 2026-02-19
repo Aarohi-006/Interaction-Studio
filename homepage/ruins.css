@@ -3,8 +3,8 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
-  height:100vh;
   overflow:hidden;
+  height:100vh;
 }
 
 /* Stage */
@@ -14,19 +14,20 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  position:relative;
 }
 
-/* Uniform maze size for ALL levels */
+/* Maze */
 .maze{
-  width:75vmin;
-  height:75vmin;
+  width:78vmin;
+  height:78vmin;
   display:grid;
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 24% 1fr 24%;  /* wider vertical */
-  grid-template-rows: 20% 1fr 20%;     /* taller horizontal */
+  grid-template-columns: 26% 1fr 26%;  /* thicker vertical */
+  grid-template-rows: 22% 1fr 22%;     /* thicker horizontal */
   position:absolute;
   visibility:hidden;
 }
@@ -37,13 +38,13 @@ body{
 
 /* WALL BASE */
 .wall{
-  padding:2vmin;
-  font-size:1.25vmin;     /* slightly smaller to prevent cutting */
+  padding:2.5vmin;
+  font-size:1.15vmin;      /* slightly smaller to avoid clipping */
   line-height:1.6;
   box-sizing:border-box;
-  overflow:hidden;
-  word-break:normal;
   white-space:normal;
+  word-break:normal;
+  overflow:visible;        /* IMPORTANT: no cutting */
   cursor:pointer;
   transition:transform .2s ease;
 }
@@ -90,18 +91,18 @@ body{
   align-items:center;
   justify-content:center;
   padding:3vmin;
-  font-size:1.4vmin;
+  font-size:1.3vmin;
   text-align:center;
 }
 
-/* Focus mode */
+/* Focus */
 .wall.focused{
   grid-area:center !important;
   writing-mode:horizontal-tb !important;
   transform:rotate(0deg) scale(1.05) !important;
   background:#ffffff;
   padding:4vmin;
-  box-shadow:0 2vmin 4vmin rgba(0,0,0,.2);
-  z-index:5;
+  box-shadow:0 2vmin 5vmin rgba(0,0,0,.2);
+  z-index:10;
 }
 
