@@ -1,57 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  background: #4b0f1b;
-  color: white;
-  font-family: Georgia, serif;
-  overflow-x: hidden;
+    background: #5a0f1b;
+    color: white;
+    font-family: Georgia, serif;
+    overflow: hidden;
 }
 
 .scroll-container {
-  height: 100vh;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  position: relative;
-  z-index: 2;
+    height: 100vh;
+    overflow-y: scroll;
+    position: relative;
 }
 
-.field {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+#field {
+    position: relative;
+    width: 100%;
 }
 
-/* Subtle sand grain */
-.sand-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 4px 4px;
-  animation: sandDrift 80s linear infinite;
-  z-index: 1;
-}
-
-@keyframes sandDrift {
-  from { transform: translateY(0); }
-  to { transform: translateY(300px); }
-}
-
+/* FRAGMENTS */
 .fragment {
-  position: absolute;
-  width: 260px;
-  font-size: 14px;
-  line-height: 1.6;
-  cursor: pointer;
-  opacity: 0.9;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+    position: absolute;
+    width: 20%;
+    font-size: 13px;
+    line-height: 1.6;
+    transition: 
+        transform 0.4s ease,
+        opacity 0.4s ease;
+    cursor: pointer;
+    opacity: 0.85;
 }
 
-.fragment.upside {
-  transform: rotate(180deg);
+.fragment:hover {
+    opacity: 1;
 }
 
+/* focus mode */
 .fragment.active {
-  transform: rotate(0deg) scale(1.05);
-  opacity: 1;
+    transform: scale(1.5);
+    z-index: 10;
+    opacity: 1;
+}
+
+/* background fade */
+.dimmed {
+    opacity: 0.2 !important;
 }
