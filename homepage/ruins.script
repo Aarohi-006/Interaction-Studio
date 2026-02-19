@@ -7,16 +7,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
     maze.addEventListener("click", function(e){
 
-      // If clicking center → do nothing
-      if(e.target.closest(".center")) return;
+      const clickedWall = e.target.closest(".wall");
 
-      // If clicking a wall → highlight only
-      if(e.target.closest(".wall")){
-        highlightWall(e.target.closest(".wall"));
+      // If clicking a wall (but NOT center), highlight it
+      if(clickedWall && !clickedWall.classList.contains("center")){
+        highlightWall(clickedWall);
         return;
       }
 
-      // Otherwise switch level
+      // Otherwise switch level (center OR empty space)
       this.classList.remove("active");
 
       current++;
@@ -32,13 +31,10 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 
   function highlightWall(wall){
-
     document.querySelectorAll(".wall").forEach(w => {
       w.classList.remove("focused");
     });
-
     wall.classList.add("focused");
   }
 
 });
-
