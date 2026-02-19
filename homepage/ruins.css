@@ -5,7 +5,7 @@ body{
   color:#7b1f2b;
 }
 
-/* Stage centered */
+/* Center stage */
 .stage{
   width:100vw;
   height:100vh;
@@ -19,71 +19,90 @@ body{
 .maze{
   position:absolute;
   display:grid;
-  visibility:hidden;      /* hide safely */
+  visibility:hidden;
 }
 
-/* Active level visible */
+/* Active level */
 .maze.active{
   visibility:visible;
 }
 
-/* Strict proportional nesting */
+/* Strict nested proportions */
 .level1{ width:900px; height:600px; }
 .level2{ width:750px; height:500px; }
 .level3{ width:600px; height:400px; }
 .level4{ width:450px; height:300px; }
 .level5{ width:280px; height:180px; }
 
-/* Grid structure */
+/* Grid layout */
 .maze{
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 60px 1fr 60px;  /* fixed corridor thickness */
+  grid-template-columns: 80px 1fr 80px;   /* fixed vertical corridor width */
+  grid-template-rows: 60px 1fr 60px;      /* fixed horizontal corridor height */
 }
 
-/* Wall styling */
+/* WALL BASE */
 .wall{
-  padding:6px 10px;
-  font-size:10px;
-  line-height:1.2;
-  text-align:justify;
-  overflow:hidden;              /* prevents overlap */
-  word-wrap:break-word;
   box-sizing:border-box;
+  padding:6px;
+  font-size:10px;
+  line-height:1.15;
+  overflow:hidden;
+  word-break:break-word;
   cursor:pointer;
   transition:transform .15s ease;
 }
 
-/* Hover (safe) */
+/* HOVER */
 .wall:hover{
   transform:scale(1.02);
 }
 
-/* Wall positions */
+/* TOP WALL */
 .top{
   grid-area:top;
+  text-align:justify;
 }
 
+/* BOTTOM WALL */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
+  text-align:justify;
 }
 
+/* LEFT WALL */
 .left{
   grid-area:left;
-  writing-mode:vertical-rl;
-  transform:rotate(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
+.left > *{
+  transform:rotate(-90deg);
+  width:500px;           /* large enough text width */
+}
+
+/* RIGHT WALL */
 .right{
   grid-area:right;
-  writing-mode:vertical-rl;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-/* Core */
+.right > *{
+  transform:rotate(90deg);
+  width:500px;
+}
+
+/* CORE */
 .core{
   display:flex;
   align-items:center;
@@ -95,3 +114,4 @@ body{
   padding:6px;
   text-align:center;
 }
+
