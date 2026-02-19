@@ -12,7 +12,6 @@ body {
   height: 100vh;
 }
 
-/* Horizontal scroll container */
 .sand-wrapper {
   height: 100vh;
   width: 100%;
@@ -22,14 +21,12 @@ body {
 
 .sand-track {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
   gap: 120px;
   padding: 120px 100px;
-  min-width: 8000px;
+  min-width: 6000px;
 }
 
-/* Columns */
 .column {
   display: flex;
   flex-direction: column;
@@ -37,7 +34,6 @@ body {
   max-width: 420px;
 }
 
-/* Slight vertical offset per column */
 .column:nth-child(even) {
   margin-top: 120px;
 }
@@ -53,4 +49,3 @@ body {
 .fragment:hover {
   transform: translateY(-6px);
 }
-
