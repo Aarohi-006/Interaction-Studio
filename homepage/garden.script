@@ -1,6 +1,7 @@
 const fullText = `The Garden of Forking Paths 
 
 To Victoria Ocampo 
+
 In his A History of the World War (page 212), Captain Liddell Hart reports that a 
 planned offensive by thirteen British divisions, supported by fourteen hundred 
 artillery pieces, against the German line at Serre-Montauban, scheduled for July 24, 
@@ -9,6 +10,8 @@ torrential rain caused this delay - which lacked any special significance. The f
 deposition, dictated by, read over, and then signed by Dr. Yu Tsun, former teacher 
 of English at the Tsingtao Hochschule, casts unsuspected light upon this event. The 
 first two pages are missing. 
+
+
 * * * 
 
 . . . and I hung up the phone. Immediately I recollected the voice that had spoken in 
@@ -373,7 +376,6 @@ have corrected errors introduced by careless copyists, I have worked out the pla
 from this chaos, I have restored, or believe I have restored, the original. I have 
 translated the whole work. I can state categorically that not once has the word time 
 been used in the whole book. 
-
 "The explanation is obvious. The Garden of Forking Paths is a picture, incomplete 
 yet not false, of the universe such as Ts'ui Pen conceived it to be. Differing from 
 Newton and Schopenhauer, your ancestor did not think of time as absolute and 
@@ -425,57 +427,46 @@ const defs = document.querySelector("defs");
 const textGroup = document.getElementById("textGroup");
 
 const centerX = 500;
-const startY = 850;
+const centerY = 500;
 
-let index = 0;
-let level = 0;
-let nodesPerLevel = 1;
+segments.forEach((segment, i) => {
 
-while (index < segments.length) {
+  const spread = 380;
+  const angle = (i * 0.6) % (Math.PI * 2);
 
-  const spacing = 700 / nodesPerLevel;
-  const y = startY - level * 120;
+  const x1 = centerX + Math.cos(angle) * (spread * 0.6);
+  const y1 = centerY + Math.sin(angle) * (spread * 0.6);
 
-  for (let n = 0; n < nodesPerLevel && index < segments.length; n++) {
+  const x2 = centerX + Math.cos(angle + 0.5) * spread;
+  const y2 = centerY + Math.sin(angle + 0.5) * spread;
 
-    const x = 150 + spacing * n + spacing/2;
+  const cx = centerX + Math.cos(angle + 0.25) * (spread * 0.3);
+  const cy = centerY + Math.sin(angle + 0.25) * (spread * 0.3);
 
-    const parentY = y + 120;
-    const parentX = nodesPerLevel === 1
-      ? centerX
-      : 150 + (spacing * Math.floor(n/2)) + spacing/2;
+  const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+  path.setAttribute("id","path"+i);
+  path.setAttribute("d",`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
+  defs.appendChild(path);
 
-    const controlX = (x + parentX) / 2;
-    const controlY = (y + parentY) / 2 - 40;
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.setAttribute("class","mazeText");
 
-    const path = document.createElementNS("http://www.w3.org/2000/svg","path");
-    path.setAttribute("id","path"+index);
-    path.setAttribute("d",`M ${parentX} ${parentY} Q ${controlX} ${controlY} ${x} ${y}`);
-    defs.appendChild(path);
+  const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
+  textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#path"+i);
+  textPath.setAttribute("startOffset","0%");
+  textPath.textContent = segment;
 
-    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
-    text.setAttribute("class","mazeText");
+  text.appendChild(textPath);
+  textGroup.appendChild(text);
 
-    const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
-    textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#path"+index);
-    textPath.textContent = segments[index];
+  if(i>4) text.classList.add("hidden");
 
-    text.appendChild(textPath);
-    textGroup.appendChild(text);
+  text.addEventListener("click",()=>{
+    text.classList.add("active");
+    revealNearby(i);
+  });
 
-    if(level > 0) text.classList.add("hidden");
-
-    text.addEventListener("click",()=>{
-      text.classList.add("active");
-      revealNextLevel(level+1);
-    });
-
-    index++;
-  }
-
-  level++;
-  nodesPerLevel *= 2; // binary branching
-}
+});
 
 
 function splitIntoChunks(text, maxLength){
@@ -497,21 +488,10 @@ function splitIntoChunks(text, maxLength){
   return chunks;
 }
 
-function revealNextLevel(level){
-  const texts = document.querySelectorAll(".mazeText");
-  let count = 0;
-  let visible = 1;
-
-  while(count < texts.length){
-    const levelSize = Math.pow(2, visible-1);
-    if(visible === level){
-      for(let i=count; i<count+levelSize && i<texts.length; i++){
-        texts[i].classList.remove("hidden");
-      }
-      break;
-    }
-    count += levelSize;
-    visible++;
+function revealNearby(index){
+  const texts=document.querySelectorAll(".mazeText");
+  for(let i=index-4;i<=index+4;i++){
+    if(texts[i]) texts[i].classList.remove("hidden");
   }
 }
 
