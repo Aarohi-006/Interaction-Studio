@@ -18,30 +18,28 @@ body{
   height:95vh;
 }
 
-/* Maze Text */
 .mazeText{
-  fill:#f4e8b2;              /* soft light yellow */
-  font-size:18px;            /* increased size */
-  letter-spacing:.4px;
-  opacity:.28;
-  transition:opacity .4s ease, fill .3s ease, transform .4s ease;
+  font-size:18px;
+  letter-spacing:.6px;
+  opacity:.3;
+  transition:opacity .4s ease, fill .3s ease;
+  text-shadow: 0 0 6px rgba(0,0,0,0.35);
+  cursor:pointer;
 }
 
-/* Active (clicked) path */
 .mazeText.active{
+  fill:#ffffff !important;
   opacity:1;
-  fill:#fff6cc;              /* brighter highlight */
   font-weight:bold;
 }
 
-/* Visited */
 .mazeText.visited{
   opacity:.6;
 }
 
-/* Hidden paths */
 .hidden{
   opacity:0;
   pointer-events:none;
 }
+
 
