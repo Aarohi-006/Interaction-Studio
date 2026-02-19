@@ -5,44 +5,68 @@
 }
 
 body {
+  background: #5a0f1c;   /* deep maroon */
+  color: #f4f1ed;        /* warm white */
   font-family: Georgia, serif;
-  background: #e8dcc5;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   height: 100vh;
 }
 
-/* Main scroll container */
+/* Horizontal viewport */
 .sand-wrapper {
+  width: 100vw;
   height: 100vh;
-  width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
 }
 
-/* Horizontal layout */
+/* Horizontal field */
 .sand-track {
   display: flex;
-  gap: 100px;
-  padding: 120px 100px;
+  align-items: flex-start;
+  gap: 140px;
+  padding: 120px 120px;
   min-width: max-content;
 }
 
-/* Column layout */
+/* Columns */
 .column {
-  width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+  width: 420px;
+  transition: transform 0.4s ease;
 }
 
-/* Slight stagger */
-.column:nth-child(even) {
+/* Density variation */
+.column:nth-child(3n) {
   margin-top: 100px;
+}
+
+.column:nth-child(4n) {
+  margin-top: 180px;
 }
 
 .fragment {
   font-size: 17px;
   line-height: 1.7;
-  color: #2b2620;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: transform 0.35s ease, opacity 0.35s ease;
 }
+
+/* Subtle drift on hover */
+.fragment:hover {
+  transform: translateX(8px);
+  opacity: 1;
+}
+
+/* Depth reveal */
+.fragment.expanded {
+  font-size: 19px;
+  opacity: 1;
+  transform: translateX(20px);
+}
+
