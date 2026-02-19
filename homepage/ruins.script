@@ -3,7 +3,7 @@ const max = 5;
 
 const stage = document.querySelector(".stage");
 
-stage.addEventListener("click", () => {
+stage.addEventListener("click", (e) => {
 
   const currentLevel = document.querySelector(".level" + current);
   if(currentLevel) currentLevel.classList.remove("active");
