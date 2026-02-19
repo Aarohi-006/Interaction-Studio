@@ -12,50 +12,31 @@ body {
   overflow: hidden;
 }
 
-/* Horizontal scroll container */
-.wrapper {
+/* Screen stage */
+.stage {
   width: 100vw;
   height: 100vh;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scroll-behavior: smooth;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  padding: 60px;
+  gap: 40px;
 }
 
-/* Horizontal content */
-.track {
-  display: flex;
-  align-items: flex-start;
-  padding: 100px 120px;
-  gap: 120px;
-  min-width: max-content;
-}
-
-/* Paragraph chunk column */
-.chunk {
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-/* Individual paragraph */
+/* Paragraph fragments */
 .fragment {
-  font-size: 18px;
-  line-height: 1.8;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  font-size: 15px; /* smaller font */
+  line-height: 1.6;
+  opacity: 0.25;
+  transition: 
+    opacity 0.5s ease,
+    transform 0.5s ease;
   cursor: pointer;
 }
 
-/* Hover interaction */
-.fragment:hover {
-  transform: translateX(10px);
-  opacity: 1;
-}
-
-/* Click expand */
+/* Active visible text */
 .fragment.active {
-  transform: translateX(20px);
+  opacity: 1;
+  transform: translateY(-4px);
 }
-
 
