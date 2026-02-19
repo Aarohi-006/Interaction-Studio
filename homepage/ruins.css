@@ -16,7 +16,7 @@ body{
   position:relative;
 }
 
-/* Maze fits screen */
+/* Maze container */
 .maze{
   width:80vmin;
   height:80vmin;
@@ -25,8 +25,8 @@ body{
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 18% 1fr 18%;
-  grid-template-rows: 15% 1fr 15%;
+  grid-template-columns: 20% 1fr 20%;
+  grid-template-rows: 18% 1fr 18%;
   position:absolute;
   visibility:hidden;
 }
@@ -35,39 +35,45 @@ body{
   visibility:visible;
 }
 
-/* Walls */
+/* WALLS */
 .wall{
-  padding:1.5vmin;
+  padding:2vmin;
   font-size:1.6vmin;
   line-height:1.4;
-  text-align:center;
-  overflow:auto;
   display:flex;
   align-items:center;
   justify-content:center;
+  text-align:center;
+  overflow:auto;                /* prevents cutting */
+  box-sizing:border-box;
   cursor:pointer;
   transition:transform .2s ease;
 }
 
 /* Hover */
 .wall:hover{
-  transform:scale(1.04);
+  transform:scale(1.05);
 }
 
-/* Positions */
-.top{ grid-area:top; }
+/* Top */
+.top{
+  grid-area:top;
+}
 
+/* Bottom */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
 }
 
+/* Left */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
 }
 
+/* Right */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
@@ -75,6 +81,7 @@ body{
   transform:rotate(180deg);
 }
 
+/* Center */
 .center{
   grid-area:center;
   display:flex;
@@ -84,7 +91,7 @@ body{
   padding:2vmin;
 }
 
-/* Focused expand */
+/* Focus expand */
 .wall.focused{
   position:absolute;
   width:60vmin;
@@ -94,6 +101,6 @@ body{
   transform:translate(-50%, -50%) rotate(0deg) !important;
   writing-mode:horizontal-tb !important;
   background:#ffffff;
-  z-index:10;
-  box-shadow:0 2vmin 6vmin rgba(0,0,0,.2);
+  z-index:1000;
+  box-shadow:0 3vmin 8vmin rgba(0,0,0,.25);
 }
