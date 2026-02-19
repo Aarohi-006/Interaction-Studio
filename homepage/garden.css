@@ -1,6 +1,6 @@
 body{
   margin:0;
-  background:#e6dfcf;
+  background: radial-gradient(circle at center, #4f6f57 0%, #2f4f3f 70%, #1e3529 100%);
   font-family: "Garamond", serif;
   overflow:hidden;
 }
@@ -18,25 +18,30 @@ body{
   height:95vh;
 }
 
+/* Maze Text */
 .mazeText{
-  fill:#7a1c1c;
-  font-size:14px;
-  letter-spacing:.35px;
-  opacity:.25;
+  fill:#f4e8b2;              /* soft light yellow */
+  font-size:18px;            /* increased size */
+  letter-spacing:.4px;
+  opacity:.28;
   transition:opacity .4s ease, fill .3s ease, transform .4s ease;
 }
 
+/* Active (clicked) path */
 .mazeText.active{
   opacity:1;
-  fill:#000;
+  fill:#fff6cc;              /* brighter highlight */
   font-weight:bold;
 }
 
+/* Visited */
 .mazeText.visited{
-  opacity:.55;
+  opacity:.6;
 }
 
+/* Hidden paths */
 .hidden{
   opacity:0;
   pointer-events:none;
 }
+
