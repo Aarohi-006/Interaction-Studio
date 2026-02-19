@@ -1,6 +1,4 @@
-const back = document.getElementById("layerBack");
-const mid = document.getElementById("layerMid");
-const front = document.getElementById("layerFront");
+const track = document.getElementById("sandTrack");
 
 const fullText = `
 The  short  stories  of  Jorge  Luis  Borges,  written 
@@ -208,15 +206,10 @@ river  made  me  think  about  time — Heraclitus'  mil-
 lennial image.  I  had  slept  well;  my  class  on  the  pre- 
 vious afternoon  had,  I  thought,  managed  to  hold 
 the  interest  of  my  students.  Not  a  soul  was  in  sight. 
-
 All  at  once,  I  had  the  impression  (according  to 
 psychologists,  it  corresponds  to  a  state  of  fatigue) 
 of  having  lived  that  moment  once  before.  Some- 
-
-
 1 1 
-
-
 one  had  sat  down  at  the  other  end  of  the  bench.  I 
 would  have  preferred  to  be  alone,  but  not  wish- 
 ing to  appear  unsociable  I  avoided  getting  up 
@@ -233,7 +226,6 @@ for  so  many  years.  Then  came  the  words.  They
 were  those  of  the  opening  line.  It  was  not  Alvaro's 
 voice  but  an  imitation  of  it.  Recognizing  this,  I  was 
 taken  aback. 
-
 "Sir,"  I  said,  turning  to  the  other  man,  "are  you 
 an  Uruguayan  or  an  Argentine?" 
 
@@ -1859,10 +1851,7 @@ ver's Road,  all  the  furniture,  all  the  books,  and  all
 the  utensils  of  the  house.  (I  sadly  recalled  the  dia- 
 
 
-52 
-
-
-grams  in  the  Hinton  volumes  and  the  great  globe.) 
+52 grams  in  the  Hinton  volumes  and  the  great  globe.) 
 The  next  day,  Preetorius  went  to  Muir  and  pro- 
 posed certain  alterations  that  the  architect  indig- 
 nantly rejected.  In  the  end,  a  firm  from  Buenos 
@@ -1878,7 +1867,6 @@ the  dark.  One  morning,  the  milkman  found  the
 sheepdog  dead  on  the  walk,  headless  and  mutila- 
 ted. That  winter  they  felled  the  araucarias.  No- 
 body saw  Preetorius  again. 
-
 News  of  these  events,  as  may  be  imagined,  left 
 me  uneasy.  I  know  that  my  most  obvious  trait  is 
 curiosity — that  same  curiosity  that  brought  me 
@@ -1889,7 +1877,6 @@ sults) the  use  of  laudanum,  to  explore  transfinite
 numbers,  and  to  undertake  the  hideous  adventure 
 that  I  am  about  to  tell.  Ominously,  I  decided  to 
 look  into  the  matter. 
-
 My  first  step  was  to  see  Alexander  Muir.  I  re- 
 membered him  as  tall-standing  and  dark,  with  a 
 wiry  build  that  suggested  strength.  Now  the  years 
@@ -1900,11 +1887,7 @@ houses  followed  the  solid  standards  of  the  good
 poet  and  bad  builder  William  Morris. 
 
 Conversation    was    spare — Scotland's    symbol, 
-
-
 53 
-
-
 after  all,  is  the  thistle.  I  had  the  feeling,  nonethe- 
 less, that  the  strong  Ceylon  tea  and  the  equally 
 generous  plate  of  scones  (which  my  host  broke  in 
@@ -2073,11 +2056,7 @@ ries were  now,  with  the  wall  between  them  torn
 down,  a  single  great  bare  room  containing  one  or 
 two  pieces  of  furniture.  I  shall  not  try  to  describe 
 them,  since  I  am  not  altogether  sure — in  spite  of 
-
-
 57 
-
-
 the  cruel  white  light — of  having  seen  them.  Let  me 
 explain  myself.  To  see  a  thing  one  has  to  compre- 
 hend it.  An  armchair  presupposes  the  human 
@@ -4615,25 +4594,25 @@ function splitSentences(text) {
 
 const sentences = splitSentences(fullText);
 
+const columnsCount = 20;
+const columns = [];
+
+// Create columns
+for (let i = 0; i < columnsCount; i++) {
+  const column = document.createElement("div");
+  column.classList.add("column");
+  track.appendChild(column);
+  columns.push(column);
+}
+
+// Distribute text
 sentences.forEach((sentence, index) => {
   const fragment = document.createElement("div");
   fragment.classList.add("fragment");
   fragment.textContent = sentence.trim();
 
-  if (index % 3 === 0) {
-    back.appendChild(fragment);
-  } else if (index % 3 === 1) {
-    mid.appendChild(fragment);
-  } else {
-    front.appendChild(fragment);
-  }
+  columns[index % columnsCount].appendChild(fragment);
 });
-
-/* Clean layered horizontal drift */
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
-
-  back.style.transform = `translateX(${y * 0.15}px)`;
   mid.style.transform = `translateX(${y * 0.08}px)`;
   front.style.transform = `translateX(${y * 0.03}px)`;
 });
