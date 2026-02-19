@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   let current = 1;
-  const max = 5;   // adjust if needed
+  const max = 5;
 
   const stage = document.querySelector(".stage");
 
-  /* LEVEL SWITCHING */
+  /* LEVEL SWITCH */
   stage.addEventListener("click", function(e){
 
     if(e.target.closest(".wall")) return;
-    if(e.target.closest(".focused")) return;
 
     const currentLevel = document.querySelector(".level" + current);
     if(currentLevel){
@@ -26,23 +25,20 @@ document.addEventListener("DOMContentLoaded", function(){
 
   });
 
-  /* WALL EXPAND */
+  /* FOCUS */
   document.querySelectorAll(".wall").forEach(function(wall){
 
     wall.addEventListener("click", function(e){
 
       e.stopPropagation();
 
-      if(wall.classList.contains("focused")){
-        wall.classList.remove("focused");
-        return;
-      }
+      const maze = wall.closest(".maze");
 
-      document.querySelectorAll(".wall.focused").forEach(function(w){
-        w.classList.remove("focused");
+      maze.querySelectorAll(".wall").forEach(w => {
+        if(w !== wall) w.classList.remove("focused");
       });
 
-      wall.classList.add("focused");
+      wall.classList.toggle("focused");
 
     });
 
