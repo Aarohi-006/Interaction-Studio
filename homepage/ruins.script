@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   let current = 1;
-  const max = 14; // since you now have 14 levels
+  const max = 14;
 
   const stage = document.querySelector(".stage");
 
-  /* LEVEL SWITCH */
   stage.addEventListener("click", function(e){
 
     if(e.target.closest(".wall")) return;
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
   });
 
-  /* CLICK HIGHLIGHT ONLY */
   document.querySelectorAll(".wall").forEach(function(wall){
 
     wall.addEventListener("click", function(e){
