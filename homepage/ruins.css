@@ -1,3 +1,7 @@
+/* ============================= */
+/* BASE */
+/* ============================= */
+
 body{
   margin:0;
   background:#e8e0d6;
@@ -7,7 +11,10 @@ body{
   overflow:hidden;
 }
 
-/* Stage */
+/* ============================= */
+/* STAGE */
+/* ============================= */
+
 .stage{
   width:100vw;
   height:100vh;
@@ -17,7 +24,10 @@ body{
   position:relative;
 }
 
-/* Maze */
+/* ============================= */
+/* MAZE GRID */
+/* ============================= */
+
 .maze{
   width:85vmin;
   height:85vmin;
@@ -39,44 +49,51 @@ body{
   visibility:visible;
 }
 
+/* ============================= */
 /* WALL BASE */
+/* ============================= */
+
 .wall{
   padding:2vmin;
   font-size:1.2vmin;
   line-height:1.6;
   box-sizing:border-box;
   text-align:center;
-  white-space:normal;
   word-break:normal;
   overflow:hidden;
 
-  transform-origin:center center;
+  transform-origin:center;
   will-change:transform;
   backface-visibility:hidden;
-  transform:translateZ(0);  /* GPU layer */
+  transform:translateZ(0);
 
   transition:transform .25s ease;
 }
 
-/* Top */
+/* Hover subtle lift */
+.wall:hover{
+  transform:scale(1.03) translateZ(0);
+}
+
+/* ============================= */
+/* WALL POSITIONS */
+/* ============================= */
+
 .top{
   grid-area:top;
 }
 
-/* Bottom rotated once only */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg) translateZ(0);
 }
 
-/* Left vertical */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
 }
 
-/* Right vertical rotated once only */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
@@ -84,34 +101,21 @@ body{
   transform:rotate(180deg) translateZ(0);
 }
 
-/* Center */
+/* ============================= */
+/* CENTER CORE */
+/* ============================= */
+
 .center{
   grid-area:center;
+  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:3vmin;
-  font-size:1.4vmin;
-  text-align:center;
-}
-
-/* Focus — scale only (DO NOT remove rotate) */
-.wall.focused{
-  transform:scale(1.05) translateZ(0);
-  background:white;
-  z-index:5;
-}
-
-/* ========================= */
-/* MAZE CORE LINES */
-/* ========================= */
-
-.center{
-  position:relative;
   overflow:hidden;
 }
 
-/* vertical line */
+/* Subtle maze cross lines */
+
 .center::before{
   content:"";
   position:absolute;
@@ -123,7 +127,6 @@ body{
   transform:translateX(-50%);
 }
 
-/* horizontal line */
 .center::after{
   content:"";
   position:absolute;
@@ -135,4 +138,12 @@ body{
   transform:translateY(-50%);
 }
 
+/* ============================= */
+/* FINAL LEVEL EMPHASIS */
+/* ============================= */
+
+.level14 .center::before,
+.level14 .center::after{
+  background:rgba(180,30,20,0.4);
+}
 
