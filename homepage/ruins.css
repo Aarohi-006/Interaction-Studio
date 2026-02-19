@@ -14,19 +14,23 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  position:relative;
 }
 
-/* Maze layout */
+/* Maze locked layout */
 .maze{
-  width:75vmin;
-  height:75vmin;
+  width:78vmin;
+  height:78vmin;
+
   display:grid;
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 24% 1fr 24%;
-  grid-template-rows: 20% 1fr 20%;
+
+  grid-template-columns: 22% 1fr 22%;
+  grid-template-rows: 18% 1fr 18%;
+
   position:absolute;
   visibility:hidden;
 }
@@ -35,24 +39,18 @@ body{
   visibility:visible;
 }
 
-/* Wall base */
+/* WALL BASE */
 .wall{
   padding:2vmin;
-  font-size:1.2vmin;
+  font-size:1.25vmin;
   line-height:1.6;
   box-sizing:border-box;
-  white-space:normal;
-  word-break:normal;
   overflow:hidden;
   text-align:center;
+  white-space:normal;
+  word-break:normal;
+  display:block;
   cursor:pointer;
-  transition:transform .2s ease, background .2s ease;
-}
-
-/* Hover */
-.wall:hover{
-  background:rgba(0,0,0,0.04);
-  transform:scale(1.02);
 }
 
 /* Top */
@@ -60,19 +58,19 @@ body{
   grid-area:top;
 }
 
-/* Bottom (no rotation anymore) */
+/* Bottom */
 .bottom{
   grid-area:bottom;
 }
 
-/* Left (vertical writing stays) */
+/* Left vertical */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
 }
 
-/* Right (vertical but flipped direction naturally) */
+/* Right vertical */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
@@ -90,13 +88,9 @@ body{
   text-align:center;
 }
 
-/* Focus mode */
+/* Focus (SAFE — does not break grid) */
 .wall.focused{
-  grid-area:center !important;
-  writing-mode:horizontal-tb !important;
-  transform:scale(1.05) !important;
-  background:#ffffff;
-  padding:4vmin;
-  box-shadow:0 2vmin 5vmin rgba(0,0,0,.2);
-  z-index:5;
+  background:white;
+  outline:2px solid rgba(0,0,0,0.1);
 }
+
