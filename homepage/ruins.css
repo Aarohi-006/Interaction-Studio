@@ -3,28 +3,30 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
-  height:100vh;
   overflow:hidden;
 }
 
-/* Stage fills screen */
+/* Stage */
 .stage{
   width:100vw;
   height:100vh;
-  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* Maze fills stage */
+/* Maze slightly smaller */
 .maze{
-  position:absolute;
-  inset:5vh 5vw;   /* margin around maze */
+  width:70vmin;              /* minimized */
+  height:70vmin;
   display:grid;
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 12vw 1fr 12vw;
-  grid-template-rows: 10vh 1fr 10vh;
+  grid-template-columns: 22% 1fr 22%;   /* thicker vertical walls */
+  grid-template-rows: 18% 1fr 18%;      /* thicker horizontal walls */
+  position:absolute;
   visibility:hidden;
 }
 
@@ -34,14 +36,11 @@ body{
 
 /* WALL BASE */
 .wall{
-  padding:1.2rem;
-  font-size:1rem;
+  padding:1.5vmin;
+  font-size:1.3vmin;          /* slightly smaller for fit */
   line-height:1.5;
-  text-align:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   box-sizing:border-box;
+  overflow:hidden;            /* prevent spill */
   word-break:break-word;
   cursor:pointer;
   transition:transform .2s ease;
@@ -49,50 +48,59 @@ body{
 
 /* Hover */
 .wall:hover{
-  transform:scale(1.03);
+  transform:scale(1.02);
 }
 
-/* Positions */
+/* TOP */
 .top{
   grid-area:top;
+  text-align:center;
 }
 
+/* BOTTOM */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
+  text-align:center;
 }
 
+/* LEFT */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
+  text-align:center;
+  white-space:normal;
 }
 
+/* RIGHT */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
   text-orientation:mixed;
   transform:rotate(180deg);
+  text-align:center;
+  white-space:normal;
 }
 
-/* Center core */
+/* CENTER */
 .center{
   grid-area:center;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:2rem;
-  font-size:1.1rem;
+  padding:2vmin;
+  font-size:1.5vmin;
   text-align:center;
 }
 
-/* Focus mode (no position:absolute) */
+/* Focus */
 .wall.focused{
   grid-area:center !important;
   writing-mode:horizontal-tb !important;
-  transform:rotate(0deg) scale(1.1) !important;
+  transform:rotate(0deg) scale(1.05) !important;
   background:#ffffff;
   z-index:5;
-  padding:3rem;
-  box-shadow:0 2rem 4rem rgba(0,0,0,.2);
+  padding:3vmin;
+  box-shadow:0 2vmin 4vmin rgba(0,0,0,.2);
 }
