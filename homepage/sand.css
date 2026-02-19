@@ -11,32 +11,48 @@ body {
     overflow: hidden;
 }
 
+/* Sand grain overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/sandpaper.png");
+    opacity: 0.15;
+    pointer-events: none;
+    animation: grainMove 20s linear infinite;
+}
+
+@keyframes grainMove {
+    from { background-position: 0 0; }
+    to { background-position: 0 500px; }
+}
+
 .scroll-container {
     height: 100vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: 60px 40px;
     scroll-behavior: smooth;
 }
 
+/* GRID — no overlap possible */
 #field {
-    position: relative;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px 40px;
 }
 
-/* fragment container */
+/* fragment */
 .fragment {
-    position: absolute;
-    width: 21%;
-    font-size: 13px;
-    line-height: 1.6;
-    transition: opacity 0.4s ease;
+    perspective: 800px;
     cursor: pointer;
 }
 
-/* inner wrapper so transforms don’t conflict */
 .fragment-inner {
+    font-size: 13px;
+    line-height: 1.6;
     transition: transform 0.6s ease;
-    transform-origin: center;
+    transform-style: preserve-3d;
 }
 
 /* flipped initially */
@@ -44,11 +60,8 @@ body {
     transform: rotateY(180deg);
 }
 
-/* active flip */
+/* active */
 .active .fragment-inner {
     transform: rotateY(0deg);
 }
 
-.fragment:hover {
-    opacity: 1;
-}
