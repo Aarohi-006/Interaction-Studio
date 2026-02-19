@@ -18,10 +18,15 @@ body{
   height:95vh;
 }
 
+svg{
+  overflow:visible;
+}
+
 .mazeText{
   font-size:18px;
   letter-spacing:.6px;
-  opacity:.3;
+  fill:#f5e6a9;
+  opacity:.35;
   transition:opacity .4s ease, fill .3s ease;
   text-shadow: 0 0 6px rgba(0,0,0,0.35);
   cursor:pointer;
