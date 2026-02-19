@@ -27,79 +27,73 @@ body{
   visibility:visible;
 }
 
-/* Strict nested proportions */
+/* Strict proportional nesting */
 .level1{ width:900px; height:600px; }
 .level2{ width:750px; height:500px; }
 .level3{ width:600px; height:400px; }
 .level4{ width:450px; height:300px; }
 .level5{ width:280px; height:180px; }
 
-/* Grid layout */
+/* CORRIDOR THICKNESS — thicker like reference */
 .maze{
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 80px 1fr 80px;   /* fixed vertical corridor width */
-  grid-template-rows: 60px 1fr 60px;      /* fixed horizontal corridor height */
+  grid-template-columns: 120px 1fr 120px;  /* wider vertical corridors */
+  grid-template-rows: 90px 1fr 90px;       /* taller horizontal corridors */
 }
 
 /* WALL BASE */
 .wall{
   box-sizing:border-box;
-  padding:6px;
-  font-size:10px;
-  line-height:1.15;
+  padding:12px;
+  font-size:13px;         /* bigger font */
+  line-height:1.35;
+  text-align:center;      /* centered chunk */
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
   word-break:break-word;
   cursor:pointer;
   transition:transform .15s ease;
 }
 
-/* HOVER */
+/* Hover */
 .wall:hover{
-  transform:scale(1.02);
+  transform:scale(1.03);
 }
 
 /* TOP WALL */
 .top{
   grid-area:top;
-  text-align:justify;
 }
 
 /* BOTTOM WALL */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
-  text-align:justify;
 }
 
 /* LEFT WALL */
 .left{
   grid-area:left;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
 }
 
 .left > *{
   transform:rotate(-90deg);
-  width:500px;           /* large enough text width */
+  width:400px;
 }
 
 /* RIGHT WALL */
 .right{
   grid-area:right;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
 }
 
 .right > *{
   transform:rotate(90deg);
-  width:500px;
+  width:400px;
 }
 
 /* CORE */
@@ -110,8 +104,7 @@ body{
 }
 
 .center{
-  font-size:11px;
-  padding:6px;
+  font-size:14px;
+  padding:10px;
   text-align:center;
 }
-
