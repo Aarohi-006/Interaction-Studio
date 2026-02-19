@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   let current = 1;
-  const max = 14;
+  const max = 14; // MUST match number of levels
 
   const stage = document.querySelector(".stage");
 
   stage.addEventListener("click", function(e){
 
+    // Prevent switching when clicking a wall
     if(e.target.closest(".wall")) return;
 
     const currentLevel = document.querySelector(".level" + current);
@@ -21,22 +22,6 @@ document.addEventListener("DOMContentLoaded", function(){
     if(nextLevel){
       nextLevel.classList.add("active");
     }
-
-  });
-
-  document.querySelectorAll(".wall").forEach(function(wall){
-
-    wall.addEventListener("click", function(e){
-
-      e.stopPropagation();
-
-      document.querySelectorAll(".wall").forEach(w => {
-        w.classList.remove("focused");
-      });
-
-      wall.classList.add("focused");
-
-    });
 
   });
 
