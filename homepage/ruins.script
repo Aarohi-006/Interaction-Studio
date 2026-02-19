@@ -1,24 +1,13 @@
-let currentLevel = 1;
-const totalLevels = 4;
+let current = 1;
+const max = 5;
 
 document.querySelector(".stage").addEventListener("click", () => {
 
-  if(currentLevel < totalLevels){
-    document.querySelector(".level" + currentLevel)
-      .classList.remove("active");
+  document.querySelector(".level" + current).classList.remove("active");
 
-    currentLevel++;
+  current++;
 
-    document.querySelector(".level" + currentLevel)
-      .classList.add("active");
-  } else {
-    document.querySelector(".level" + currentLevel)
-      .classList.remove("active");
+  if(current > max) current = 1;
 
-    currentLevel = 1;
-
-    document.querySelector(".level1")
-      .classList.add("active");
-  }
-
+  document.querySelector(".level" + current).classList.add("active");
 });
