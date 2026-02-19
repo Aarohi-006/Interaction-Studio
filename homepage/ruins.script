@@ -1,29 +1,44 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   let current = 1;
-  const max = 14; // MUST match number of levels
+  const max = 14;
 
-  const stage = document.querySelector(".stage");
+  document.querySelectorAll(".maze").forEach(maze => {
 
-  stage.addEventListener("click", function(e){
+    maze.addEventListener("click", function(e){
 
-    // Prevent switching when clicking a wall
-    if(e.target.closest(".wall")) return;
+      // If clicking center → do nothing
+      if(e.target.closest(".center")) return;
 
-    const currentLevel = document.querySelector(".level" + current);
-    if(currentLevel){
-      currentLevel.classList.remove("active");
-    }
+      // If clicking a wall → highlight only
+      if(e.target.closest(".wall")){
+        highlightWall(e.target.closest(".wall"));
+        return;
+      }
 
-    current++;
-    if(current > max) current = 1;
+      // Otherwise switch level
+      this.classList.remove("active");
 
-    const nextLevel = document.querySelector(".level" + current);
-    if(nextLevel){
-      nextLevel.classList.add("active");
-    }
+      current++;
+      if(current > max) current = 1;
+
+      const nextLevel = document.querySelector(".level" + current);
+      if(nextLevel){
+        nextLevel.classList.add("active");
+      }
+
+    });
 
   });
+
+  function highlightWall(wall){
+
+    document.querySelectorAll(".wall").forEach(w => {
+      w.classList.remove("focused");
+    });
+
+    wall.classList.add("focused");
+  }
 
 });
 
