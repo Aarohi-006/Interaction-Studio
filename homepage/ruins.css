@@ -6,7 +6,7 @@ body{
   overflow:hidden;
 }
 
-/* Stage centered */
+/* Stage */
 .stage{
   width:100vw;
   height:100vh;
@@ -16,18 +16,18 @@ body{
   position:relative;
 }
 
-/* Maze base */
+/* Maze fits screen */
 .maze{
-  position:absolute;
-  width:850px;
-  height:850px;
+  width:80vmin;
+  height:80vmin;
   display:grid;
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 160px 1fr 160px;
-  grid-template-rows: 140px 1fr 140px;
+  grid-template-columns: 18% 1fr 18%;
+  grid-template-rows: 15% 1fr 15%;
+  position:absolute;
   visibility:hidden;
 }
 
@@ -35,45 +35,39 @@ body{
   visibility:visible;
 }
 
-/* WALL BASE */
+/* Walls */
 .wall{
-  box-sizing:border-box;
-  padding:15px;
-  font-size:14px;
+  padding:1.5vmin;
+  font-size:1.6vmin;
   line-height:1.4;
   text-align:center;
-  overflow:auto;                 /* no cutting */
+  overflow:auto;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:transform .25s ease;
+  transition:transform .2s ease;
 }
 
-/* HOVER */
+/* Hover */
 .wall:hover{
-  transform:scale(1.03);
+  transform:scale(1.04);
 }
 
-/* TOP */
-.top{
-  grid-area:top;
-}
+/* Positions */
+.top{ grid-area:top; }
 
-/* BOTTOM */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
 }
 
-/* LEFT */
 .left{
   grid-area:left;
   writing-mode:vertical-rl;
   text-orientation:mixed;
 }
 
-/* RIGHT */
 .right{
   grid-area:right;
   writing-mode:vertical-rl;
@@ -81,28 +75,25 @@ body{
   transform:rotate(180deg);
 }
 
-/* CENTER CORE */
 .center{
   grid-area:center;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:16px;
-  padding:20px;
+  font-size:2vmin;
+  padding:2vmin;
 }
 
 /* Focused expand */
 .wall.focused{
-  position:fixed;
+  position:absolute;
+  width:60vmin;
+  height:50vmin;
   top:50%;
   left:50%;
-  width:600px;
-  height:450px;
   transform:translate(-50%, -50%) rotate(0deg) !important;
   writing-mode:horizontal-tb !important;
   background:#ffffff;
-  z-index:999;
-  box-shadow:0 30px 80px rgba(0,0,0,.2);
-}
-
+  z-index:10;
+  box-shadow:0 2vmin 6vmin rgba(0,0,0,.2);
 }
