@@ -1,67 +1,82 @@
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    background: #5a0f1b;
-    color: white;
+    background: #5a0f19;
+    color: #ffffff;
     font-family: Georgia, serif;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* Sand grain overlay */
-body::before {
-    content: "";
+/* Grain background */
+.grain {
     position: fixed;
     inset: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/sandpaper.png");
-    opacity: 0.15;
     pointer-events: none;
-    animation: grainMove 20s linear infinite;
+    opacity: 0.06;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    mix-blend-mode: overlay;
+    z-index: 0;
 }
 
-@keyframes grainMove {
-    from { background-position: 0 0; }
-    to { background-position: 0 500px; }
-}
-
-.scroll-container {
-    height: 100vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 60px 40px;
-    scroll-behavior: smooth;
-}
-
-/* GRID — no overlap possible */
-#field {
+/* Layout container */
+.field {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 70px 80px 120px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 60px 40px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 70px 90px;
 }
 
-/* fragment */
+/* Fragment */
 .fragment {
-    perspective: 800px;
+    perspective: 1200px;
     cursor: pointer;
+    transition: opacity 0.4s ease;
 }
 
 .fragment-inner {
     font-size: 13px;
-    line-height: 1.6;
-    transition: transform 0.6s ease;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+    padding: 12px;
     transform-style: preserve-3d;
+    transition:
+        transform 0.8s cubic-bezier(.2,.7,.3,1),
+        background 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
-/* flipped initially */
+/* Start upside down */
 .flipped .fragment-inner {
-    transform: rotateY(180deg);
+    transform: rotateX(180deg);
 }
 
-/* active */
-.active .fragment-inner {
-    transform: rotateY(0deg);
+/* Hover preview */
+.fragment:not(.active):hover .fragment-inner {
+    transform: rotateX(0deg);
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 18px rgba(255,255,255,0.15);
 }
 
+/* Active clicked */
+.fragment.active .fragment-inner {
+    transform: rotateX(0deg);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 26px rgba(255,255,255,0.25);
+}
+
+/* Dim others */
+.fragment.dimmed {
+    opacity: 0.25;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
