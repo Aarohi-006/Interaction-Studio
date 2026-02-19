@@ -1,12 +1,9 @@
 let current = 1;
-const max = 5;   // Adjust if you have 4 or 5 levels
+const max = 5;
 
 const stage = document.querySelector(".stage");
 
-stage.addEventListener("click", (e) => {
-
-  // Prevent click from triggering when hovering wall text selection
-  if(e.target.classList.contains("wall")) return;
+stage.addEventListener("click", () => {
 
   const currentLevel = document.querySelector(".level" + current);
   if(currentLevel) currentLevel.classList.remove("active");
