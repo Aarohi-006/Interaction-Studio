@@ -1,19 +1,19 @@
-/* ============================= */
+/* ================================= */
 /* BASE */
-/* ============================= */
+/* ================================= */
 
 body{
   margin:0;
   background:#e8e0d6;
   font-family:Georgia, serif;
-  color:#7b1f2b;
+  color:#7b3a2a;
   height:100vh;
   overflow:hidden;
 }
 
-/* ============================= */
+/* ================================= */
 /* STAGE */
-/* ============================= */
+/* ================================= */
 
 .stage{
   width:100vw;
@@ -24,9 +24,9 @@ body{
   position:relative;
 }
 
-/* ============================= */
+/* ================================= */
 /* MAZE GRID */
-/* ============================= */
+/* ================================= */
 
 .maze{
   width:85vmin;
@@ -49,9 +49,9 @@ body{
   visibility:visible;
 }
 
-/* ============================= */
+/* ================================= */
 /* WALL BASE */
-/* ============================= */
+/* ================================= */
 
 .wall{
   padding:2vmin;
@@ -59,7 +59,6 @@ body{
   line-height:1.6;
   box-sizing:border-box;
   text-align:center;
-  word-break:normal;
   overflow:hidden;
 
   transform-origin:center;
@@ -70,14 +69,14 @@ body{
   transition:transform .25s ease;
 }
 
-/* Hover subtle lift */
+/* Subtle hover lift */
 .wall:hover{
   transform:scale(1.03) translateZ(0);
 }
 
-/* ============================= */
+/* ================================= */
 /* WALL POSITIONS */
-/* ============================= */
+/* ================================= */
 
 .top{
   grid-area:top;
@@ -101,9 +100,9 @@ body{
   transform:rotate(180deg) translateZ(0);
 }
 
-/* ============================= */
-/* CENTER CORE */
-/* ============================= */
+/* ================================= */
+/* CENTER COMPLEX MAZE CORE */
+/* ================================= */
 
 .center{
   grid-area:center;
@@ -114,36 +113,72 @@ body{
   overflow:hidden;
 }
 
-/* Subtle maze cross lines */
-
+/* Main vertical corridor */
 .center::before{
   content:"";
   position:absolute;
-  width:1px;
-  height:70%;
-  background:rgba(120,20,30,0.2);
-  top:15%;
+  width:2px;
+  height:80%;
+  background:#5a2d1f;
   left:50%;
+  top:10%;
   transform:translateX(-50%);
+  opacity:0.8;
 }
 
+/* Main horizontal corridor */
 .center::after{
   content:"";
   position:absolute;
-  height:1px;
-  width:70%;
-  background:rgba(120,20,30,0.2);
-  left:15%;
+  height:2px;
+  width:80%;
+  background:#5a2d1f;
   top:50%;
+  left:10%;
   transform:translateY(-50%);
+  opacity:0.8;
 }
 
-/* ============================= */
+/* Inner broken maze fragments */
+.center .maze-lines{
+  position:absolute;
+  width:70%;
+  height:70%;
+  pointer-events:none;
+}
+
+/* Inner vertical broken segment */
+.center .maze-lines::before{
+  content:"";
+  position:absolute;
+  width:2px;
+  height:40%;
+  background:#5a2d1f;
+  left:30%;
+  top:0;
+  opacity:0.7;
+}
+
+/* Inner horizontal broken segment */
+.center .maze-lines::after{
+  content:"";
+  position:absolute;
+  height:2px;
+  width:40%;
+  background:#5a2d1f;
+  right:0;
+  bottom:30%;
+  opacity:0.7;
+}
+
+/* ================================= */
 /* FINAL LEVEL EMPHASIS */
-/* ============================= */
+/* ================================= */
 
 .level14 .center::before,
-.level14 .center::after{
-  background:rgba(180,30,20,0.4);
+.level14 .center::after,
+.level14 .maze-lines::before,
+.level14 .maze-lines::after{
+  background:#7a1e12;   /* deeper fire tone */
 }
 
