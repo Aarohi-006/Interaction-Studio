@@ -6,85 +6,85 @@ body{
   overflow:hidden;
 }
 
-/* Fit to Mac 13" */
+/* Stage */
 .stage{
   width:1280px;
   height:800px;
   margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   position:relative;
-  overflow:hidden;
 }
 
-/* Maze levels — smaller */
+/* Maze container */
 .maze{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
+  display:grid;
   opacity:0;
-  transition:opacity 1s ease, transform 1s ease;
+  transition:opacity 1s ease;
 }
 
-/* Reduced sizes */
-.level1{ width:850px; height:520px; }
-.level2{ width:650px; height:400px; }
-.level3{ width:480px; height:300px; }
-.level4{ width:280px; height:150px; }
+/* Level sizes (scaled properly) */
+.level1{ width:900px; height:600px; }
+.level2{ width:700px; height:450px; }
+.level3{ width:500px; height:320px; }
+.level4{ width:300px; height:200px; }
 
 .active{
   opacity:1;
 }
 
-/* Side text */
-.side{
-  position:absolute;
+/* Grid layout for walls */
+.maze{
+  grid-template-areas:
+    "top top top"
+    "left center right"
+    "bottom bottom bottom";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* Wall styling */
+.wall{
+  padding:15px;
   font-size:12px;
-  line-height:1.5;
-  width:100%;
+  line-height:1.4;
   text-align:center;
-  white-space:normal;
+  overflow-wrap:break-word;
 }
 
-/* TOP */
+/* Positioning */
 .top{
-  top:-40px;
+  grid-area:top;
 }
 
-/* BOTTOM */
 .bottom{
-  bottom:-40px;
+  grid-area:bottom;
   transform:rotate(180deg);
 }
 
-/* LEFT */
 .left{
-  left:-260px;
-  top:50%;
-  transform:rotate(-90deg) translateY(-50%);
-  transform-origin:center;
-  width:300px;
+  grid-area:left;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
 }
 
-/* RIGHT */
 .right{
-  right:-260px;
-  top:50%;
-  transform:rotate(90deg) translateY(-50%);
-  transform-origin:center;
-  width:300px;
+  grid-area:right;
+  writing-mode:vertical-rl;
 }
 
-/* CORE */
+/* Core center */
 .core{
   display:flex;
   align-items:center;
   justify-content:center;
+}
+
+.center{
   font-size:16px;
   text-align:center;
+  padding:20px;
 }
-
-.core-text{
-  max-width:260px;
-}
-
 
