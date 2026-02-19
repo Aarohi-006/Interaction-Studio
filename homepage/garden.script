@@ -424,62 +424,64 @@ however, had already solved this mystery. He knew that my problem was to shout,
 with my feeble voice, above the tumult of war, the name of the city called Albert, 
 and that I had no other course open to me than to kill someone of that name. He 
 does not know, for no one can, of my infinite penitence and sickness of the heart. 
-
-
 ' A malicious and outlandish statement. In point of fact, Captain Richard Madden had been attacked by the 
 Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol when Madden appeared with 
 orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. - Note by 
 the manuscript editor. 
-
-
 8 `;
 
-const segments = splitIntoChunks(fullText, 420);
+const segments = splitIntoChunks(fullText, 350);
 
 const defs = document.querySelector("defs");
-const textGroup = document.getElementById("textGroup");
+const branchLayer = document.getElementById("branches");
+const textLayer = document.getElementById("textGroup");
 
-const centerX = 500;
-const centerY = 500;
+let currentIndex = 0;
 
-segments.forEach((segment, i) => {
+createNode(500, 850, -Math.PI/2, 0); // start bottom center upward
 
-  // Create maze-like curved paths (non circular)
-  const spread = 380;
-  const angle = (i * 0.6) % (Math.PI * 2);
+function createNode(x, y, angle, depth){
 
-  const x1 = centerX + Math.cos(angle) * (spread * 0.6);
-  const y1 = centerY + Math.sin(angle) * (spread * 0.6);
+  if(currentIndex >= segments.length) return;
 
-  const x2 = centerX + Math.cos(angle + 0.5) * spread;
-  const y2 = centerY + Math.sin(angle + 0.5) * spread;
+  const segment = segments[currentIndex++];
+  const id = "path" + currentIndex;
 
-  const cx = centerX + Math.cos(angle + 0.25) * (spread * 0.3);
-  const cy = centerY + Math.sin(angle + 0.25) * (spread * 0.3);
+  const length = 140 - depth*8;
+  const curveOffset = 40 - depth*2;
+
+  const x2 = x + Math.cos(angle) * length;
+  const y2 = y + Math.sin(angle) * length;
+
+  const cx = x + Math.cos(angle) * (length/2) - Math.sin(angle)*curveOffset;
+  const cy = y + Math.sin(angle) * (length/2) + Math.cos(angle)*curveOffset;
 
   const path = document.createElementNS("http://www.w3.org/2000/svg","path");
-  path.setAttribute("id","path"+i);
-  path.setAttribute("d",`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
-  defs.appendChild(path);
+  path.setAttribute("id", id);
+  path.setAttribute("d", `M ${x} ${y} Q ${cx} ${cy} ${x2} ${y2}`);
+
+  branchLayer.appendChild(path);
 
   const text = document.createElementNS("http://www.w3.org/2000/svg","text");
   text.setAttribute("class","mazeText");
 
   const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
-  textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#path"+i);
-  textPath.setAttribute("startOffset","0%");
+  textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#"+id);
   textPath.textContent = segment;
 
   text.appendChild(textPath);
-  textGroup.appendChild(text);
+  textLayer.appendChild(text);
 
-  if(i>4) text.classList.add("hidden");
+  text.addEventListener("click", ()=>{
 
-  text.addEventListener("click",()=>{
-    text.classList.add("active","visited");
-    revealNearby(i);
+    if(depth > 9) return; // stop deep branching
+
+    createNode(x2, y2, angle - 0.6, depth+1);
+    createNode(x2, y2, angle + 0.6, depth+1);
+
+    text.classList.add("active");
   });
-});
+}
 
 
 function splitIntoChunks(text, maxLength){
@@ -499,11 +501,4 @@ function splitIntoChunks(text, maxLength){
   if(current.length>0) chunks.push(current.trim());
 
   return chunks;
-}
-
-function revealNearby(index){
-  const texts=document.querySelectorAll(".mazeText");
-  for(let i=index-4;i<=index+4;i++){
-    if(texts[i]) texts[i].classList.remove("hidden");
-  }
 }
