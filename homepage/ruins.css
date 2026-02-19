@@ -102,4 +102,37 @@ body{
   z-index:5;
 }
 
+/* ========================= */
+/* MAZE CORE LINES */
+/* ========================= */
+
+.center{
+  position:relative;
+  overflow:hidden;
+}
+
+/* vertical line */
+.center::before{
+  content:"";
+  position:absolute;
+  width:1px;
+  height:70%;
+  background:rgba(120,20,30,0.2);
+  top:15%;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* horizontal line */
+.center::after{
+  content:"";
+  position:absolute;
+  height:1px;
+  width:70%;
+  background:rgba(120,20,30,0.2);
+  left:15%;
+  top:50%;
+  transform:translateY(-50%);
+}
+
 
