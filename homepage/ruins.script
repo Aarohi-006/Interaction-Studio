@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   let current = 1;
-  const max = 5;
+  const max = 14; // since you now have 14 levels
 
   const stage = document.querySelector(".stage");
 
@@ -25,20 +25,18 @@ document.addEventListener("DOMContentLoaded", function(){
 
   });
 
-  /* FOCUS */
+  /* CLICK HIGHLIGHT ONLY */
   document.querySelectorAll(".wall").forEach(function(wall){
 
     wall.addEventListener("click", function(e){
 
       e.stopPropagation();
 
-      const maze = wall.closest(".maze");
-
-      maze.querySelectorAll(".wall").forEach(w => {
-        if(w !== wall) w.classList.remove("focused");
+      document.querySelectorAll(".wall").forEach(w => {
+        w.classList.remove("focused");
       });
 
-      wall.classList.toggle("focused");
+      wall.classList.add("focused");
 
     });
 
