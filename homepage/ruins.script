@@ -1,13 +1,17 @@
 let current = 1;
 const max = 5;
 
-document.querySelector(".stage").addEventListener("click", () => {
+const stage = document.querySelector(".stage");
 
-  document.querySelector(".level" + current).classList.remove("active");
+stage.addEventListener("click", () => {
+
+  const currentLevel = document.querySelector(".level" + current);
+  currentLevel.classList.remove("active");
 
   current++;
-
   if(current > max) current = 1;
 
-  document.querySelector(".level" + current).classList.add("active");
+  const nextLevel = document.querySelector(".level" + current);
+  nextLevel.classList.add("active");
+
 });
