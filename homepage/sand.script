@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const stage = document.getElementById("stage");
 
-  const fullText = `The  short  stories  of  Jorge  Luis  Borges,  written 
+  const FULL_TEXT = `The  short  stories  of  Jorge  Luis  Borges,  written 
 more  than  twenty  years  ago,  have  become 
 classics  of  contemporary  literature.  In  The 
 Book  of  Sand  are  thirteen  brand-new  stories 
@@ -11,7 +11,6 @@ Borges'  world-wide  reputation.  Borges  him-
 self considers  two  of  the  stories— the  title 
 story  and  "The  Congress"— to  be  among  his 
 greatest  achievements  in  short  fiction. 
-
 Like  the  distinctive  stories  in  Ficciones  and 
 The  Aleph,  these  stories  artfully  blend  ele- 
 ments from  many  literary  genres:  the  essay, 
@@ -64,30 +63,16 @@ In  Praise  of  Darkness
 Chronicles  of  Bustos  Domecq 
 (with  Adolfo  Bioy-Casares) 
 
-
 JORGE 
-
 LUIS 
-
 BORGES 
-
-
-n 
-
-
-TRANSLATED  BY 
+n TRANSLATED  BY 
 
 NORMAN   THOMAS    Dl    GIOVANNI 
-
-
 n 
 a 
-
-
 E.    P.  DUTTON 
 NEW  YORK 
-
-
 Published   1977  by  E.  P.  Dutton,  a  Division  of  Sequoia-Elsevier  Publishing 
 
 Company,  Inc.,  New  York 
@@ -4674,14 +4659,19 @@ CHRONICLES  OF  BUSTOS  DOMECQ
 1077 
 `;
 
-const paragraphs = FULL_TEXT
+
+  // Split by blank lines
+  const paragraphs = FULL_TEXT
     .split(/\n\s*\n/)
     .map(p => p.trim())
     .filter(p => p.length > 0);
 
+  // Limit to first 12 to fit screen safely
+  const visibleParagraphs = paragraphs.slice(0, 12);
+
   const fragments = [];
 
-  paragraphs.forEach((text, index) => {
+  visibleParagraphs.forEach((text, index) => {
 
     const div = document.createElement("div");
     div.className = "fragment";
@@ -4691,22 +4681,19 @@ const paragraphs = FULL_TEXT
     fragments.push(div);
   });
 
-  // Show first few
-  fragments.slice(0, 4).forEach(f => f.classList.add("active"));
+  // Activate first few
+  fragments.slice(0, 3).forEach(f => f.classList.add("active"));
 
-  // Non-linear reveal logic
-  fragments.forEach((frag, i) => {
-
+  // Non-linear hover reveal
+  fragments.forEach((frag) => {
     frag.addEventListener("mouseenter", () => {
 
       frag.classList.add("active");
 
-      // Random reveal
-      const randomIndex = Math.floor(Math.random() * fragments.length);
-      fragments[randomIndex].classList.add("active");
-
+      const random = fragments[Math.floor(Math.random() * fragments.length)];
+      random.classList.add("active");
     });
-
   });
 
 });
+
