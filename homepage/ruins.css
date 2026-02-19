@@ -3,9 +3,10 @@ body{
   background:#e8e0d6;
   font-family:Georgia, serif;
   color:#7b1f2b;
+  overflow:hidden;
 }
 
-/* Center stage */
+/* Stage centered */
 .stage{
   width:100vw;
   height:100vh;
@@ -18,93 +19,90 @@ body{
 /* Maze base */
 .maze{
   position:absolute;
+  width:850px;
+  height:850px;
   display:grid;
-  visibility:hidden;
-}
-
-/* Active level */
-.maze.active{
-  visibility:visible;
-}
-
-/* Strict proportional nesting */
-.level1{ width:900px; height:600px; }
-.level2{ width:750px; height:500px; }
-.level3{ width:600px; height:400px; }
-.level4{ width:450px; height:300px; }
-.level5{ width:280px; height:180px; }
-
-/* CORRIDOR THICKNESS — thicker like reference */
-.maze{
   grid-template-areas:
     "top top top"
     "left center right"
     "bottom bottom bottom";
-  grid-template-columns: 120px 1fr 120px;  /* wider vertical corridors */
-  grid-template-rows: 90px 1fr 90px;       /* taller horizontal corridors */
+  grid-template-columns: 160px 1fr 160px;
+  grid-template-rows: 140px 1fr 140px;
+  visibility:hidden;
+}
+
+.maze.active{
+  visibility:visible;
 }
 
 /* WALL BASE */
 .wall{
   box-sizing:border-box;
-  padding:12px;
-  font-size:13px;         /* bigger font */
-  line-height:1.35;
-  text-align:center;      /* centered chunk */
+  padding:15px;
+  font-size:14px;
+  line-height:1.4;
+  text-align:center;
+  overflow:auto;                 /* no cutting */
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-  word-break:break-word;
   cursor:pointer;
-  transition:transform .15s ease;
+  transition:transform .25s ease;
 }
 
-/* Hover */
+/* HOVER */
 .wall:hover{
   transform:scale(1.03);
 }
 
-/* TOP WALL */
+/* TOP */
 .top{
   grid-area:top;
 }
 
-/* BOTTOM WALL */
+/* BOTTOM */
 .bottom{
   grid-area:bottom;
   transform:rotate(180deg);
 }
 
-/* LEFT WALL */
+/* LEFT */
 .left{
   grid-area:left;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
 }
 
-.left > *{
-  transform:rotate(-90deg);
-  width:400px;
-}
-
-/* RIGHT WALL */
+/* RIGHT */
 .right{
   grid-area:right;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  transform:rotate(180deg);
 }
 
-.right > *{
-  transform:rotate(90deg);
-  width:400px;
-}
-
-/* CORE */
-.core{
+/* CENTER CORE */
+.center{
+  grid-area:center;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:16px;
+  padding:20px;
 }
 
-.center{
-  font-size:14px;
-  padding:10px;
-  text-align:center;
+/* Focused expand */
+.wall.focused{
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:600px;
+  height:450px;
+  transform:translate(-50%, -50%) rotate(0deg) !important;
+  writing-mode:horizontal-tb !important;
+  background:#ffffff;
+  z-index:999;
+  box-shadow:0 30px 80px rgba(0,0,0,.2);
+}
+
 }
