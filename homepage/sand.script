@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  const wrapper = document.querySelector(".sand-wrapper");
-  const track = document.getElementById("sandTrack");
+  const track = document.getElementById("track");
 
   const fullText = `The  short  stories  of  Jorge  Luis  Borges,  written 
 more  than  twenty  years  ago,  have  become 
@@ -22,21 +21,12 @@ ject matter,  which  Borges  makes  so  uniquely
 his  own,  ranges  from  philosophic  musings  on 
 the  nature  of  time  to  deft  satire  on  the 
 role-playing  of  contemporary  authors. 
-
 The  Book  of  Sand  is  an  important  addition 
 to  Borges'  works,  a  welcome  and  unexpected 
 gift  for  Borges'  host  of  admirers. 
-
-
 PRINT    BORGES,  Jorge  Luis 
-F       The  book  of  sand 
-
-
-t 
-
-
+      The  book  of  sand 
 Copy  1 
-
 PRINT 
 F 
 
@@ -4684,43 +4674,31 @@ CHRONICLES  OF  BUSTOS  DOMECQ
 1077 
 `;
 
-  const paragraphs = fullText
+ const paragraphs = fullText
     .split(/\n\s*\n/)
     .map(p => p.trim())
     .filter(p => p.length > 0);
 
-  const columnCount = 20;
-  const columns = [];
+  const paragraphsPerChunk = 6; // controls density
 
-  for (let i = 0; i < columnCount; i++) {
-    const col = document.createElement("div");
-    col.className = "column";
-    track.appendChild(col);
-    columns.push(col);
-  }
+  for (let i = 0; i < paragraphs.length; i += paragraphsPerChunk) {
 
-  paragraphs.forEach((para, index) => {
-    const div = document.createElement("div");
-    div.className = "fragment";
-    div.textContent = para;
+    const chunk = document.createElement("div");
+    chunk.className = "chunk";
 
-    // Click reveal depth
-    div.addEventListener("click", () => {
-      div.classList.toggle("expanded");
+    paragraphs.slice(i, i + paragraphsPerChunk).forEach(p => {
+      const frag = document.createElement("div");
+      frag.className = "fragment";
+      frag.textContent = p;
+
+      frag.addEventListener("click", () => {
+        frag.classList.toggle("active");
+      });
+
+      chunk.appendChild(frag);
     });
 
-    columns[index % columnCount].appendChild(div);
-  });
-
-  /* Infinite Looping */
-  const clone = track.cloneNode(true);
-  wrapper.appendChild(clone);
-
-  wrapper.addEventListener("scroll", () => {
-    const scrollWidth = track.scrollWidth;
-    if (wrapper.scrollLeft >= scrollWidth) {
-      wrapper.scrollLeft = 0;
-    }
-  });
+    track.appendChild(chunk);
+  }
 
 });
