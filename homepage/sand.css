@@ -1,43 +1,84 @@
 body {
   margin: 0;
-  background-color: #4b0f1b; /* deep maroon */
+  background-color: #4b0f1b;
   color: white;
   font-family: Georgia, serif;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+/* Subtle sand texture */
+.sand-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 3px 3px;
+  animation: sandDrift 40s linear infinite;
+  z-index: 0;
+}
+
+@keyframes sandDrift {
+  from { transform: translateY(0px); }
+  to   { transform: translateY(200px); }
+}
+
+.scroll-container {
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .field {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 1400px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* Organic scattered positions */
+/* Base fragment */
 .fragment {
   position: absolute;
-  width: 240px;
+  width: 260px;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   letter-spacing: 0.3px;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: 
+    opacity 0.6s ease, 
+    transform 0.8s cubic-bezier(.2,.8,.2,1);
 }
 
-/* Carefully positioned layout */
-.fragment[data-id="1"] { top: 12%; left: 10%; }
-.fragment[data-id="2"] { top: 28%; left: 55%; }
-.fragment[data-id="3"] { top: 60%; left: 18%; }
-.fragment[data-id="4"] { top: 72%; left: 60%; }
-.fragment[data-id="5"] { top: 40%; left: 35%; }
+/* Placement */
+.fragment[data-id="1"] { top: 120px; left: 8%; }
+.fragment[data-id="2"] { top: 280px; right: 12%; }
+.fragment[data-id="3"] { top: 460px; left: 22%; }
+.fragment[data-id="4"] { top: 640px; right: 20%; }
+.fragment[data-id="5"] { top: 820px; left: 40%; }
 
-.fragment[data-id="6"] { top: 18%; left: 70%; }
-.fragment[data-id="7"] { top: 50%; left: 75%; }
-.fragment[data-id="8"] { top: 82%; left: 30%; }
-.fragment[data-id="9"] { top: 65%; left: 45%; }
-.fragment[data-id="10"] { top: 25%; left: 25%; }
+.fragment[data-id="6"] { top: 200px; left: 55%; }
+.fragment[data-id="7"] { top: 520px; left: 65%; }
+.fragment[data-id="8"] { top: 1000px; left: 18%; }
+.fragment[data-id="9"] { top: 1120px; right: 28%; }
+.fragment[data-id="10"] { top: 1250px; left: 48%; }
 
-/* Visibility states */
+/* Upside default */
+.upside {
+  transform: rotate(180deg);
+}
+
+/* Flip upright when active */
+.upside.active {
+  transform: rotate(0deg) scale(1.05);
+}
+
+/* Normal active */
+.fragment.active:not(.upside) {
+  transform: scale(1.05);
+}
+
 .visible {
   opacity: 0.85;
 }
@@ -45,10 +86,4 @@ body {
 .hidden {
   opacity: 0;
   pointer-events: none;
-}
-
-/* Active click emphasis */
-.active {
-  opacity: 1;
-  transform: scale(1.05);
 }
