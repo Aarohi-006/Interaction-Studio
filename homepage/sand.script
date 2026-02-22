@@ -4613,7 +4613,7 @@ const paragraphs = fullText
   .map(p => p.trim())
   .filter(p => p.length > 0);
 
-/* Group paragraphs */
+/* Group into chunks */
 function groupParagraphs(arr, size = 3) {
     const groups = [];
     for (let i = 0; i < arr.length; i += size) {
@@ -4623,8 +4623,6 @@ function groupParagraphs(arr, size = 3) {
 }
 
 const groupedText = groupParagraphs(paragraphs, 3);
-
-let fragments = [];
 
 /* Create fragments */
 groupedText.forEach(text => {
@@ -4642,62 +4640,28 @@ groupedText.forEach(text => {
 
     fragment.appendChild(inner);
     field.appendChild(fragment);
-
-    fragments.push(fragment);
 });
 
-/* Initial collapse at center */
-function collapseFragments() {
-
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    fragments.forEach(fragment => {
-
-        const rect = fragment.getBoundingClientRect();
-        const dx = centerX - (rect.left + rect.width / 2);
-        const dy = centerY - (rect.top + rect.height / 2);
-
-        fragment.style.transform = `translate(${dx}px, ${dy}px) scale(0.3)`;
-        fragment.style.opacity = "0";
-    });
-}
-
-/* Scatter to natural grid */
-function scatterFragments() {
-
-    fragments.forEach(fragment => {
-        fragment.style.transform = `translate(0px, 0px) scale(1)`;
-        fragment.style.opacity = "1";
-    });
-}
-
+/* Toggle */
 let expanded = false;
-
-/* Wait for layout to settle */
-setTimeout(() => {
-    collapseFragments();
-}, 100);
 
 icon.addEventListener("click", () => {
 
     expanded = !expanded;
 
     if (expanded) {
-        scatterFragments();
+        field.classList.remove("collapsed");
+        field.classList.add("expanded");
         icon.classList.add("active");
         icon.textContent = "⌛";
     } else {
-        collapseFragments();
+        field.classList.remove("expanded");
+        field.classList.add("collapsed");
         icon.classList.remove("active");
         icon.textContent = "⏳";
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-});
-
-window.addEventListener("resize", () => {
-    if (!expanded) collapseFragments();
 });
 
 });
