@@ -35,11 +35,11 @@ body {
 }
 
 .sand-icon.active {
-    transform: translate(-50%, -50%) rotate(180deg) scale(0.8);
+    transform: translate(-50%, -50%) rotate(180deg) scale(0.85);
     opacity: 0.4;
 }
 
-/* Field */
+/* Field Grid */
 .field {
     position: relative;
     min-height: 100vh;
@@ -48,6 +48,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 60px 80px;
     justify-items: center;
+    transition: opacity 0.8s ease;
     z-index: 1;
 }
 
@@ -55,20 +56,24 @@ body {
 .fragment {
     width: 100%;
     max-width: 320px;
-    opacity: 0;
-    transform: translate(0px, 0px) scale(0.5);
     transition:
         transform 1s cubic-bezier(.2,.7,.3,1),
         opacity 0.8s ease;
 }
 
-/* When scattered */
-.fragment.visible {
-    opacity: 1;
-    transform: translate(0px, 0px) scale(1);
+/* Collapsed state */
+.field.collapsed .fragment {
+    transform: scale(0.2);
+    opacity: 0;
 }
 
-/* Flip support */
+/* Expanded state */
+.field.expanded .fragment {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Flip */
 .fragment-inner {
     font-size: 13px;
     line-height: 1.7;
@@ -84,5 +89,10 @@ body {
 .fragment:hover .fragment-inner {
     transform: rotateX(0deg);
 }
+
+html {
+    scroll-behavior: smooth;
+}
+
 
 
