@@ -4332,9 +4332,6 @@ branching  out  in  the  hospitable  imagination  of
 those  who  now  close  it. 
 
 J.  L.  B. 
-
-`;
-
 `;
 
 /* Split */
@@ -4343,7 +4340,7 @@ const paragraphs = fullText
   .map(p => p.trim())
   .filter(p => p.length > 0);
 
-/* Group paragraphs */
+/* Group into chunks */
 function groupParagraphs(arr, size = 3) {
     const groups = [];
     for (let i = 0; i < arr.length; i += size) {
@@ -4354,10 +4351,8 @@ function groupParagraphs(arr, size = 3) {
 
 const groupedText = groupParagraphs(paragraphs, 3);
 
-let fragments = [];
-
 /* Create fragments */
-groupedText.forEach(text => {
+groupedText.forEach((text, index) => {
 
     const fragment = document.createElement("div");
     fragment.classList.add("fragment");
@@ -4373,72 +4368,39 @@ groupedText.forEach(text => {
     fragment.appendChild(inner);
     field.appendChild(fragment);
 
-    fragments.push(fragment);
 });
 
-/* Collapse to center initially */
-function collapseToCenter() {
-
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    fragments.forEach(fragment => {
-
-        const rect = fragment.getBoundingClientRect();
-        const dx = centerX - (rect.left + rect.width / 2);
-        const dy = centerY - (rect.top + rect.height / 2);
-
-        fragment.style.transform = `translate(${dx}px, ${dy}px) scale(0.2)`;
-        fragment.style.opacity = "0";
-    });
-}
-
-/* Scatter outward */
-function scatterFragments() {
-
-    fragments.forEach((fragment, index) => {
-
-        fragment.style.transitionDelay = `${index * 40}ms`;
-
-        fragment.style.transform = `translate(0,0) scale(1)`;
-        fragment.style.opacity = "1";
-
-        fragment.classList.add("visible");
-    });
-}
+/* Initial collapsed state */
+field.classList.add("collapsed");
 
 let expanded = false;
 
-/* Wait for layout */
-setTimeout(() => {
-    collapseToCenter();
-}, 100);
-
 icon.addEventListener("click", () => {
-
-    if (expanded) return;
 
     expanded = true;
 
     icon.classList.add("hidden");
-    scatterFragments();
+
+    field.classList.remove("collapsed");
+    field.classList.add("expanded");
+
 });
 
-/* Collapse when clicking text */
+/* Collapse when clicking field */
 field.addEventListener("click", () => {
 
     if (!expanded) return;
 
     expanded = false;
 
-    collapseToCenter();
+    field.classList.remove("expanded");
+    field.classList.add("collapsed");
+
     icon.classList.remove("hidden");
 
     window.scrollTo({ top: 0, behavior: "smooth" });
-});
 
-window.addEventListener("resize", () => {
-    if (!expanded) collapseToCenter();
 });
 
 });
+
