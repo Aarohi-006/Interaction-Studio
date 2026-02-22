@@ -1,12 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
 const field = document.querySelector(".field");
-
-/* Create reading icon */
-const icon = document.createElement("div");
-icon.classList.add("reading-icon");
-icon.innerHTML = "📖";
-document.body.appendChild(icon);
+const icon = document.querySelector(".sand-icon");
 
 /* FULL TEXT */
 const fullText = `The  short  stories  of  Jorge  Luis  Borges,  written 
@@ -4603,7 +4598,6 @@ jacket  design  by  Randall  Richmond
 E.P.  Dutton 
 201  Park  Avenue  South,  New  York,  N.Y.  10003 
 Jacobus  tenBroek  Library 
-101264 
 BY  JORGE  LUIS  BORGES 
 IN  PRAISE  OF  DARKNESS 
 A  UNIVERSAL  HISTORY  OF  INFAMY 
@@ -4612,7 +4606,6 @@ THE  ALEPH  AND  OTHER  STORIES  1933-1969
 THE  BOOK  OF  IMAGINARY  BEINGS 
 CHRONICLES  OF  BUSTOS  DOMECQ 
 (with  Adolfo  Bioy-Casares) 
-^BN:  0-525-06992-5  
 `;
 
 /* Split paragraphs */
@@ -4621,7 +4614,7 @@ const paragraphs = fullText
   .map(p => p.trim())
   .filter(p => p.length > 0);
 
-/* Group paragraphs (3 per chunk for density) */
+/* Group into chunks of 3 */
 function groupParagraphs(arr, size = 3) {
     const groups = [];
     for (let i = 0; i < arr.length; i += size) {
@@ -4650,17 +4643,22 @@ groupedText.forEach(text => {
     field.appendChild(fragment);
 });
 
-/* Toggle collapse */
-let collapsed = false;
+/* Toggle state */
+let expanded = false;
 
-field.addEventListener("click", () => {
+icon.addEventListener("click", () => {
 
-    collapsed = !collapsed;
+    expanded = !expanded;
 
-    if (collapsed) {
-        field.classList.add("collapsed");
+    if (expanded) {
+        field.classList.remove("hidden");
+        icon.style.opacity = "0.2";
+        icon.style.transform = "translate(-50%, -50%) scale(0.8)";
     } else {
-        field.classList.remove("collapsed");
+        field.classList.add("hidden");
+        icon.style.opacity = "1";
+        icon.style.transform = "translate(-50%, -50%) scale(1)";
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
 });
