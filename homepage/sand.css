@@ -28,29 +28,30 @@ body {
     z-index: 1;
     min-height: 100vh;
     padding: 120px 80px 160px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 60px 80px;
+    justify-items: center;
 }
 
 /* Fragment */
 .fragment {
-    position: absolute;
-    width: 260px;
+    width: 100%;
+    max-width: 320px;
     perspective: 1200px;
-    transition:
-        transform 1.2s cubic-bezier(.2,.7,.3,1),
-        opacity 0.5s ease;
     cursor: pointer;
+    transition: transform 1s cubic-bezier(.2,.7,.3,1);
 }
 
 .fragment-inner {
     font-size: 13px;
     line-height: 1.7;
-    letter-spacing: 0.3px;
     padding: 12px;
-    transform-style: preserve-3d;
     transition:
         transform 0.8s cubic-bezier(.2,.7,.3,1),
         background 0.4s ease,
         box-shadow 0.4s ease;
+    transform-style: preserve-3d;
 }
 
 /* 30% flipped */
@@ -65,9 +66,26 @@ body {
     box-shadow: 0 0 18px rgba(255,255,255,0.15);
 }
 
-/* Active upright */
-.fragment.active .fragment-inner {
-    transform: rotateX(0deg);
+/* Collapsed state */
+.field.collapsed .fragment {
+    transform: scale(0.6) translateY(-100px);
+    opacity: 0.2;
+}
+
+/* Reading icon */
+.reading-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.field.collapsed ~ .reading-icon {
+    opacity: 1;
 }
 
 /* Smooth scroll */
