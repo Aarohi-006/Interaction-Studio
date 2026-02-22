@@ -22,7 +22,23 @@ body {
     z-index: 0;
 }
 
-/* Field */
+/* Sand Timer Icon */
+.sand-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.4s ease, opacity 0.5s ease;
+}
+
+.sand-icon:hover {
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* Field layout */
 .field {
     position: relative;
     z-index: 1;
@@ -32,6 +48,14 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 60px 80px;
     justify-items: center;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+/* Hidden initially */
+.field.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Fragment */
@@ -39,19 +63,17 @@ body {
     width: 100%;
     max-width: 320px;
     perspective: 1200px;
-    cursor: pointer;
-    transition: transform 1s cubic-bezier(.2,.7,.3,1);
 }
 
 .fragment-inner {
     font-size: 13px;
     line-height: 1.7;
     padding: 12px;
+    transform-style: preserve-3d;
     transition:
         transform 0.8s cubic-bezier(.2,.7,.3,1),
         background 0.4s ease,
         box-shadow 0.4s ease;
-    transform-style: preserve-3d;
 }
 
 /* 30% flipped */
@@ -66,30 +88,9 @@ body {
     box-shadow: 0 0 18px rgba(255,255,255,0.15);
 }
 
-/* Collapsed state */
-.field.collapsed .fragment {
-    transform: scale(0.6) translateY(-100px);
-    opacity: 0.2;
-}
-
-/* Reading icon */
-.reading-icon {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 60px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    pointer-events: none;
-}
-
-.field.collapsed ~ .reading-icon {
-    opacity: 1;
-}
-
 /* Smooth scroll */
 html {
     scroll-behavior: smooth;
 }
+
 
