@@ -22,7 +22,7 @@ body {
     z-index: 0;
 }
 
-/* Sand Icon */
+/* Icon */
 .sand-icon {
     position: fixed;
     top: 50%;
@@ -31,7 +31,7 @@ body {
     font-size: 70px;
     cursor: pointer;
     z-index: 10;
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .sand-icon.hidden {
@@ -39,7 +39,7 @@ body {
     pointer-events: none;
 }
 
-/* Grid Layout */
+/* Grid */
 .field {
     position: relative;
     min-height: 100vh;
@@ -55,17 +55,21 @@ body {
 .fragment {
     width: 100%;
     max-width: 320px;
-    opacity: 0;
-    transform: translate(0,0) scale(0.3);
     transition:
-        transform 1.2s cubic-bezier(.2,.7,.3,1),
+        transform 1s cubic-bezier(.2,.7,.3,1),
         opacity 0.8s ease;
 }
 
-/* When visible */
-.fragment.visible {
+/* COLLAPSED STATE */
+.field.collapsed .fragment {
+    transform: scale(0);
+    opacity: 0;
+}
+
+/* SCATTER STATE */
+.field.expanded .fragment {
+    transform: scale(1);
     opacity: 1;
-    transform: translate(0,0) scale(1);
 }
 
 /* Flip */
