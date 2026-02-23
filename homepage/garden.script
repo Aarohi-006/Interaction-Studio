@@ -391,6 +391,7 @@ does not know, for no one can, of my infinite penitence and sickness of the hear
 Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol when Madden appeared with 
 orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. - Note by 
 the manuscript editor. 
+`;
 
 const segments = splitIntoChunks(fullText, 420);
 
@@ -432,7 +433,7 @@ while(index < segments.length){
     const text = document.createElementNS("http://www.w3.org/2000/svg","text");
     text.setAttribute("class","mazeText");
 
-    const textPath = document.createElementNS("http://www.w3.org/1999/xlink","textPath");
+    const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
     textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#path"+index);
     textPath.textContent = segments[index];
 
@@ -448,7 +449,7 @@ while(index < segments.length){
   }
 
   level++;
-  nodesInLevel *= 2; // branching spread
+  nodesInLevel *= 2;
 }
 
 revealNextBatch();
@@ -479,3 +480,4 @@ function splitIntoChunks(text, maxLength){
 
   return chunks;
 }
+
