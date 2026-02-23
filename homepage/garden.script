@@ -411,28 +411,20 @@ function splitIntoChunks(text, maxLength){
 }
 
 const segments = splitIntoChunks(fullText, 320);
+
 const tree = document.getElementById("tree");
+const startBtn = document.getElementById("start");
 
 let index = 0;
-let levels = [[null]]; // track tree structure
 
-createNode(0,0); // root
+startBtn.addEventListener("click", function(){
+  startBtn.style.display = "none";
+  createNode(window.innerWidth/2, window.innerHeight - 100, 0);
+});
 
-function createNode(level, position){
+function createNode(x, y, level){
 
   if(index >= segments.length) return;
-
-  if(!levels[level]) levels[level] = [];
-
-  const nodeIndex = levels[level].length;
-  const totalNodes = Math.pow(2, level);
-
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-  const xSpacing = width / (totalNodes + 1);
-  const x = xSpacing * (nodeIndex + 1);
-  const y = height - (level * 130) - 80;
 
   const div = document.createElement("div");
   div.className = "node";
@@ -442,16 +434,16 @@ function createNode(level, position){
 
   tree.appendChild(div);
 
-  levels[level].push(div);
-
   div.addEventListener("click", function(){
 
-    // prevent duplicate growth
     if(div.dataset.grown) return;
     div.dataset.grown = true;
 
-    createNode(level+1, 0);
-    createNode(level+1, 1);
+    const spread = 220;
+    const newY = y - 140;
+
+    createNode(x - spread, newY, level+1);
+    createNode(x + spread, newY, level+1);
 
   });
 }
