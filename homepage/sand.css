@@ -11,15 +11,22 @@ body {
     overflow-x: hidden;
 }
 
-/* Grain */
+/* Grain (stronger + subtle movement) */
 .grain {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: 0.06;
+    opacity: 0.14;
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    background-size: 300px 300px;
     mix-blend-mode: overlay;
     z-index: 0;
+    animation: grainMove 8s linear infinite alternate;
+}
+
+@keyframes grainMove {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(-50px,-50px); }
 }
 
 /* Sand Icon */
@@ -49,7 +56,6 @@ body {
     gap: 60px 80px;
     justify-items: center;
     z-index: 1;
-    transition: opacity 0.6s ease;
 }
 
 /* Prevent blocking when collapsed */
@@ -73,13 +79,13 @@ body {
         opacity 0.8s ease;
 }
 
-/* Expanded state */
+/* Expanded */
 .field.expanded .fragment {
     opacity: 1;
     transform: scale(1);
 }
 
-/* Flip support */
+/* Text */
 .fragment-inner {
     font-size: 13px;
     line-height: 1.7;
@@ -88,6 +94,13 @@ body {
     transition: transform 0.8s ease;
 }
 
+/* 30% italic */
+.fragment.italic .fragment-inner {
+    font-style: italic;
+    letter-spacing: 0.3px;
+}
+
+/* 30% flipped */
 .fragment.flipped .fragment-inner {
     transform: rotateX(180deg);
 }
@@ -99,5 +112,3 @@ body {
 html {
     scroll-behavior: smooth;
 }
-
-
