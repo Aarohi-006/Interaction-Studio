@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 const field = document.querySelector(".field");
 const icon = document.querySelector(".sand-icon");
 
-/* PASTE YOUR FULL TEXT BELOW */
+/* FULL TEXT */
 const fullText = `The  short  stories  of  Jorge  Luis  Borges,  written 
 more  than  twenty  years  ago,  have  become 
 classics  of  contemporary  literature.  In  The 
@@ -3376,9 +3376,6 @@ been  unstinting  in  his  assistance  to  him,  particu-
 larly with  regard  to  a  certain  annotated  edition  of 
 
 
-99 
-
-
 Beowulf  which,  in  a  number  of  universities,  had 
 replaced  Klaeber's  edition.  Locke  was  now  com- 
 piling a  very  useful  work  for  the  Germanic  special- 
@@ -3756,9 +3753,6 @@ heard  a  voice  inside  defying  the  order.  Losing  no
 time,  we  marched  in.  The  office  was  pitch-dark, 
 
 
-109 
-
-
 but  we  riddled  with  bullets  whoever  was  doing  the 
 talking.  We  wanted  to  drag  him  out  by  the  heels. 
 When  it  was  quiet,  we  searched  the  place  for  him, 
@@ -3840,9 +3834,6 @@ in  a  more  involved  fashion;  this  is  the  way  I  imag-
 ine it  happened. 
 
 
-1 1 1 
-
-
 The  Disk 
 
 
@@ -3915,9 +3906,6 @@ name  is  Isern  and  I  am  of  the  race  of  Odin."
 
 "I  do  not  worship  Odin,"  I  said.  "I  worship 
 Christ." 
-
-
-114 
 
 
 He  went  on  as  if  he  had  not  heard  me.  "I  travel 
@@ -4051,8 +4039,6 @@ used  in  dictionaries — an  anchor  drawn  with  pen
 and  ink,  as  if  by  a  schoolboy's  clumsy  hand. 
 
 It  was  at  this  point  that  the  stranger  said,  "Look 
-
-118 
 
 
 at  the  illustration  closely.  You'll  never  see  it  again." 
@@ -4210,9 +4196,6 @@ from  the  door,  I  lost  the  Book  of  Sand  on  one  of
 the  basement's  musty  shelves. 
 
 
-122 
-
-
 Afterword 
 
 
@@ -4309,8 +4292,6 @@ I  hope  that  these  hasty  notes  I  have  just  dictated
 do  not  exhaust  this  book  and  that  its  dreams  go  on 
 branching  out  in  the  hospitable  imagination  of 
 those  who  now  close  it. 
-
-J.  L.  B. 
 `;
 
 /* Split paragraphs */
@@ -4336,8 +4317,14 @@ groupedText.forEach(text => {
     const fragment = document.createElement("div");
     fragment.classList.add("fragment");
 
+    /* 30% flipped */
     if (Math.random() < 0.3) {
         fragment.classList.add("flipped");
+    }
+
+    /* 30% italic */
+    if (Math.random() < 0.3) {
+        fragment.classList.add("italic");
     }
 
     const inner = document.createElement("div");
@@ -4353,7 +4340,7 @@ field.classList.add("collapsed");
 
 let expanded = false;
 
-/* Expand on icon click */
+/* Expand */
 icon.addEventListener("click", () => {
 
     expanded = true;
@@ -4365,7 +4352,7 @@ icon.addEventListener("click", () => {
 
 });
 
-/* Collapse when clicking text */
+/* Collapse */
 field.addEventListener("click", () => {
 
     if (!expanded) return;
