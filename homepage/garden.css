@@ -22,14 +22,12 @@ svg{
   overflow:visible;
 }
 
-/* Light branch guides */
 path{
   fill:none;
   stroke:rgba(255,255,255,0.08);
   stroke-width:1.2;
 }
 
-/* Text */
 .mazeText{
   font-size:20px;
   letter-spacing:0.7px;
