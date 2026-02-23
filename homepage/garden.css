@@ -1,7 +1,7 @@
 body{
   margin:0;
   background: radial-gradient(circle at center, #4f6f57 0%, #2f4f3f 70%, #1e3529 100%);
-  font-family: "Garamond", serif;
+  font-family: 'Cormorant Garamond', serif;
   overflow:hidden;
 }
 
@@ -22,32 +22,29 @@ svg{
   overflow:visible;
 }
 
-/* Curved paths */
+/* Light branch guides */
 path{
   fill:none;
-  stroke:rgba(255,255,255,0.15);
-  stroke-width:1;
+  stroke:rgba(255,255,255,0.08);
+  stroke-width:1.2;
 }
 
-/* Text styling */
+/* Text */
 .mazeText{
-  font-size:18px;
-  letter-spacing:0.6px;
-  fill:#f5e6a9;
-  opacity:0.35;
-  text-shadow:0 0 6px rgba(0,0,0,0.4);
-  transition:opacity .4s ease, fill .3s ease;
+  font-size:20px;
+  letter-spacing:0.7px;
+  fill:#f6e8b2;
+  opacity:0;
+  text-shadow:0 0 8px rgba(0,0,0,0.4);
+  transition:opacity .6s ease, fill .3s ease;
   cursor:pointer;
+}
+
+.mazeText.visible{
+  opacity:0.9;
 }
 
 .mazeText.active{
   fill:#ffffff;
-  opacity:1;
-  font-weight:bold;
+  font-weight:600;
 }
-
-.hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
