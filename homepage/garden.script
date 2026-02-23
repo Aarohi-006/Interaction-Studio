@@ -1,4 +1,16 @@
-const fullText = document.getElementById("storyData").value;
+document.addEventListener("DOMContentLoaded", function(){
+
+const storyElement = document.getElementById("storyData");
+if(!storyElement){
+    console.error("storyData not found");
+    return;
+}
+
+const fullText = storyElement.value;
+if(!fullText || fullText.trim() === ""){
+    console.error("No text inside textarea");
+    return;
+}
 
 const segments = splitIntoChunks(fullText, 260);
 
@@ -7,16 +19,15 @@ const textLayer = document.getElementById("textGroup");
 
 let index = 0;
 
-// Start root
+// Create root node
 createNode(600, 900, null);
 
 function createNode(x, y, parent){
 
   if(index >= segments.length) return;
 
-  const segment = segments[index];
-  index++;
-
+  const segment = segments[index++];
+  
   if(parent){
     const controlX = (x + parent.x) / 2;
     const controlY = (y + parent.y) / 2 - 80;
@@ -34,28 +45,20 @@ function createNode(x, y, parent){
 
   textLayer.appendChild(text);
 
-  text.addEventListener("click", () => {
-    text.classList.add("active");
-    grow(nodePosition(text));
+  text.addEventListener("click", function(){
+      text.classList.add("active");
+      grow(x, y);
   });
 }
 
-function nodePosition(textElement){
-  return {
-    x: parseFloat(textElement.getAttribute("x")),
-    y: parseFloat(textElement.getAttribute("y"))
-  };
-}
-
-function grow(parent){
-
+function grow(parentX, parentY){
   if(index >= segments.length) return;
 
-  const newY = parent.y - 140;
+  const newY = parentY - 140;
   const spread = 200;
 
-  createNode(parent.x - spread, newY, parent);
-  createNode(parent.x + spread, newY, parent);
+  createNode(parentX - spread, newY, {x: parentX, y: parentY});
+  createNode(parentX + spread, newY, {x: parentX, y: parentY});
 }
 
 function splitIntoChunks(text, maxLength){
@@ -73,7 +76,7 @@ function splitIntoChunks(text, maxLength){
   });
 
   if(current.length>0) chunks.push(current.trim());
-
   return chunks;
 }
 
+});
