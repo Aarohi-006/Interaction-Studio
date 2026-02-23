@@ -1,38 +1,27 @@
 body{
   margin:0;
   background: radial-gradient(circle at center, #4f6f57 0%, #2f4f3f 70%, #1e3529 100%);
-  font-family:'Cormorant Garamond', serif;
+  font-family: Georgia, serif;
   overflow:hidden;
 }
 
-#wrapper{
+#tree{
+  position:relative;
   width:100vw;
   height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
 }
 
-#tree{
-  width:95vw;
-  height:95vh;
-}
-
-path{
-  fill:none;
-  stroke:rgba(255,255,255,0.2);
-  stroke-width:1.5;
-  stroke-linecap:round;
-}
-
-.mazeText{
+/* Node style */
+.node{
+  position:absolute;
+  max-width:260px;
+  color:#f6e8b2;
   font-size:15px;
-  fill:#f6e8b2;
-  text-anchor:middle;
+  line-height:1.4;
   cursor:pointer;
+  transition:0.3s ease;
 }
 
-.mazeText.active{
-  fill:#ffffff;
-  font-weight:600;
+.node:hover{
+  color:white;
 }
