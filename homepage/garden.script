@@ -1,4 +1,4 @@
-const fullText = `
+const segments = [
 To Victoria Ocampo 
 
 In his A History of the World War (page 212), Captain Liddell Hart reports that a 
@@ -392,58 +392,58 @@ does not know, for no one can, of my infinite penitence and sickness of the hear
 Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol when Madden appeared with 
 orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. - Note by 
 the manuscript editor. 
-`;
+];
 
-function splitIntoChunks(text, maxLength){
-  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-  const chunks=[];
-  let current="";
-  sentences.forEach(sentence=>{
-    if((current + sentence).length < maxLength){
-      current += sentence;
-    } else {
-      chunks.push(current.trim());
-      current = sentence;
-    }
-  });
-  if(current.length>0) chunks.push(current.trim());
-  return chunks;
-}
-
-const segments = splitIntoChunks(fullText, 320);
-
-const tree = document.getElementById("tree");
-const startBtn = document.getElementById("start");
+const tree = document.createElement("div");
+tree.style.position = "relative";
+tree.style.width = "100vw";
+tree.style.height = "100vh";
+document.body.appendChild(tree);
 
 let index = 0;
 
-startBtn.addEventListener("click", function(){
-  startBtn.style.display = "none";
-  createNode(window.innerWidth/2, window.innerHeight - 100, 0);
-});
+// START BUTTON
+const start = document.createElement("div");
+start.innerText = "Click to Begin";
+start.style.position = "absolute";
+start.style.left = "50%";
+start.style.top = "80%";
+start.style.transform = "translate(-50%,-50%)";
+start.style.color = "#f6e8b2";
+start.style.fontSize = "20px";
+start.style.cursor = "pointer";
+tree.appendChild(start);
 
-function createNode(x, y, level){
+start.onclick = function(){
+  start.remove();
+  createNode(window.innerWidth/2, window.innerHeight - 120);
+};
+
+function createNode(x, y){
 
   if(index >= segments.length) return;
 
-  const div = document.createElement("div");
-  div.className = "node";
-  div.innerText = segments[index++];
-  div.style.left = x + "px";
-  div.style.top = y + "px";
+  const node = document.createElement("div");
+  node.innerText = segments[index++];
+  node.style.position = "absolute";
+  node.style.left = x + "px";
+  node.style.top = y + "px";
+  node.style.transform = "translate(-50%,-50%)";
+  node.style.color = "#f6e8b2";
+  node.style.fontSize = "14px";
+  node.style.maxWidth = "240px";
+  node.style.textAlign = "center";
+  node.style.cursor = "pointer";
 
-  tree.appendChild(div);
+  tree.appendChild(node);
 
-  div.addEventListener("click", function(){
+  node.onclick = function(){
+    node.onclick = null;
 
-    if(div.dataset.grown) return;
-    div.dataset.grown = true;
-
-    const spread = 220;
+    const spread = 200;
     const newY = y - 140;
 
-    createNode(x - spread, newY, level+1);
-    createNode(x + spread, newY, level+1);
-
-  });
+    createNode(x - spread, newY);
+    createNode(x + spread, newY);
+  };
 }
