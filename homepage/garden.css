@@ -2,6 +2,7 @@ body{
   margin:0;
   background:#355f47;
   font-family:Georgia, serif;
+  overflow:hidden;
 }
 
 #tree{
@@ -10,17 +11,23 @@ body{
   height:100vh;
 }
 
+#start{
+  position:absolute;
+  left:50%;
+  top:80%;
+  transform:translate(-50%,-50%);
+  color:#f6e8b2;
+  font-size:20px;
+  cursor:pointer;
+}
+
 .node{
   position:absolute;
-  max-width:220px;
+  max-width:240px;
   color:#f6e8b2;
   font-size:14px;
   line-height:1.4;
+  text-align:center;
   transform:translate(-50%,-50%);
   cursor:pointer;
-  text-align:center;
-}
-
-.node:hover{
-  color:white;
 }
