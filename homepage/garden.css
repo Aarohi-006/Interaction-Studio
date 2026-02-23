@@ -1,8 +1,7 @@
 body{
   margin:0;
-  background: radial-gradient(circle at center, #4f6f57 0%, #2f4f3f 70%, #1e3529 100%);
-  font-family: Georgia, serif;
-  overflow:hidden;
+  background:#355f47;
+  font-family:Georgia, serif;
 }
 
 #tree{
@@ -11,15 +10,15 @@ body{
   height:100vh;
 }
 
-/* Node style */
 .node{
   position:absolute;
-  max-width:260px;
+  max-width:220px;
   color:#f6e8b2;
-  font-size:15px;
+  font-size:14px;
   line-height:1.4;
+  transform:translate(-50%,-50%);
   cursor:pointer;
-  transition:0.3s ease;
+  text-align:center;
 }
 
 .node:hover{
