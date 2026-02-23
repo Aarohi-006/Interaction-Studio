@@ -393,73 +393,62 @@ orders for the spy's arrest. Madden, in self defense, had inflicted wounds of wh
 the manuscript editor. 
 `;
 
-const segments = splitIntoChunks(fullText, 420);
+const segments = splitIntoChunks(fullText, 320);
 
-const defs = document.querySelector("defs");
-const textGroup = document.getElementById("textGroup");
+const branchLayer = document.getElementById("branches");
+const textLayer = document.getElementById("textGroup");
 
-let visibleCount = 0;
-const revealStep = 3;
-
-const startX = 500;
-const startY = 900;
-
-let level = 0;
 let index = 0;
-let nodesInLevel = 1;
+let activeNodes = [];
 
-while(index < segments.length){
+// Root node
+createNode(600, 900, null);
 
-  const levelWidth = 800 / nodesInLevel;
-  const y = startY - level * 110;
+function createNode(x, y, parent){
 
-  for(let n=0; n<nodesInLevel && index<segments.length; n++){
+  if(index >= segments.length) return;
 
-    const x = 100 + levelWidth*n + levelWidth/2;
+  const id = "path"+index;
+  const segment = segments[index];
+  index++;
 
-    const parentY = y + 110;
-    const parentX = nodesInLevel === 1 
-      ? startX 
-      : 100 + levelWidth*Math.floor(n/2) + levelWidth/2;
-
-    const controlX = (x + parentX)/2 + (Math.random()*60 - 30);
-    const controlY = (y + parentY)/2 - 50;
+  if(parent){
+    const controlX = (x + parent.x)/2;
+    const controlY = (y + parent.y)/2 - 60;
 
     const path = document.createElementNS("http://www.w3.org/2000/svg","path");
-    path.setAttribute("id","path"+index);
-    path.setAttribute("d",`M ${parentX} ${parentY} Q ${controlX} ${controlY} ${x} ${y}`);
-    defs.appendChild(path);
-
-    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
-    text.setAttribute("class","mazeText");
-
-    const textPath = document.createElementNS("http://www.w3.org/2000/svg","textPath");
-    textPath.setAttributeNS("http://www.w3.org/1999/xlink","href","#path"+index);
-    textPath.textContent = segments[index];
-
-    text.appendChild(textPath);
-    textGroup.appendChild(text);
-
-    text.addEventListener("click",()=>{
-      text.classList.add("active");
-      revealNextBatch();
-    });
-
-    index++;
+    path.setAttribute("d",`M ${parent.x} ${parent.y} Q ${controlX} ${controlY} ${x} ${y}`);
+    branchLayer.appendChild(path);
   }
 
-  level++;
-  nodesInLevel *= 2;
+  const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+  text.setAttribute("class","mazeText visible");
+  text.setAttribute("x",x);
+  text.setAttribute("y",y);
+  text.setAttribute("text-anchor","middle");
+
+  text.textContent = segment;
+  textLayer.appendChild(text);
+
+  const node = {x,y,text};
+  activeNodes.push(node);
+
+  text.addEventListener("click",()=>{
+    text.classList.add("active");
+    growFrom(node);
+  });
 }
 
-revealNextBatch();
+function growFrom(node){
 
-function revealNextBatch(){
-  const texts = document.querySelectorAll(".mazeText");
-  for(let i=visibleCount; i<visibleCount+revealStep && i<texts.length; i++){
-    texts[i].classList.add("visible");
-  }
-  visibleCount += revealStep;
+  if(index >= segments.length) return;
+
+  const levelY = node.y - 130;
+
+  const spread = 180;
+
+  createNode(node.x - spread, levelY, node);
+  createNode(node.x + spread, levelY, node);
 }
 
 function splitIntoChunks(text, maxLength){
