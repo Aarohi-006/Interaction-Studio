@@ -1,4 +1,3 @@
-// FULL STORY LIVES SAFELY HERE
 const fullText = `
 To Victoria Ocampo 
 
@@ -395,12 +394,10 @@ orders for the spy's arrest. Madden, in self defense, had inflicted wounds of wh
 the manuscript editor. 
 `;
 
-// Split into chunks
 function splitIntoChunks(text, maxLength){
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
   const chunks=[];
   let current="";
-
   sentences.forEach(sentence=>{
     if((current + sentence).length < maxLength){
       current += sentence;
@@ -409,43 +406,52 @@ function splitIntoChunks(text, maxLength){
       current = sentence;
     }
   });
-
   if(current.length>0) chunks.push(current.trim());
   return chunks;
 }
 
-const segments = splitIntoChunks(fullText, 350);
-
+const segments = splitIntoChunks(fullText, 320);
 const tree = document.getElementById("tree");
 
 let index = 0;
+let levels = [[null]]; // track tree structure
 
-// Create first root node
-createNode(window.innerWidth/2, window.innerHeight - 80, null);
+createNode(0,0); // root
 
-function createNode(x, y, parent){
+function createNode(level, position){
 
   if(index >= segments.length) return;
+
+  if(!levels[level]) levels[level] = [];
+
+  const nodeIndex = levels[level].length;
+  const totalNodes = Math.pow(2, level);
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  const xSpacing = width / (totalNodes + 1);
+  const x = xSpacing * (nodeIndex + 1);
+  const y = height - (level * 130) - 80;
 
   const div = document.createElement("div");
   div.className = "node";
   div.innerText = segments[index++];
   div.style.left = x + "px";
   div.style.top = y + "px";
-  div.style.transform = "translate(-50%, -50%)";
 
   tree.appendChild(div);
 
+  levels[level].push(div);
+
   div.addEventListener("click", function(){
 
-    // Prevent double growth
-    div.onclick = null;
+    // prevent duplicate growth
+    if(div.dataset.grown) return;
+    div.dataset.grown = true;
 
-    const newY = y - 150;
-    const spread = 250;
-
-    createNode(x - spread, newY, div);
-    createNode(x + spread, newY, div);
+    createNode(level+1, 0);
+    createNode(level+1, 1);
 
   });
 }
