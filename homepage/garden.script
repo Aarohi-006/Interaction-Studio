@@ -1,3 +1,4 @@
+// FULL TEXT STORED HERE
 const fullText = `To Victoria Ocampo 
 
 In his A History of the World War, Captain Liddell Hart reports that a 
@@ -377,49 +378,61 @@ and that I had no other course open to me than to kill someone of that name. He
 does not know, for no one can, of my infinite penitence and sickness of the heart. 
 A malicious and outlandish statement. In point of fact, Captain Richard Madden had been attacked by the 
 Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol when Madden appeared with 
-orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. - Note by 
-the manuscript editor. 
-`;
+orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. Note by 
+the manuscript editor. `;
 
-const segments = fullText
-  .split(/\n\s*\n/)
-  .map(p => p.trim())
-  .filter(p => p.length > 0);
+// Split into shorter clean segments
+function splitText(text) {
+    const sentences = text.split(/(?<=[.?!])\s+/);
+    const segments = [];
+    let current = "";
 
-const tree = document.getElementById("tree");
-const startBtn = document.getElementById("start");
+    sentences.forEach(sentence => {
+        if ((current + sentence).length < 220) {
+            current += " " + sentence;
+        } else {
+            segments.push(current.trim());
+            current = sentence;
+        }
+    });
 
-let index = 0;
-let currentY = window.innerHeight - 120;
+    if (current.trim().length > 0) {
+        segments.push(current.trim());
+    }
 
-startBtn.onclick = function(){
-  startBtn.style.display = "none";
-  addNextNode();
-};
+    return segments;
+}
 
-function addNextNode(){
+const segments = splitText(fullText);
 
-  if(index >= segments.length) return;
+const container = document.getElementById("treeContainer");
+const root = document.getElementById("rootNode");
 
-  const node = document.createElement("div");
-  node.className = "node";
-  node.innerText = segments[index];
+let currentIndex = 0;
 
-  node.style.position = "absolute";
-  node.style.left = (window.innerWidth/2) + "px";
-  node.style.top = currentY + "px";
-  node.style.transform = "translate(-50%,-50%)";
-  node.style.color = "#f6e8b2";
-  node.style.maxWidth = "700px";
-  node.style.textAlign = "center";
-  node.style.cursor = "pointer";
+// Start tree
+root.addEventListener("click", function () {
+    root.removeEventListener("click", arguments.callee);
+    growNext();
+});
 
-  tree.appendChild(node);
+function growNext() {
+    if (currentIndex >= segments.length) return;
 
-  index++;
-  currentY -= 160;
+    const branch = document.createElement("div");
+    branch.className = "branch";
 
-  node.onclick = function(){
-    addNextNode();
-  };
+    const node = document.createElement("div");
+    node.className = "node";
+    node.textContent = segments[currentIndex];
+
+    node.addEventListener("click", function () {
+        node.removeEventListener("click", arguments.callee);
+        growNext();
+    });
+
+    container.appendChild(branch);
+    container.appendChild(node);
+
+    currentIndex++;
 }
