@@ -433,6 +433,8 @@ const maxDepth = 12;
 root.classList.add("alive");
 
 root.addEventListener("click", () => {
+    if (!root.classList.contains("alive")) return;
+
     root.classList.remove("alive");
     branchFrom(root, 0);
 });
@@ -467,6 +469,8 @@ function branchFrom(parentNode, depth) {
         node.textContent = segments[currentIndex];
 
         node.addEventListener("click", () => {
+            if (!node.classList.contains("alive")) return;
+
             node.classList.remove("alive");
             branchFrom(node, depth + 1);
         });
