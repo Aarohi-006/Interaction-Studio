@@ -2,7 +2,7 @@ body {
     margin: 0;
     background: #10261c;
     font-family: Georgia, serif;
-    color: #fff6b0;
+    color: #e6e0a8;
 }
 
 /* Wrapper */
@@ -41,7 +41,7 @@ body {
     flex-wrap: wrap;
 }
 
-/* Nodes */
+/* Base node */
 .node {
     background: rgba(255,255,200,0.06);
     padding: 14px 18px;
@@ -50,14 +50,11 @@ body {
     text-align: center;
     line-height: 1.5;
     font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s ease;
+    cursor: default;
+    transition: all 0.25s ease;
 }
 
-.node:hover {
-    background: rgba(255,255,200,0.18);
-}
-
+/* Root */
 .root {
     font-size: 20px;
     font-weight: bold;
@@ -65,28 +62,15 @@ body {
     border: 1px solid rgba(255,255,200,0.4);
 }
 
-/* Clickable (alive) nodes */
+/* CLICKABLE NODES */
 .node.alive {
-    box-shadow: 0 0 10px rgba(255,255,200,0.25);
-    position: relative;
+    color: #fff94d;              /* brighter yellow */
+    cursor: pointer;
+    font-weight: 600;
 }
 
-/* Subtle pulse indicator */
-.node.alive::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: rgba(255,255,200,0.7);
-    border-radius: 50%;
-    animation: pulse 2.2s infinite ease-in-out;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
-    100% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
+/* Hover feedback */
+.node.alive:hover {
+    background: rgba(255,255,200,0.18);
+    transform: translateY(-2px);
 }
