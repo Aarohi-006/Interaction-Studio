@@ -64,3 +64,29 @@ body {
     margin-bottom: 80px;
     border: 1px solid rgba(255,255,200,0.4);
 }
+
+/* Clickable (alive) nodes */
+.node.alive {
+    box-shadow: 0 0 10px rgba(255,255,200,0.25);
+    position: relative;
+}
+
+/* Subtle pulse indicator */
+.node.alive::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,200,0.7);
+    border-radius: 50%;
+    animation: pulse 2.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+    100% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
+}
