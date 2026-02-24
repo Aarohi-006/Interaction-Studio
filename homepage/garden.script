@@ -381,7 +381,6 @@ Prussian spy Hans Rabener, alias Viktor Runeberg, who drew an automatic pistol w
 orders for the spy's arrest. Madden, in self defense, had inflicted wounds of which the spy later died. Note by 
 the manuscript editor. `;
 
-// Split into shorter clean segments
 function splitText(text) {
     const sentences = text.split(/(?<=[.?!])\s+/);
     const segments = [];
@@ -410,9 +409,9 @@ const root = document.getElementById("rootNode");
 
 let currentIndex = 0;
 
-// Start tree
-root.addEventListener("click", function () {
-    root.removeEventListener("click", arguments.callee);
+// Start growing
+root.addEventListener("click", function startTree() {
+    root.removeEventListener("click", startTree);
     growNext();
 });
 
@@ -426,13 +425,18 @@ function growNext() {
     node.className = "node";
     node.textContent = segments[currentIndex];
 
-    node.addEventListener("click", function () {
-        node.removeEventListener("click", arguments.callee);
+    node.addEventListener("click", function revealNext() {
+        node.removeEventListener("click", revealNext);
         growNext();
     });
 
     container.appendChild(branch);
     container.appendChild(node);
+
+    // Auto-scroll to newest node (darkroom camera effect)
+    setTimeout(() => {
+        node.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
 
     currentIndex++;
 }
