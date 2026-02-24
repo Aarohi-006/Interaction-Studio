@@ -1,3 +1,7 @@
+// ================================
+// FULL STORY TEXT
+// ================================
+
 const fullText = `To Victoria Ocampo 
 
 In his A History of the World War, Captain Liddell Hart reports that a 
@@ -381,6 +385,11 @@ orders for the spy's arrest. Madden, in self defense, had inflicted wounds of wh
 the manuscript editor. 
 `;
 
+
+// ================================
+// TEXT SEGMENTATION
+// ================================
+
 function splitText(text) {
     const sentences = text.split(/(?<=[.?!])\s+/);
     const segments = [];
@@ -403,26 +412,48 @@ function splitText(text) {
 }
 
 const segments = splitText(fullText);
+
+
+// ================================
+// TREE SETUP
+// ================================
+
 const container = document.getElementById("treeContainer");
 const svg = document.getElementById("connections");
 const root = document.getElementById("rootNode");
 
 let currentIndex = 0;
-const maxDepth = 10;
+const maxDepth = 12;
+
+
+// ================================
+// START TREE
+// ================================
 
 root.addEventListener("click", () => {
     branchFrom(root, 0);
 });
 
+
+// ================================
+// BRANCHING ENGINE
+// ================================
+
 function branchFrom(parentNode, depth) {
-    if (currentIndex >= segments.length) return;
+
+    // If all text has been used
+    if (currentIndex >= segments.length) {
+        createEndingNode(parentNode);
+        return;
+    }
+
     if (depth > maxDepth) return;
 
-    const branchCount = Math.floor(Math.random() * 2) + 1; // 1–2 children
+    // 1–2 children for organic non-linearity
+    const branchCount = Math.floor(Math.random() * 2) + 1;
 
     const level = document.createElement("div");
     level.className = "level";
-
     container.appendChild(level);
 
     const children = [];
@@ -450,22 +481,38 @@ function branchFrom(parentNode, depth) {
     }, 100);
 }
 
+
+// ================================
+// SVG CONNECTION DRAWING
+// ================================
+
 function drawConnections(parent, children) {
+
     const parentRect = parent.getBoundingClientRect();
-    const wrapperRect = document.getElementById("treeWrapper").getBoundingClientRect();
+    const wrapperRect = document
+        .getElementById("treeWrapper")
+        .getBoundingClientRect();
 
     children.forEach(child => {
+
         const childRect = child.getBoundingClientRect();
 
-        const startX = parentRect.left + parentRect.width / 2 - wrapperRect.left;
-        const startY = parentRect.bottom - wrapperRect.top;
+        const startX =
+            parentRect.left + parentRect.width / 2 - wrapperRect.left;
+        const startY =
+            parentRect.bottom - wrapperRect.top;
 
-        const endX = childRect.left + childRect.width / 2 - wrapperRect.left;
-        const endY = childRect.top - wrapperRect.top;
-
-        const curve = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const endX =
+            childRect.left + childRect.width / 2 - wrapperRect.left;
+        const endY =
+            childRect.top - wrapperRect.top;
 
         const midY = (startY + endY) / 2;
+
+        const path = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "path"
+        );
 
         const d = `
             M ${startX} ${startY}
@@ -473,12 +520,37 @@ function drawConnections(parent, children) {
               ${endX} ${endY}
         `;
 
-        curve.setAttribute("d", d);
-        curve.setAttribute("stroke", "rgba(255,255,200,0.25)");
-        curve.setAttribute("stroke-width", "1.5");
-        curve.setAttribute("fill", "none");
+        path.setAttribute("d", d);
+        path.setAttribute("stroke", "rgba(255,255,200,0.25)");
+        path.setAttribute("stroke-width", "1.5");
+        path.setAttribute("fill", "none");
 
-        svg.appendChild(curve);
+        svg.appendChild(path);
     });
+}
+
+
+// ================================
+// ENDING NODE (NO DEAD CLICKS)
+// ================================
+
+function createEndingNode(parentNode) {
+
+    const level = document.createElement("div");
+    level.className = "level";
+
+    const endNode = document.createElement("div");
+    endNode.className = "node";
+    endNode.textContent =
+        "The garden closes. Or perhaps it opens elsewhere.";
+
+    level.appendChild(endNode);
+    container.appendChild(level);
+
+    drawConnections(parentNode, [endNode]);
+
+    level.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    endNode.style.cursor = "default";
 }
    
