@@ -1,33 +1,47 @@
-body{
-  margin:0;
-  background:#355f47;
-  font-family:Georgia, serif;
-  overflow:hidden;
+body {
+    margin: 0;
+    padding: 40px 0;
+    background: #1f3d2b; /* subtle dreamy green */
+    font-family: "Georgia", serif;
+    display: flex;
+    justify-content: center;
 }
 
-#tree{
-  position:relative;
-  width:100vw;
-  height:100vh;
+#treeContainer {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
-#start{
-  position:absolute;
-  left:50%;
-  top:80%;
-  transform:translate(-50%,-50%);
-  color:#f6e8b2;
-  font-size:20px;
-  cursor:pointer;
+/* Node styling */
+.node {
+    background: rgba(255,255,200,0.08);
+    color: #fff6b0; /* light yellow */
+    padding: 14px 18px;
+    margin: 20px 0;
+    border-radius: 8px;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
-.node{
-  position:absolute;
-  max-width:240px;
-  color:#f6e8b2;
-  font-size:14px;
-  line-height:1.4;
-  text-align:center;
-  transform:translate(-50%,-50%);
-  cursor:pointer;
+.node:hover {
+    background: rgba(255,255,200,0.15);
+}
+
+.root {
+    font-size: 22px;
+    font-weight: bold;
+    border: 1px solid rgba(255,255,200,0.4);
+}
+
+/* Branch connector */
+.branch {
+    width: 2px;
+    height: 30px;
+    background: rgba(255,255,200,0.4);
 }
