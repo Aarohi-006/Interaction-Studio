@@ -430,7 +430,10 @@ const maxDepth = 12;
 // START TREE
 // ================================
 
+root.classList.add("alive");
+
 root.addEventListener("click", () => {
+    root.classList.remove("alive");
     branchFrom(root, 0);
 });
 
@@ -441,7 +444,6 @@ root.addEventListener("click", () => {
 
 function branchFrom(parentNode, depth) {
 
-    // If all text has been used
     if (currentIndex >= segments.length) {
         createEndingNode(parentNode);
         return;
@@ -449,7 +451,6 @@ function branchFrom(parentNode, depth) {
 
     if (depth > maxDepth) return;
 
-    // 1–2 children for organic non-linearity
     const branchCount = Math.floor(Math.random() * 2) + 1;
 
     const level = document.createElement("div");
@@ -462,10 +463,11 @@ function branchFrom(parentNode, depth) {
         if (currentIndex >= segments.length) break;
 
         const node = document.createElement("div");
-        node.className = "node";
+        node.className = "node alive";
         node.textContent = segments[currentIndex];
 
         node.addEventListener("click", () => {
+            node.classList.remove("alive");
             branchFrom(node, depth + 1);
         });
 
@@ -489,9 +491,8 @@ function branchFrom(parentNode, depth) {
 function drawConnections(parent, children) {
 
     const parentRect = parent.getBoundingClientRect();
-    const wrapperRect = document
-        .getElementById("treeWrapper")
-        .getBoundingClientRect();
+    const wrapperRect =
+        document.getElementById("treeWrapper").getBoundingClientRect();
 
     children.forEach(child => {
 
@@ -531,7 +532,7 @@ function drawConnections(parent, children) {
 
 
 // ================================
-// ENDING NODE (NO DEAD CLICKS)
+// ENDING NODE
 // ================================
 
 function createEndingNode(parentNode) {
@@ -550,7 +551,4 @@ function createEndingNode(parentNode) {
     drawConnections(parentNode, [endNode]);
 
     level.scrollIntoView({ behavior: "smooth", block: "center" });
-
-    endNode.style.cursor = "default";
 }
-   
