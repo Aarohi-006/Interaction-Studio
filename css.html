@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Position Property Painting</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main red canvas */
+.painting {
+    position: relative;   /* IMPORTANT */
+    width: 900px;
+    height: 500px;
+    background: #ff1f3d;
+}
+
+/* Bottom green strip */
+.ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background: #66bb33;
+}
+
+/* Common window style */
+.window {
+    position: absolute;
+}
+
+/* Left tall neon green */
+.w1 {
+    width: 120px;
+    height: 260px;
+    background: #c6ff00;
+    top: 120px;
+    left: 80px;
+    border: 8px solid #e60039;
+}
+
+/* Small orange top */
+.w2 {
+    width: 150px;
+    height: 90px;
+    background: orange;
+    top: 90px;
+    left: 260px;
+    border: 8px solid #6c63ff;
+}
+
+/* Purple vertical bottom left */
+.w3 {
+    width: 120px;
+    height: 220px;
+    background: #b388ff;
+    top: 200px;
+    left: 280px;
+    border: 8px solid #ff4da6;
+}
+
+/* Tall blue center */
+.w4 {
+    width: 120px;
+    height: 320px;
+    background: #6fa8dc;
+    top: 80px;
+    left: 450px;
+    border: 8px solid #99d9ea;
+}
+
+/* Pink vertical right */
+.w5 {
+    width: 140px;
+    height: 260px;
+    background: #f8a1c4;
+    top: 110px;
+    left: 620px;
+    border: 8px solid #3f51b5;
+}
+
+/* Small orange bottom right */
+.w6 {
+    width: 140px;
+    height: 90px;
+    background: #ff7043;
+    top: 310px;
+    left: 640px;
+    border: 8px solid #ff2e63;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="painting">
+    <div class="window w1"></div>
+    <div class="window w2"></div>
+    <div class="window w3"></div>
+    <div class="window w4"></div>
+    <div class="window w5"></div>
+    <div class="window w6"></div>
+    <div class="ground"></div>
+</div>
+
+</body>
+</html>
