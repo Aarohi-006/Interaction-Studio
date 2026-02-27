@@ -22,7 +22,7 @@ body {
 
 /* Main red canvas */
 .painting {
-    position: relative;   /* IMPORTANT */
+    position: relative;
     width: 900px;
     height: 500px;
     background: #ff1f3d;
@@ -42,6 +42,23 @@ body {
     position: absolute;
 }
 
+/* Divider lines */
+.line-vertical {
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    background: currentColor;
+}
+
+.line-horizontal {
+    position: absolute;
+    height: 6px;
+    width: 100%;
+    background: currentColor;
+}
+
+/* WINDOWS */
+
 /* Left tall neon green */
 .w1 {
     width: 120px;
@@ -50,6 +67,13 @@ body {
     top: 120px;
     left: 80px;
     border: 8px solid #e60039;
+    color: #e60039;
+}
+
+/* Center divider */
+.w1 .line-vertical {
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Small orange top */
@@ -60,9 +84,14 @@ body {
     top: 90px;
     left: 260px;
     border: 8px solid #6c63ff;
+    color: #6c63ff;
 }
 
-/* Purple vertical bottom left */
+/* Two horizontal lines */
+.w2 .h1 { top: 33%; }
+.w2 .h2 { top: 66%; }
+
+/* Purple bottom left */
 .w3 {
     width: 120px;
     height: 220px;
@@ -70,7 +99,12 @@ body {
     top: 200px;
     left: 280px;
     border: 8px solid #ff4da6;
+    color: #ff4da6;
 }
+
+/* Two vertical lines */
+.w3 .v1 { left: 33%; }
+.w3 .v2 { left: 66%; }
 
 /* Tall blue center */
 .w4 {
@@ -80,9 +114,16 @@ body {
     top: 80px;
     left: 450px;
     border: 8px solid #99d9ea;
+    color: #99d9ea;
 }
 
-/* Pink vertical right */
+/* Center divider */
+.w4 .line-vertical {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Pink right */
 .w5 {
     width: 140px;
     height: 260px;
@@ -90,7 +131,12 @@ body {
     top: 110px;
     left: 620px;
     border: 8px solid #3f51b5;
+    color: #3f51b5;
 }
+
+/* Two vertical lines */
+.w5 .v1 { left: 33%; }
+.w5 .v2 { left: 66%; }
 
 /* Small orange bottom right */
 .w6 {
@@ -100,7 +146,12 @@ body {
     top: 310px;
     left: 640px;
     border: 8px solid #ff2e63;
+    color: #ff2e63;
 }
+
+/* Two horizontal lines */
+.w6 .h1 { top: 33%; }
+.w6 .h2 { top: 66%; }
 
 </style>
 </head>
@@ -108,13 +159,37 @@ body {
 <body>
 
 <div class="painting">
-    <div class="window w1"></div>
-    <div class="window w2"></div>
-    <div class="window w3"></div>
-    <div class="window w4"></div>
-    <div class="window w5"></div>
-    <div class="window w6"></div>
+
+    <div class="window w1">
+        <div class="line-vertical"></div>
+    </div>
+
+    <div class="window w2">
+        <div class="line-horizontal h1"></div>
+        <div class="line-horizontal h2"></div>
+    </div>
+
+    <div class="window w3">
+        <div class="line-vertical v1"></div>
+        <div class="line-vertical v2"></div>
+    </div>
+
+    <div class="window w4">
+        <div class="line-vertical"></div>
+    </div>
+
+    <div class="window w5">
+        <div class="line-vertical v1"></div>
+        <div class="line-vertical v2"></div>
+    </div>
+
+    <div class="window w6">
+        <div class="line-horizontal h1"></div>
+        <div class="line-horizontal h2"></div>
+    </div>
+
     <div class="ground"></div>
+
 </div>
 
 </body>
