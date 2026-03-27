@@ -1,22 +1,64 @@
-:::writing{variant="standard" id="html1"}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Visual Phrase Generator</title>
-  <link rel="stylesheet" href="phrase.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
   <div class="container">
-    <h1>Visual Phrase Generator</h1>
-    <button onclick="generate()">Generate</button>
-    <p id="output">Click to create a scene</p>
+    <h1>Phrase Generator</h1>
+    <button id="btn">Generate</button>
+    <p id="output">Click to generate</p>
   </div>
 
-  <script src="phrase.js"></script>
+  <script>
+    const phrases = [
+      "rising incense smoke",
+      "glowing ritual lights",
+      "mist-covered mountains",
+      "still water reflections",
+      "neon chaos",
+      "midnight crossing"
+    ];
+
+    function randomPhrase() {
+      return phrases[Math.floor(Math.random() * phrases.length)];
+    }
+
+    document.getElementById("btn").addEventListener("click", function () {
+      const line = randomPhrase() + " meets " + randomPhrase();
+      document.getElementById("output").innerText = line;
+    });
+  </script>
 
 </body>
 </html>
-:::
