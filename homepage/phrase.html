@@ -18,7 +18,7 @@
       transition: background-image 0.6s ease-in-out;
     }
 
-    /* dark overlay for readability */
+    /* dark overlay */
     body::before {
       content: "";
       position: absolute;
@@ -89,29 +89,30 @@
       "still water reflections",
       "neon chaos"
     ];
-  const images = [
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-  "https://images.unsplash.com/photo-1493244040629-496f6d136cc3"
-];
+
+    const images = [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+      "https://images.unsplash.com/photo-1493244040629-496f6d136cc3"
+    ];
 
     function randomItem(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
+    // SET INITIAL BACKGROUND
+    document.body.style.backgroundImage = `url('${images[0]}')`;
+
     document.getElementById("btn").addEventListener("click", function () {
       const output = document.getElementById("output");
 
-      // generate text
       const line = randomItem(phrases) + " meets " + randomItem(phrases);
 
-      // animate text
       output.classList.remove("show");
       void output.offsetWidth;
       output.innerText = line;
       output.classList.add("show");
 
-      // change background
       const randomImage = randomItem(images);
       document.body.style.backgroundImage = `url('${randomImage}')`;
     });
