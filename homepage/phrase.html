@@ -21,7 +21,7 @@
     /* dark overlay */
     body::before {
       content: "";
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -90,18 +90,19 @@
       "neon chaos"
     ];
 
+    // ✅ guaranteed working images
     const images = [
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-      "https://images.unsplash.com/photo-1493244040629-496f6d136cc3"
+      "https://picsum.photos/id/1018/1200/800",
+      "https://picsum.photos/id/1015/1200/800",
+      "https://picsum.photos/id/1011/1200/800"
     ];
 
     function randomItem(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    // SET INITIAL BACKGROUND
-    document.body.style.backgroundImage = `url('${images[0]}')`;
+    // ✅ set initial background
+    document.body.style.backgroundImage = `url(${images[0]})`;
 
     document.getElementById("btn").addEventListener("click", function () {
       const output = document.getElementById("output");
@@ -110,11 +111,12 @@
 
       output.classList.remove("show");
       void output.offsetWidth;
+
       output.innerText = line;
       output.classList.add("show");
 
       const randomImage = randomItem(images);
-      document.body.style.backgroundImage = `url('${randomImage}')`;
+      document.body.style.backgroundImage = `url(${randomImage})`;
     });
   </script>
 
