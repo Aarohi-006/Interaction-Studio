@@ -41,7 +41,6 @@
       font-size: 14px;
     }
 
-    /* Mood styles */
     .calm {
       background-color: #d0f0ff;
       color: #003344;
@@ -67,38 +66,37 @@
     <p id="message">Tap to hear the city...</p>
   </div>
 
-  <button onclick="speakCity()">Where do I go?</button>
+  <button onclick="generateDirection()">Where do I go?</button>
 
   <script>
-    function speakCity() {
-      const message = document.getElementById("message");
-      const box = document.getElementById("cityBox");
+    // FUNCTION WITH PARAMETERS
+    function updateCity(text, mood) {
+      let messageElement = document.getElementById("message");
+      let boxElement = document.getElementById("cityBox");
 
-      // Reset styles
-      box.className = "";
+      // remove old styles
+      boxElement.classList.remove("calm", "urgent", "mysterious");
 
-      const directions = [
-        {
-          text: "Turn left where the street hums.",
-          mood: "calm"
-        },
-        {
-          text: "Hurry. The train is breathing below you.",
-          mood: "urgent"
-        },
-        {
-          text: "Not everything is mapped. Walk anyway.",
-          mood: "mysterious"
-        }
+      // update content (VARIABLE)
+      messageElement.textContent = text;
+
+      // update style (PARAMETER)
+      boxElement.classList.add(mood);
+    }
+
+    function generateDirection() {
+      // VARIABLES
+      let directions = [
+        { text: "Turn left where the street hums.", mood: "calm" },
+        { text: "Hurry. The train is breathing below you.", mood: "urgent" },
+        { text: "Not everything is mapped. Walk anyway.", mood: "mysterious" }
       ];
 
-      const choice = directions[Math.floor(Math.random() * directions.length)];
+      let randomIndex = Math.floor(Math.random() * directions.length);
+      let chosenDirection = directions[randomIndex];
 
-      // Change content
-      message.textContent = choice.text;
-
-      // Change styling
-      box.classList.add(choice.mood);
+      // PASSING ARGUMENTS INTO FUNCTION
+      updateCity(chosenDirection.text, chosenDirection.mood);
     }
   </script>
 
