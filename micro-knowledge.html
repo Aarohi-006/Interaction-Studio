@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -29,7 +28,7 @@ body {
   text-align: center;
   color: red;
   font-weight: bold;
-  padding: 18px 10px 10px;
+  padding: 16px 10px 8px;
   font-size: 20px;
 }
 
@@ -37,10 +36,12 @@ body {
 .map {
   position: relative;
   height: 360px;
-  background: url('https://i.imgur.com/8QZ7Z9R.png') center/cover;
+  background: url('map.png') center/cover no-repeat;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* BUILDING LABELS */
+/* LABELS */
 .label {
   position: absolute;
   padding: 8px 14px;
@@ -55,11 +56,12 @@ body {
   transform: scale(0.95);
 }
 
-.lang { background:#6cc4d4; top:60px; left:40px; }
-.parsons { background:#e59b64; top:140px; left:20px; }
-.uc { background:red; top:160px; left:140px; }
-.nssr { background:#3fb34f; top:60px; right:30px; }
-.copa { background:#9b4de3; bottom:80px; right:20px; }
+/* POSITIONED TO MATCH YOUR MAP */
+.lang   { background:#6cc4d4; top:50px; left:30px; }
+.parsons{ background:#e59b64; top:160px; left:20px; }
+.uc     { background:red; top:160px; left:150px; }
+.nssr   { background:#3fb34f; top:60px; right:20px; }
+.copa   { background:#9b4de3; bottom:70px; right:20px; }
 
 /* UC DOT */
 .dot {
@@ -68,8 +70,8 @@ body {
   height:12px;
   background:red;
   border-radius:50%;
-  top:200px;
-  left:180px;
+  top:210px;
+  left:185px;
 }
 
 /* TIPS */
@@ -82,7 +84,7 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* FILTER BAR */
+/* FILTERS */
 .filters {
   display:flex;
   gap:8px;
@@ -112,13 +114,13 @@ body {
 .f-copa { background:#9b4de3; }
 .f-nssr { background:#3fb34f; }
 
-/* BUILDING VIEW */
+/* BUILDING */
 .building {
   display:none;
-  padding:20px;
-  background:#fff;
   position:absolute;
   inset:0;
+  background:#fff;
+  padding:20px;
   z-index:10;
 }
 
@@ -139,7 +141,6 @@ body {
   display:flex;
   justify-content:space-around;
   padding:12px;
-  font-size:14px;
 }
 </style>
 
@@ -165,22 +166,22 @@ body {
 <div class="dot"></div>
 
 <!-- TIPS -->
-<div class="tip" data-school="uc" style="top:220px; left:130px;">
+<div class="tip" data-school="uc" style="top:230px; left:140px;">
   Free pizza – UC
 </div>
 
-<div class="tip" data-school="lang" style="top:100px; left:50px;">
+<div class="tip" data-school="lang" style="top:100px; left:40px;">
   Quiet study – Lang
 </div>
 
-<div class="tip" data-school="parsons" style="top:180px; left:40px;">
+<div class="tip" data-school="parsons" style="top:200px; left:30px;">
   Studio open – Parsons
 </div>
 ```
 
   </div>
 
-  <!-- FILTERS -->
+  <!-- FILTER -->
 
   <div class="filters">
     <div class="filter f-all active" onclick="filterTips('all', this)">All</div>
@@ -191,7 +192,7 @@ body {
     <div class="filter f-nssr" onclick="filterTips('nssr', this)">NSSR</div>
   </div>
 
-  <!-- BUILDING VIEW -->
+  <!-- BUILDING -->
 
   <div class="building" id="building">
     <h3>University Center</h3>
@@ -201,7 +202,7 @@ body {
 <div class="floor-tip">Elevator broken</div>
 <div class="floor-tip">Quiet lounge – 5th floor</div>
 
-<button onclick="closeBuilding()">← Back to map</button>
+<button onclick="closeBuilding()">← Back</button>
 ```
 
   </div>
@@ -242,3 +243,4 @@ function filterTips(school, el){
 
 </body>
 </html>
+
