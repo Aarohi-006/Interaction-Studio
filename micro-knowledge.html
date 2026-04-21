@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -12,148 +13,133 @@
 body {
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
-  background: #efe8d0;
+  background: #e8e0c8;
 }
 
 .app {
   max-width: 420px;
-  margin: 0 auto;
-  background: #fff;
+  margin: auto;
   min-height: 100vh;
+  background: #f5f0dc;
   position: relative;
-  overflow: hidden;
 }
 
-/* HEADER */
-.header {
-  height: 50px;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 12px;
-  font-size: 14px;
-}
-
-/* SCREENS WRAPPER */
-.screens {
-  position: relative;
-  width: 300%;
-  display: flex;
-  transition: transform 0.4s ease;
-}
-
-/* EACH SCREEN */
-.screen {
-  width: 100%;
-  height: calc(100vh - 110px);
-  position: relative;
+/* TITLE */
+.title {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  padding: 18px 10px 10px;
+  font-size: 20px;
 }
 
 /* MAP */
 .map {
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Union_Square_Map.png/640px-Union_Square_Map.png') center/cover;
+  position: relative;
+  height: 360px;
+  background: url('https://i.imgur.com/8QZ7Z9R.png') center/cover;
 }
 
-/* TIP */
-.tip {
+/* BUILDING LABELS */
+.label {
   position: absolute;
-  background: #ffe08a;
-  padding: 6px 10px;
-  border-radius: 12px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  color: white;
   font-size: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.label:active {
+  transform: scale(0.95);
+}
+
+.lang { background:#6cc4d4; top:60px; left:40px; }
+.parsons { background:#e59b64; top:140px; left:20px; }
+.uc { background:red; top:160px; left:140px; }
+.nssr { background:#3fb34f; top:60px; right:30px; }
+.copa { background:#9b4de3; bottom:80px; right:20px; }
+
+/* UC DOT */
+.dot {
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:red;
+  border-radius:50%;
+  top:200px;
+  left:180px;
+}
+
+/* TIPS */
+.tip {
+  position:absolute;
+  background:#ffe08a;
+  padding:5px 8px;
+  border-radius:10px;
+  font-size:11px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* UC marker */
-.uc {
-  position: absolute;
-  top: 120px;
-  left: 140px;
-  width: 44px;
-  height: 44px;
-  background: red;
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.4s ease;
+/* FILTER BAR */
+.filters {
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:12px;
 }
 
-/* BUILDING OVERLAY */
+.filter {
+  padding:8px 12px;
+  border-radius:20px;
+  color:white;
+  font-size:11px;
+  cursor:pointer;
+  white-space:nowrap;
+  opacity:0.8;
+}
+
+.filter.active {
+  opacity:1;
+  outline:2px solid #00000020;
+}
+
+.f-all { background:#999; }
+.f-lang { background:#6cc4d4; }
+.f-parsons { background:#e59b64; }
+.f-uc { background:red; }
+.f-copa { background:#9b4de3; }
+.f-nssr { background:#3fb34f; }
+
+/* BUILDING VIEW */
 .building {
-  position: absolute;
-  inset: 0;
-  background: #f4f4f4;
-  display: none;
-  z-index: 5;
+  display:none;
+  padding:20px;
+  background:#fff;
+  position:absolute;
+  inset:0;
+  z-index:10;
 }
 
 .floor-tip {
-  position: absolute;
-  background: #aee1f9;
-  padding: 5px 8px;
-  border-radius: 8px;
-  font-size: 11px;
-}
-
-/* FEED + PROFILE */
-.feed, .profile {
-  padding: 20px;
-}
-
-/* MODAL (BOTTOM SHEET) */
-.modal {
-  position: fixed;
-  bottom: -100%;
-  left: 0;
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: 20px 20px 0 0;
-  padding: 15px;
-  transition: bottom 0.3s ease;
-  box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-}
-
-.modal.active {
-  bottom: 0;
-}
-
-.modal input, .modal select {
-  width: 100%;
-  padding: 8px;
-  margin: 6px 0;
-}
-
-.modal button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background: gold;
-  border-radius: 10px;
+  background:#aee1f9;
+  padding:8px;
+  border-radius:8px;
+  margin:10px 0;
 }
 
 /* NAV */
 .nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  max-width: 420px;
-  background: #8cc7c3;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-}
-
-.nav button {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  max-width:420px;
+  background:#8cc7c3;
+  display:flex;
+  justify-content:space-around;
+  padding:12px;
+  font-size:14px;
 }
 </style>
 
@@ -163,82 +149,59 @@ body {
 
 <div class="app">
 
-  <div class="header">
-    <span>Search</span>
-    <span>Filter</span>
-  </div>
+  <div class="title">THE NEW SCHOOL CAMPUS</div>
 
-  <!-- SCREENS -->
+  <!-- MAP -->
 
-  <div class="screens" id="screens">
+  <div class="map" id="map">
 
 ```
-<!-- MAP -->
-<div class="screen map">
+<div class="label lang" onclick="filterTips('lang')">LANG</div>
+<div class="label parsons" onclick="filterTips('parsons')">PARSONS</div>
+<div class="label uc" onclick="openBuilding()">UC</div>
+<div class="label nssr" onclick="filterTips('nssr')">NSSR</div>
+<div class="label copa" onclick="filterTips('copa')">COPA</div>
 
-  <div class="tip" style="top:50px; left:40px;">
-    Free pizza 🍕 (10m)
+<div class="dot"></div>
+
+<!-- TIPS -->
+<div class="tip" data-school="uc" style="top:220px; left:130px;">
+  Free pizza – UC
+</div>
+
+<div class="tip" data-school="lang" style="top:100px; left:50px;">
+  Quiet study – Lang
+</div>
+
+<div class="tip" data-school="parsons" style="top:180px; left:40px;">
+  Studio open – Parsons
+</div>
+```
+
   </div>
 
-  <div class="tip" style="top:200px; left:60px;">
-    Quiet study (Lang)
+  <!-- FILTERS -->
+
+  <div class="filters">
+    <div class="filter f-all active" onclick="filterTips('all', this)">All</div>
+    <div class="filter f-lang" onclick="filterTips('lang', this)">Lang</div>
+    <div class="filter f-parsons" onclick="filterTips('parsons', this)">Parsons</div>
+    <div class="filter f-uc" onclick="filterTips('uc', this)">UC</div>
+    <div class="filter f-copa" onclick="filterTips('copa', this)">CoPA</div>
+    <div class="filter f-nssr" onclick="filterTips('nssr', this)">NSSR</div>
   </div>
 
-  <div class="uc" onclick="zoomToBuilding()">UC</div>
+  <!-- BUILDING VIEW -->
 
-  <!-- BUILDING OVERLAY -->
   <div class="building" id="building">
-    <button onclick="closeBuilding()">← Back</button>
-
-    <div class="floor-tip" style="top:80px; left:120px;">
-      Pizza – 2nd floor
-    </div>
-
-    <div class="floor-tip" style="top:180px; left:140px;">
-      Elevator broken
-    </div>
-  </div>
-
-</div>
-
-<!-- FEED -->
-<div class="screen feed">
-  <h3>Feed</h3>
-  <p>Free pizza – 2 min left</p>
-  <p>Quiet study – 15 min</p>
-</div>
-
-<!-- PROFILE -->
-<div class="screen profile">
-  <h3>Profile</h3>
-  <p>Your posts</p>
-</div>
-```
-
-  </div>
-
-  <!-- MODAL -->
-
-  <div class="modal" id="modal">
-    <h4>Add Tip</h4>
+    <h3>University Center</h3>
 
 ```
-<select>
-  <option>Parsons</option>
-  <option>Lang</option>
-  <option>CoPA</option>
-  <option>NSSR</option>
-</select>
+<div class="floor-tip">Free pizza – 2nd floor</div>
+<div class="floor-tip">Elevator broken</div>
+<div class="floor-tip">Quiet lounge – 5th floor</div>
 
-<input placeholder="What's happening?">
-
-<select>
-  <option>Food</option>
-  <option>Space</option>
-  <option>Warning</option>
-</select>
-
-<button onclick="closeModal()">Post</button>
+<button onclick="closeBuilding()">← Back to map</button>
 ```
 
   </div>
@@ -246,58 +209,34 @@ body {
   <!-- NAV -->
 
   <div class="nav">
-    <button onclick="goTo(0)">Map</button>
-    <button onclick="openModal()">＋</button>
-    <button onclick="goTo(1)">Feed</button>
-    <button onclick="goTo(2)">Profile</button>
+    <div>Map</div>
+    <div>＋</div>
+    <div>Profile</div>
   </div>
 
 </div>
 
 <script>
-let index = 0;
-const screens = document.getElementById("screens");
-
-/* NAVIGATION */
-function goTo(i) {
-  index = i;
-  screens.style.transform = `translateX(-${i * 100}%)`;
+function openBuilding(){
+  document.getElementById("building").style.display="block";
 }
 
-/* SWIPE */
-let startX = 0;
-
-document.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend", e => {
-  let endX = e.changedTouches[0].clientX;
-
-  if (startX - endX > 50) goTo(Math.min(index + 1, 2));
-  if (endX - startX > 50) goTo(Math.max(index - 1, 0));
-});
-
-/* BUILDING ZOOM */
-function zoomToBuilding() {
-  document.querySelector(".uc").style.transform = "scale(4)";
-  setTimeout(() => {
-    document.getElementById("building").style.display = "block";
-  }, 300);
+function closeBuilding(){
+  document.getElementById("building").style.display="none";
 }
 
-function closeBuilding() {
-  document.querySelector(".uc").style.transform = "scale(1)";
-  document.getElementById("building").style.display = "none";
-}
+function filterTips(school, el){
+  let tips = document.querySelectorAll(".tip");
+  tips.forEach(t=>{
+    if(school==="all" || t.dataset.school===school){
+      t.style.display="block";
+    } else {
+      t.style.display="none";
+    }
+  });
 
-/* MODAL */
-function openModal() {
-  document.getElementById("modal").classList.add("active");
-}
-
-function closeModal() {
-  document.getElementById("modal").classList.remove("active");
+  document.querySelectorAll(".filter").forEach(f=>f.classList.remove("active"));
+  if(el) el.classList.add("active");
 }
 </script>
 
