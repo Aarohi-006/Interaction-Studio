@@ -20,43 +20,58 @@ body {
   margin: auto;
   min-height: 100vh;
   background: #f5f0dc;
-  position: relative;
-  overflow: hidden;
 }
 
-/* TITLE */
-.title {
+/* HEADER */
+.header {
   text-align: center;
-  color: red;
-  font-weight: bold;
   padding: 16px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  background: #e9d9a8;
+  border-radius: 12px;
+  margin: 12px;
 }
 
 /* MAP */
 .map {
   position: relative;
   height: 360px;
+  margin: 0 12px;
+  border-radius: 12px;
+  overflow: hidden;
   background: url('map.png') center/cover no-repeat;
-  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-.map.zoomed {
-  transform: scale(2.2) translate(-20%, -20%);
-  opacity: 0;
-}
-
-/* HOTSPOTS */
-.hotspot {
+/* LABELS */
+.label {
   position: absolute;
-  width: 70px;
-  height: 50px;
+  z-index: 10;
+  padding: 6px 12px;
+  border-radius: 14px;
+  font-size: 12px;
   cursor: pointer;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
-.hotspot.uc { top:160px; left:150px; }
+
+.label:active {
+  transform: scale(0.95);
+}
+
+/* POSITIONS */
+.lang { top:40px; left:30px; }
+.parsons { top:180px; left:20px; }
+.uc { top:150px; left:160px; background:#ff4d4d; color:white; }
+.nssr { top:40px; right:20px; }
+.copa { bottom:70px; right:20px; }
 
 /* TIPS */
 .tip {
   position:absolute;
+  z-index: 9;
   background:#ffe08a;
   padding:5px 8px;
   border-radius:10px;
@@ -82,15 +97,12 @@ body {
 .f-all { background:#999; }
 .f-lang { background:#6cc4d4; }
 .f-parsons { background:#e59b64; }
-.f-uc { background:red; }
+.f-uc { background:#ff4d4d; }
 .f-copa { background:#9b4de3; }
 .f-nssr { background:#3fb34f; }
 
 /* BUILDING */
 .building {
-  position:absolute;
-  inset:0;
-  background:white;
   display:none;
   padding:20px;
 }
@@ -148,13 +160,24 @@ button {
 
 <div class="app">
 
-<div class="title">THE NEW SCHOOL CAMPUS</div>
+<div class="header">THE NEW SCHOOL CAMPUS</div>
 
 <!-- MAP -->
 
 <div class="map" id="map">
-  <div class="hotspot uc" onclick="zoomToBuilding()"></div>
+
+  <!-- LABELS -->
+
+  <div class="label lang" onclick="filterTips('lang')">Lang</div>
+  <div class="label parsons" onclick="filterTips('parsons')">Parsons</div>
+  <div class="label uc" onclick="openBuilding()">UC</div>
+  <div class="label nssr" onclick="filterTips('nssr')">NSSR</div>
+  <div class="label copa" onclick="filterTips('copa')">CoPA</div>
+
+  <!-- TIPS -->
+
   <div id="tips-container"></div>
+
 </div>
 
 <!-- FILTER -->
@@ -223,9 +246,9 @@ function renderTips(){
     div.className = "tip";
     div.innerText = t.text;
 
-    if(t.school==="uc") { div.style.top="230px"; div.style.left="140px"; }
-    if(t.school==="lang") { div.style.top="100px"; div.style.left="40px"; }
-    if(t.school==="parsons") { div.style.top="200px"; div.style.left="30px"; }
+    if(t.school==="uc"){ div.style.top="230px"; div.style.left="150px"; }
+    if(t.school==="lang"){ div.style.top="100px"; div.style.left="40px"; }
+    if(t.school==="parsons"){ div.style.top="220px"; div.style.left="30px"; }
 
     container.appendChild(div);
   });
@@ -251,11 +274,11 @@ function addTip(){
 }
 
 function filterTips(school){
-  document.querySelectorAll(".tip").forEach((t,i)=>{
-    if(school==="all" || tips[i].school===school){
-      t.style.display="block";
+  document.querySelectorAll(".tip").forEach((tip, index)=>{
+    if(school==="all" || tips[index].school===school){
+      tip.style.display="block";
     } else {
-      t.style.display="none";
+      tip.style.display="none";
     }
   });
 }
@@ -268,13 +291,11 @@ function closeModal(){
   document.getElementById("modal").classList.remove("active");
 }
 
-function zoomToBuilding(){
-  document.getElementById("map").classList.add("zoomed");
-  setTimeout(()=>document.getElementById("building").style.display="block",500);
+function openBuilding(){
+  document.getElementById("building").style.display="block";
 }
 
 function closeBuilding(){
-  document.getElementById("map").classList.remove("zoomed");
   document.getElementById("building").style.display="none";
 }
 
@@ -293,5 +314,3 @@ renderTips();
 
 </body>
 </html>
-
-
