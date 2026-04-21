@@ -21,6 +21,7 @@ body {
   min-height: 100vh;
   background: #f5f0dc;
   position: relative;
+  overflow: hidden;
 }
 
 /* TITLE */
@@ -28,8 +29,7 @@ body {
   text-align: center;
   color: red;
   font-weight: bold;
-  padding: 16px 10px 8px;
-  font-size: 20px;
+  padding: 16px;
 }
 
 /* MAP */
@@ -37,42 +37,22 @@ body {
   position: relative;
   height: 360px;
   background: url('map.png') center/cover no-repeat;
-  border-radius: 10px;
-  overflow: hidden;
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-/* LABELS */
-.label {
+.map.zoomed {
+  transform: scale(2.2) translate(-20%, -20%);
+  opacity: 0;
+}
+
+/* HOTSPOTS */
+.hotspot {
   position: absolute;
-  padding: 8px 14px;
-  border-radius: 20px;
-  color: white;
-  font-size: 12px;
+  width: 70px;
+  height: 50px;
   cursor: pointer;
-  transition: transform 0.2s;
 }
-
-.label:active {
-  transform: scale(0.95);
-}
-
-/* POSITIONED TO MATCH YOUR MAP */
-.lang   { background:#6cc4d4; top:50px; left:30px; }
-.parsons{ background:#e59b64; top:160px; left:20px; }
-.uc     { background:red; top:160px; left:150px; }
-.nssr   { background:#3fb34f; top:60px; right:20px; }
-.copa   { background:#9b4de3; bottom:70px; right:20px; }
-
-/* UC DOT */
-.dot {
-  position:absolute;
-  width:12px;
-  height:12px;
-  background:red;
-  border-radius:50%;
-  top:210px;
-  left:185px;
-}
+.hotspot.uc { top:160px; left:150px; }
 
 /* TIPS */
 .tip {
@@ -81,15 +61,14 @@ body {
   padding:5px 8px;
   border-radius:10px;
   font-size:11px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* FILTERS */
+/* FILTER */
 .filters {
   display:flex;
   gap:8px;
-  overflow-x:auto;
   padding:12px;
+  overflow-x:auto;
 }
 
 .filter {
@@ -98,13 +77,6 @@ body {
   color:white;
   font-size:11px;
   cursor:pointer;
-  white-space:nowrap;
-  opacity:0.8;
-}
-
-.filter.active {
-  opacity:1;
-  outline:2px solid #00000020;
 }
 
 .f-all { background:#999; }
@@ -116,19 +88,45 @@ body {
 
 /* BUILDING */
 .building {
-  display:none;
   position:absolute;
   inset:0;
-  background:#fff;
+  background:white;
+  display:none;
   padding:20px;
-  z-index:10;
 }
 
-.floor-tip {
-  background:#aee1f9;
+/* FEED */
+.feed {
+  display:none;
+  padding:20px;
+}
+
+/* MODAL */
+.modal {
+  position:fixed;
+  bottom:-100%;
+  left:0;
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:20px;
+  border-radius:20px 20px 0 0;
+  transition:0.3s;
+}
+.modal.active { bottom:0; }
+
+input, select {
+  width:100%;
+  margin:8px 0;
   padding:8px;
-  border-radius:8px;
-  margin:10px 0;
+}
+
+button {
+  padding:10px;
+  border:none;
+  background:gold;
+  width:100%;
+  border-radius:10px;
 }
 
 /* NAV */
@@ -150,97 +148,150 @@ body {
 
 <div class="app">
 
-  <div class="title">THE NEW SCHOOL CAMPUS</div>
+<div class="title">THE NEW SCHOOL CAMPUS</div>
 
-  <!-- MAP -->
+<!-- MAP -->
 
-  <div class="map" id="map">
-
-```
-<div class="label lang" onclick="filterTips('lang')">LANG</div>
-<div class="label parsons" onclick="filterTips('parsons')">PARSONS</div>
-<div class="label uc" onclick="openBuilding()">UC</div>
-<div class="label nssr" onclick="filterTips('nssr')">NSSR</div>
-<div class="label copa" onclick="filterTips('copa')">COPA</div>
-
-<div class="dot"></div>
-
-<!-- TIPS -->
-<div class="tip" data-school="uc" style="top:230px; left:140px;">
-  Free pizza – UC
+<div class="map" id="map">
+  <div class="hotspot uc" onclick="zoomToBuilding()"></div>
+  <div id="tips-container"></div>
 </div>
 
-<div class="tip" data-school="lang" style="top:100px; left:40px;">
-  Quiet study – Lang
+<!-- FILTER -->
+
+<div class="filters">
+  <div class="filter f-all" onclick="filterTips('all')">All</div>
+  <div class="filter f-lang" onclick="filterTips('lang')">Lang</div>
+  <div class="filter f-parsons" onclick="filterTips('parsons')">Parsons</div>
+  <div class="filter f-uc" onclick="filterTips('uc')">UC</div>
+  <div class="filter f-copa" onclick="filterTips('copa')">CoPA</div>
+  <div class="filter f-nssr" onclick="filterTips('nssr')">NSSR</div>
 </div>
 
-<div class="tip" data-school="parsons" style="top:200px; left:30px;">
-  Studio open – Parsons
+<!-- BUILDING -->
+
+<div class="building" id="building">
+  <h3>University Center</h3>
+  <p>Free pizza – 2nd floor</p>
+  <button onclick="closeBuilding()">Back</button>
 </div>
-```
 
-  </div>
+<!-- FEED -->
 
-  <!-- FILTER -->
+<div class="feed" id="feed">
+  <h3>Feed</h3>
+  <div id="feed-list"></div>
+</div>
 
-  <div class="filters">
-    <div class="filter f-all active" onclick="filterTips('all', this)">All</div>
-    <div class="filter f-lang" onclick="filterTips('lang', this)">Lang</div>
-    <div class="filter f-parsons" onclick="filterTips('parsons', this)">Parsons</div>
-    <div class="filter f-uc" onclick="filterTips('uc', this)">UC</div>
-    <div class="filter f-copa" onclick="filterTips('copa', this)">CoPA</div>
-    <div class="filter f-nssr" onclick="filterTips('nssr', this)">NSSR</div>
-  </div>
+<!-- MODAL -->
 
-  <!-- BUILDING -->
+<div class="modal" id="modal">
+  <h3>Add Tip</h3>
+  <input id="tipText" placeholder="What's happening?">
+  <select id="tipSchool">
+    <option value="uc">UC</option>
+    <option value="lang">Lang</option>
+    <option value="parsons">Parsons</option>
+    <option value="copa">CoPA</option>
+    <option value="nssr">NSSR</option>
+  </select>
+  <button onclick="addTip()">Post</button>
+</div>
 
-  <div class="building" id="building">
-    <h3>University Center</h3>
+<!-- NAV -->
 
-```
-<div class="floor-tip">Free pizza – 2nd floor</div>
-<div class="floor-tip">Elevator broken</div>
-<div class="floor-tip">Quiet lounge – 5th floor</div>
-
-<button onclick="closeBuilding()">← Back</button>
-```
-
-  </div>
-
-  <!-- NAV -->
-
-  <div class="nav">
-    <div>Map</div>
-    <div>＋</div>
-    <div>Profile</div>
-  </div>
+<div class="nav">
+  <div onclick="showMap()">Map</div>
+  <div onclick="openModal()">＋</div>
+  <div onclick="showFeed()">Feed</div>
+</div>
 
 </div>
 
 <script>
-function openBuilding(){
-  document.getElementById("building").style.display="block";
-}
+let tips = [
+  {text:"Free pizza – UC", school:"uc"},
+  {text:"Quiet study – Lang", school:"lang"}
+];
 
-function closeBuilding(){
-  document.getElementById("building").style.display="none";
-}
+function renderTips(){
+  let container = document.getElementById("tips-container");
+  container.innerHTML = "";
 
-function filterTips(school, el){
-  let tips = document.querySelectorAll(".tip");
   tips.forEach(t=>{
-    if(school==="all" || t.dataset.school===school){
+    let div = document.createElement("div");
+    div.className = "tip";
+    div.innerText = t.text;
+
+    if(t.school==="uc") { div.style.top="230px"; div.style.left="140px"; }
+    if(t.school==="lang") { div.style.top="100px"; div.style.left="40px"; }
+    if(t.school==="parsons") { div.style.top="200px"; div.style.left="30px"; }
+
+    container.appendChild(div);
+  });
+
+  let feed = document.getElementById("feed-list");
+  feed.innerHTML = "";
+  tips.forEach(t=>{
+    let p = document.createElement("p");
+    p.innerText = t.text;
+    feed.appendChild(p);
+  });
+}
+
+function addTip(){
+  let text = document.getElementById("tipText").value;
+  let school = document.getElementById("tipSchool").value;
+
+  if(text){
+    tips.push({text, school});
+    renderTips();
+    closeModal();
+  }
+}
+
+function filterTips(school){
+  document.querySelectorAll(".tip").forEach((t,i)=>{
+    if(school==="all" || tips[i].school===school){
       t.style.display="block";
     } else {
       t.style.display="none";
     }
   });
-
-  document.querySelectorAll(".filter").forEach(f=>f.classList.remove("active"));
-  if(el) el.classList.add("active");
 }
+
+function openModal(){
+  document.getElementById("modal").classList.add("active");
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("active");
+}
+
+function zoomToBuilding(){
+  document.getElementById("map").classList.add("zoomed");
+  setTimeout(()=>document.getElementById("building").style.display="block",500);
+}
+
+function closeBuilding(){
+  document.getElementById("map").classList.remove("zoomed");
+  document.getElementById("building").style.display="none";
+}
+
+function showFeed(){
+  document.getElementById("feed").style.display="block";
+  document.getElementById("map").style.display="none";
+}
+
+function showMap(){
+  document.getElementById("feed").style.display="none";
+  document.getElementById("map").style.display="block";
+}
+
+renderTips();
 </script>
 
 </body>
 </html>
+
 
