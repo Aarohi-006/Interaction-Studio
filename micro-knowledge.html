@@ -1,70 +1,95 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Micro-Local Knowledge</title>
 
 <style>
+* { box-sizing: border-box; }
+
 body {
-  font-family: Helvetica, Arial, sans-serif;
   margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
   background: #efe8d0;
 }
 
-.container {
-  width: 320px;
-  margin: 20px auto;
+.app {
+  max-width: 420px;
+  margin: 0 auto;
   background: #fff;
-  border-radius: 20px;
+  min-height: 100vh;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
+/* HEADER */
 .header {
-  padding: 10px;
+  height: 50px;
   background: #ddd;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  padding: 0 12px;
+  font-size: 14px;
 }
 
-.map {
+/* SCREENS WRAPPER */
+.screens {
   position: relative;
-  height: 300px;
+  width: 300%;
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+/* EACH SCREEN */
+.screen {
+  width: 100%;
+  height: calc(100vh - 110px);
+  position: relative;
+}
+
+/* MAP */
+.map {
   background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Union_Square_Map.png/640px-Union_Square_Map.png') center/cover;
 }
 
-/* floating tips */
+/* TIP */
 .tip {
   position: absolute;
   background: #ffe08a;
   padding: 6px 10px;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 12px;
-  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 /* UC marker */
 .uc {
   position: absolute;
   top: 120px;
-  left: 130px;
-  width: 40px;
-  height: 40px;
+  left: 140px;
+  width: 44px;
+  height: 44px;
   background: red;
   border-radius: 50%;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
   cursor: pointer;
+  transition: transform 0.4s ease;
 }
 
-/* building view */
+/* BUILDING OVERLAY */
 .building {
-  display: none;
-  position: relative;
-  height: 300px;
+  position: absolute;
+  inset: 0;
   background: #f4f4f4;
+  display: none;
+  z-index: 5;
 }
 
 .floor-tip {
@@ -75,12 +100,53 @@ body {
   font-size: 11px;
 }
 
-/* bottom nav */
+/* FEED + PROFILE */
+.feed, .profile {
+  padding: 20px;
+}
+
+/* MODAL (BOTTOM SHEET) */
+.modal {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 15px;
+  transition: bottom 0.3s ease;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+}
+
+.modal.active {
+  bottom: 0;
+}
+
+.modal input, .modal select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+}
+
+.modal button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: gold;
+  border-radius: 10px;
+}
+
+/* NAV */
 .nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  background: #8cc7c3;
   display: flex;
   justify-content: space-around;
-  padding: 10px;
-  background: #8cc7c3;
+  padding: 10px 0;
 }
 
 .nav button {
@@ -89,132 +155,149 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
-
-/* modal */
-.modal {
-  display: none;
-  position: absolute;
-  top: 50px;
-  left: 20px;
-  width: 280px;
-  background: white;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-}
-
-input, select {
-  width: 100%;
-  margin: 5px 0;
-  padding: 5px;
-}
-
-button.primary {
-  background: gold;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  border-radius: 10px;
-}
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
   <div class="header">
     <span>Search</span>
     <span>Filter</span>
   </div>
 
-  <!-- CAMPUS MAP -->
-  <div class="map" id="map">
+  <!-- SCREENS -->
 
-    <div class="tip" style="top:40px; left:40px;">
-      Free pizza (10 min)
-    </div>
+  <div class="screens" id="screens">
 
-    <div class="tip" style="top:200px; left:60px;">
-      Quiet study (Lang)
-    </div>
+```
+<!-- MAP -->
+<div class="screen map">
 
-    <!-- UC clickable -->
-    <div class="uc" onclick="openBuilding()">UC</div>
-
+  <div class="tip" style="top:50px; left:40px;">
+    Free pizza 🍕 (10m)
   </div>
 
-  <!-- BUILDING VIEW -->
-  <div class="building" id="building">
+  <div class="tip" style="top:200px; left:60px;">
+    Quiet study (Lang)
+  </div>
 
-    <div class="floor-tip" style="top:60px; left:100px;">
-      Pizza - 2nd floor
+  <div class="uc" onclick="zoomToBuilding()">UC</div>
+
+  <!-- BUILDING OVERLAY -->
+  <div class="building" id="building">
+    <button onclick="closeBuilding()">← Back</button>
+
+    <div class="floor-tip" style="top:80px; left:120px;">
+      Pizza – 2nd floor
     </div>
 
-    <div class="floor-tip" style="top:150px; left:120px;">
+    <div class="floor-tip" style="top:180px; left:140px;">
       Elevator broken
     </div>
+  </div>
 
-    <button onclick="backToMap()" style="position:absolute; top:10px; left:10px;">
-      ← Back
-    </button>
+</div>
+
+<!-- FEED -->
+<div class="screen feed">
+  <h3>Feed</h3>
+  <p>Free pizza – 2 min left</p>
+  <p>Quiet study – 15 min</p>
+</div>
+
+<!-- PROFILE -->
+<div class="screen profile">
+  <h3>Profile</h3>
+  <p>Your posts</p>
+</div>
+```
 
   </div>
 
-  <!-- ADD TIP MODAL -->
-  <div class="modal" id="modal">
+  <!-- MODAL -->
 
+  <div class="modal" id="modal">
     <h4>Add Tip</h4>
 
-    <select>
-      <option>Parsons</option>
-      <option>Lang</option>
-      <option>CoPA</option>
-      <option>NSSR</option>
-    </select>
+```
+<select>
+  <option>Parsons</option>
+  <option>Lang</option>
+  <option>CoPA</option>
+  <option>NSSR</option>
+</select>
 
-    <input placeholder="What's happening?">
+<input placeholder="What's happening?">
 
-    <select>
-      <option>Food</option>
-      <option>Space</option>
-      <option>Warning</option>
-    </select>
+<select>
+  <option>Food</option>
+  <option>Space</option>
+  <option>Warning</option>
+</select>
 
-    <button class="primary" onclick="closeModal()">POST</button>
+<button onclick="closeModal()">Post</button>
+```
 
   </div>
 
   <!-- NAV -->
+
   <div class="nav">
-    <button onclick="showMap()">Map</button>
+    <button onclick="goTo(0)">Map</button>
     <button onclick="openModal()">＋</button>
-    <button>Profile</button>
+    <button onclick="goTo(1)">Feed</button>
+    <button onclick="goTo(2)">Profile</button>
   </div>
 
 </div>
 
 <script>
-function openBuilding() {
-  document.getElementById("map").style.display = "none";
-  document.getElementById("building").style.display = "block";
+let index = 0;
+const screens = document.getElementById("screens");
+
+/* NAVIGATION */
+function goTo(i) {
+  index = i;
+  screens.style.transform = `translateX(-${i * 100}%)`;
 }
 
-function backToMap() {
-  document.getElementById("map").style.display = "block";
+/* SWIPE */
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+
+  if (startX - endX > 50) goTo(Math.min(index + 1, 2));
+  if (endX - startX > 50) goTo(Math.max(index - 1, 0));
+});
+
+/* BUILDING ZOOM */
+function zoomToBuilding() {
+  document.querySelector(".uc").style.transform = "scale(4)";
+  setTimeout(() => {
+    document.getElementById("building").style.display = "block";
+  }, 300);
+}
+
+function closeBuilding() {
+  document.querySelector(".uc").style.transform = "scale(1)";
   document.getElementById("building").style.display = "none";
 }
 
+/* MODAL */
 function openModal() {
-  document.getElementById("modal").style.display = "block";
+  document.getElementById("modal").classList.add("active");
 }
 
 function closeModal() {
-  document.getElementById("modal").style.display = "none";
-}
-
-function showMap() {
-  backToMap();
+  document.getElementById("modal").classList.remove("active");
 }
 </script>
 
