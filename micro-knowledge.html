@@ -27,10 +27,9 @@ body {
   text-align: center;
   padding: 16px;
   font-weight: bold;
-  font-size: 18px;
   background: #e9d9a8;
-  border-radius: 12px;
   margin: 12px;
+  border-radius: 10px;
 }
 
 /* MAP */
@@ -38,43 +37,33 @@ body {
   position: relative;
   height: 360px;
   margin: 0 12px;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 10px;
   background: url('map.png') center/cover no-repeat;
 }
 
 /* LABELS */
 .label {
   position: absolute;
-  z-index: 10;
   padding: 6px 12px;
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 12px;
+  background: white;
   cursor: pointer;
-  background: rgba(255,255,255,0.95);
-  border: 1px solid #ccc;
 }
 
 .lang { top:40px; left:30px; }
 .parsons { top:180px; left:20px; }
-.uc { top:150px; left:160px; background:#ff4d4d; color:white; }
+.uc { top:150px; left:160px; background:red; color:white; }
 .nssr { top:40px; right:20px; }
 .copa { bottom:70px; right:20px; }
 
 /* TIPS */
 .tip {
   position:absolute;
-  z-index: 9;
   background:#ffe08a;
   padding:5px 8px;
   border-radius:10px;
   font-size:11px;
-  transition: 0.2s;
-}
-
-.tip.detected {
-  box-shadow: 0 0 12px gold;
-  transform: scale(1.05);
 }
 
 /* FILTER */
@@ -82,11 +71,10 @@ body {
   display:flex;
   gap:8px;
   padding:12px;
-  overflow-x:auto;
 }
 
 .filter {
-  padding:8px 12px;
+  padding:6px 10px;
   border-radius:20px;
   color:white;
   font-size:11px;
@@ -96,34 +84,15 @@ body {
 .f-all { background:#999; }
 .f-lang { background:#6cc4d4; }
 .f-parsons { background:#e59b64; }
-.f-uc { background:#ff4d4d; }
+.f-uc { background:red; }
 .f-copa { background:#9b4de3; }
 .f-nssr { background:#3fb34f; }
 
-
-/* RIPPLE */
-.ripple {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(255,200,0,0.6);
-  transform: translate(-50%, -50%) scale(0);
-  animation: ripple 0.5s ease-out;
-}
-
-@keyframes ripple {
-  to {
-    transform: translate(-50%, -50%) scale(4);
-    opacity: 0;
-  }
-}
-
-/* BUILDING */
-.building { display:none; padding:20px; }
-
 /* FEED */
-.feed { display:none; padding:20px; }
+.feed {
+  display:none;
+  padding:20px;
+}
 
 /* MODAL */
 .modal {
@@ -134,24 +103,9 @@ body {
   max-width:420px;
   background:white;
   padding:20px;
-  border-radius:20px 20px 0 0;
   transition:0.3s;
 }
 .modal.active { bottom:0; }
-
-input, select {
-  width:100%;
-  margin:8px 0;
-  padding:8px;
-}
-
-button {
-  padding:10px;
-  border:none;
-  background:gold;
-  width:100%;
-  border-radius:10px;
-}
 
 /* NAV */
 .nav {
@@ -175,22 +129,14 @@ button {
 <div class="header">THE NEW SCHOOL CAMPUS</div>
 
 <div class="map" id="map">
-
-  <!-- LABELS -->
-
   <div class="label lang" onclick="filterTips('lang')">Lang</div>
   <div class="label parsons" onclick="filterTips('parsons')">Parsons</div>
-  <div class="label uc" onclick="openBuilding()">UC</div>
+  <div class="label uc" onclick="filterTips('uc')">UC</div>
   <div class="label nssr" onclick="filterTips('nssr')">NSSR</div>
   <div class="label copa" onclick="filterTips('copa')">CoPA</div>
 
-  <!-- TIPS -->
-
   <div id="tips-container"></div>
-
 </div>
-
-<!-- FILTER -->
 
 <div class="filters">
   <div class="filter f-all" onclick="filterTips('all')">All</div>
@@ -201,22 +147,10 @@ button {
   <div class="filter f-nssr" onclick="filterTips('nssr')">NSSR</div>
 </div>
 
-<!-- BUILDING -->
-
-<div class="building" id="building">
-  <h3>University Center</h3>
-  <p>Free pizza – 2nd floor</p>
-  <button onclick="closeBuilding()">Back</button>
-</div>
-
-<!-- FEED -->
-
 <div class="feed" id="feed">
   <h3>Feed</h3>
   <div id="feed-list"></div>
 </div>
-
-<!-- MODAL -->
 
 <div class="modal" id="modal">
   <h3>Add Tip</h3>
@@ -231,17 +165,11 @@ button {
   <button onclick="addTip()">Post</button>
 </div>
 
-<!-- NAV -->
-
 <div class="nav">
   <div onclick="showMap()">Map</div>
   <div onclick="openModal()">＋</div>
   <div onclick="showFeed()">Feed</div>
 </div>
-
-<!-- MASCOT -->
-
-<img src="mascot.png" class="mascot" id="mascot">
 
 </div>
 
@@ -255,14 +183,13 @@ function renderTips(){
   let container = document.getElementById("tips-container");
   container.innerHTML = "";
 
-  tips.forEach(t=>{
+  tips.forEach((t, i)=>{
     let div = document.createElement("div");
     div.className = "tip";
     div.innerText = t.text;
 
     if(t.school==="uc"){ div.style.top="230px"; div.style.left="150px"; }
     if(t.school==="lang"){ div.style.top="100px"; div.style.left="40px"; }
-    if(t.school==="parsons"){ div.style.top="220px"; div.style.left="30px"; }
 
     container.appendChild(div);
   });
@@ -305,14 +232,6 @@ function closeModal(){
   document.getElementById("modal").classList.remove("active");
 }
 
-function openBuilding(){
-  document.getElementById("building").style.display="block";
-}
-
-function closeBuilding(){
-  document.getElementById("building").style.display="none";
-}
-
 function showFeed(){
   document.getElementById("feed").style.display="block";
   document.getElementById("map").style.display="none";
@@ -323,68 +242,10 @@ function showMap(){
   document.getElementById("map").style.display="block";
 }
 
-document.addEventListener("mousemove", (e) => {
-  const mascot = document.getElementById("mascot");
-
-  let x = (e.clientX / window.innerWidth - 0.5) * 10;
-  let y = (e.clientY / window.innerHeight - 0.5) * 10;
-
-  mascot.style.transform = `translate(${x}px, ${y}px)`;
-});
-  document.getElementById("map").addEventListener("mousemove", function(e){
-  const mascot = document.getElementById("mascot");
-  let active = false;
-
-  document.querySelectorAll(".tip").forEach(tip=>{
-    const rect = tip.getBoundingClientRect();
-    const dx = e.clientX - rect.left;
-    const dy = e.clientY - rect.top;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-
-    if(dist < 80){
-      tip.classList.add("detected");
-      active = true;
-    } else {
-      tip.classList.remove("detected");
-    }
-  });
-
-  if(active){
-    mascot.style.transform += " scale(1.3)";
-  }
-});
-  /* TAP RIPPLE */
-document.getElementById("map").addEventListener("click", function(e){
-  const ripple = document.createElement("div");
-  ripple.className = "ripple";
-  ripple.style.left = e.offsetX + "px";
-  ripple.style.top = e.offsetY + "px";
-  this.appendChild(ripple);
-  setTimeout(()=> ripple.remove(), 500);
-});
-
-/* DETECTOR */
-document.getElementById("map").addEventListener("mousemove", function(e){
-  const mascot = document.getElementById("mascot");
-  document.querySelectorAll(".tip").forEach(tip=>{
-    const rect = tip.getBoundingClientRect();
-    const dx = e.clientX - rect.left;
-    const dy = e.clientY - rect.top;
-    const dist = Math.sqrt(dx*dx + dy*dy);
-
-    if(dist < 80){
-      tip.classList.add("detected");
-      mascot.style.transform = "scale(1.2)";
-    } else {
-      tip.classList.remove("detected");
-      mascot.style.transform = "scale(1)";
-    }
-  });
-});
-
 renderTips();
 </script>
 
 </body>
 </html>
+
 
