@@ -13,6 +13,7 @@ body {
   font-family: 'Inter', sans-serif;
   background: #2F4A8A;
   color: white;
+  text-align: center;
 }
 
 /* HEADER */
@@ -21,36 +22,24 @@ body {
   border-bottom: 2px solid #FFD400;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: #FFD400;
 }
 
 .subtitle {
   font-size: 12px;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
-/* HERO */
-.hero {
-  padding: 20px;
-  text-align: center;
-}
-
-.preview-box {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 16px;
-  margin-bottom: 20px;
-}
-
+/* ROUTE DISPLAY */
 .route-preview {
-  font-size: 36px;
-  letter-spacing: 12px;
+  font-size: 34px;
+  letter-spacing: 10px;
+  margin: 20px;
   color: #FFD400;
 }
 
@@ -58,34 +47,49 @@ body {
 .cta {
   background: #FFD400;
   color: black;
-  padding: 16px;
+  padding: 14px;
   border-radius: 30px;
   font-weight: 700;
-  text-align: center;
-  cursor: pointer;
   margin: 20px;
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 20px;
-}
-
-.card {
-  background: #6F86B6;
-  border-radius: 16px;
-  padding: 20px;
-  text-align: center;
   cursor: pointer;
 }
 
-.card span {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
+/* SYMBOL BUTTONS */
+.symbols {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+}
+
+.symbol {
+  background: #6F86B6;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.symbol:hover {
+  background: #8FA6D4;
+}
+
+/* ROUTE SCREEN */
+.hidden {
+  display: none;
+}
+
+.step {
+  font-size: 60px;
+  margin: 40px 0;
+  color: #FFD400;
+}
+
+.choice {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 /* NAV */
@@ -96,37 +100,7 @@ body {
   display: flex;
   justify-content: space-around;
   border-top: 2px solid #FFD400;
-  padding: 12px 0;
-}
-
-/* ROUTE SCREEN */
-.hidden {
-  display: none;
-}
-
-.route-screen {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.step {
-  font-size: 60px;
-  color: #FFD400;
-  margin: 40px 0;
-}
-
-.step-label {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-/* BUTTON BACK */
-.back {
-  margin: 20px;
-  padding: 12px;
-  border: 1px solid #FFD400;
-  border-radius: 20px;
-  cursor: pointer;
+  padding: 10px;
 }
 </style>
 </head>
@@ -139,29 +113,27 @@ body {
   <div class="header">
     <div>
       <div class="title">CITY FLOW</div>
-      <div class="subtitle">NAVIGATION MADE SIMPLE</div>
+      <div class="subtitle">NAVIGATION IS FOLLOWED</div>
     </div>
     <div>🔍 ⭐</div>
   </div>
 
-  <div class="hero">
-    <div class="preview-box">
-      <div class="route-preview">→ → Y ↘ ↺</div>
-    </div>
+  <div class="route-preview" id="preview">→ → Y ↘</div>
 
-    <div class="cta" onclick="startNavigation()">START NAVIGATION</div>
+  <!-- SYMBOL INPUT -->
+  <div class="symbols">
+    <div class="symbol" onclick="addSymbol('→')">→</div>
+    <div class="symbol" onclick="addSymbol('Y')">Y</div>
+    <div class="symbol" onclick="addSymbol('↘')">↘</div>
+    <div class="symbol" onclick="addSymbol('↺')">↺</div>
+    <div class="symbol" onclick="addSymbol('←')">←</div>
   </div>
 
-  <div class="grid">
-    <div class="card" onclick="quickRoute()">⏱<span>Quick Routes</span></div>
-    <div class="card">⚙<span>Personalize</span></div>
-    <div class="card">★<span>Saved Places</span></div>
-    <div class="card">≡<span>Settings</span></div>
-  </div>
+  <div class="cta" onclick="startNavigation()">START NAVIGATION</div>
 
 </div>
 
-<!-- ROUTE -->
+<!-- ROUTE SCREEN -->
 <div id="route" class="hidden">
 
   <div class="header">
@@ -169,12 +141,14 @@ body {
     <div>⏱</div>
   </div>
 
-  <div class="route-screen">
-    <div id="step" class="step">→</div>
-    <div class="step-label">Follow this direction</div>
+  <div id="step" class="step">→</div>
+
+  <div id="choice" class="choice hidden">
+    <div class="symbol" onclick="chooseDirection('←')">←</div>
+    <div class="symbol" onclick="chooseDirection('→')">→</div>
   </div>
 
-  <div class="back" onclick="goHome()">Back</div>
+  <div class="cta" onclick="goHome()">BACK</div>
 
 </div>
 
@@ -187,39 +161,69 @@ body {
 
 <script>
 
-const route = ["→", "→", "Y", "↘", "↺"];
+let route = ["→","→","Y","↘"];
 let index = 0;
 let interval;
 
+// ADD SYMBOL
+function addSymbol(sym) {
+  route.push(sym);
+  document.getElementById("preview").innerText = route.join(" ");
+}
+
+// START NAV
 function startNavigation() {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("route").classList.remove("hidden");
 
   index = 0;
+  playRoute();
+}
+
+// PLAY ROUTE
+function playRoute() {
   showStep();
 
   interval = setInterval(() => {
     index++;
+
     if (index >= route.length) {
       clearInterval(interval);
       return;
     }
-    showStep();
+
+    if (route[index] === "Y") {
+      clearInterval(interval);
+      showChoice();
+    } else {
+      showStep();
+    }
+
   }, 1500);
 }
 
+// SHOW STEP
 function showStep() {
   document.getElementById("step").innerText = route[index];
 }
 
-function goHome() {
-  document.getElementById("route").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-  clearInterval(interval);
+// SHOW CHOICE
+function showChoice() {
+  document.getElementById("choice").classList.remove("hidden");
 }
 
-function quickRoute() {
-  alert("Quick Route: → → Y");
+// USER CHOICE
+function chooseDirection(dir) {
+  document.getElementById("choice").classList.add("hidden");
+  route.splice(index + 1, 0, dir);
+  playRoute();
+}
+
+// BACK
+function goHome() {
+  clearInterval(interval);
+  document.getElementById("route").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
 }
 
 </script>
