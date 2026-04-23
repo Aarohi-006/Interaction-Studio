@@ -22,7 +22,6 @@ body {
   background: #f5f0dc;
 }
 
-/* HEADER */
 .header {
   text-align: center;
   padding: 16px;
@@ -32,7 +31,6 @@ body {
   border-radius: 10px;
 }
 
-/* MAP */
 .map {
   position: relative;
   height: 360px;
@@ -41,7 +39,6 @@ body {
   background: url('map.png') center/cover no-repeat;
 }
 
-/* LABELS */
 .label {
   position: absolute;
   padding: 6px 12px;
@@ -57,7 +54,6 @@ body {
 .nssr { top:40px; right:20px; }
 .copa { bottom:70px; right:20px; }
 
-/* TIPS */
 .tip {
   position:absolute;
   background:#ffe08a;
@@ -66,7 +62,6 @@ body {
   font-size:11px;
 }
 
-/* FILTER */
 .filters {
   display:flex;
   gap:8px;
@@ -88,13 +83,11 @@ body {
 .f-copa { background:#9b4de3; }
 .f-nssr { background:#3fb34f; }
 
-/* FEED */
 .feed {
   display:none;
   padding:20px;
 }
 
-/* MODAL */
 .modal {
   position:fixed;
   bottom:-100%;
@@ -107,7 +100,6 @@ body {
 }
 .modal.active { bottom:0; }
 
-/* NAV */
 .nav {
   position:fixed;
   bottom:0;
@@ -179,24 +171,42 @@ let tips = [
   {text:"Quiet study – Lang", school:"lang"}
 ];
 
+let currentFilter = "all";
+
+function getPosition(school){
+  const positions = {
+    uc: {top:230, left:150},
+    lang: {top:100, left:40},
+    parsons: {top:200, left:30},
+    nssr: {top:80, left:250},
+    copa: {top:260, left:260}
+  };
+  return positions[school];
+}
+
 function renderTips(){
-  let container = document.getElementById("tips-container");
+  const container = document.getElementById("tips-container");
   container.innerHTML = "";
 
   tips.forEach((t, i)=>{
+    if(currentFilter !== "all" && t.school !== currentFilter) return;
+
     let div = document.createElement("div");
     div.className = "tip";
     div.innerText = t.text;
 
-    if(t.school==="uc"){ div.style.top="230px"; div.style.left="150px"; }
-    if(t.school==="lang"){ div.style.top="100px"; div.style.left="40px"; }
+    let pos = getPosition(t.school);
+    div.style.top = pos.top + "px";
+    div.style.left = pos.left + "px";
 
     container.appendChild(div);
   });
 
-  let feed = document.getElementById("feed-list");
+  const feed = document.getElementById("feed-list");
   feed.innerHTML = "";
   tips.forEach(t=>{
+    if(currentFilter !== "all" && t.school !== currentFilter) return;
+
     let p = document.createElement("p");
     p.innerText = t.text;
     feed.appendChild(p);
@@ -204,24 +214,21 @@ function renderTips(){
 }
 
 function addTip(){
-  let text = document.getElementById("tipText").value;
-  let school = document.getElementById("tipSchool").value;
+  const text = document.getElementById("tipText").value.trim();
+  const school = document.getElementById("tipSchool").value;
 
-  if(text){
-    tips.push({text, school});
-    renderTips();
-    closeModal();
-  }
+  if(text === "") return;
+
+  tips.push({text, school});
+  document.getElementById("tipText").value = "";
+
+  renderTips();
+  closeModal();
 }
 
 function filterTips(school){
-  document.querySelectorAll(".tip").forEach((tip, index)=>{
-    if(school==="all" || tips[index].school===school){
-      tip.style.display="block";
-    } else {
-      tip.style.display="none";
-    }
-  });
+  currentFilter = school;
+  renderTips();
 }
 
 function openModal(){
@@ -233,13 +240,13 @@ function closeModal(){
 }
 
 function showFeed(){
-  document.getElementById("feed").style.display="block";
-  document.getElementById("map").style.display="none";
+  document.getElementById("feed").style.display = "block";
+  document.getElementById("map").style.display = "none";
 }
 
 function showMap(){
-  document.getElementById("feed").style.display="none";
-  document.getElementById("map").style.display="block";
+  document.getElementById("feed").style.display = "none";
+  document.getElementById("map").style.display = "block";
 }
 
 renderTips();
@@ -247,5 +254,6 @@ renderTips();
 
 </body>
 </html>
+
 
 
