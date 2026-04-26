@@ -1,268 +1,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CityFlow</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CityFlow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue:#28489A;
+      --yellow:#F2D318;
+      --light:#A9B8E8;
+      --white:#F5F3EA;
+      --panel:#203B82;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    *{box-sizing:border-box}
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #2F4A8A;
-  color: white;
-  text-align: center;
-}
+    body{
+      margin:0;
+      background:var(--blue);
+      font-family:'Inter',sans-serif;
+      color:var(--white);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
 
-/* HEADER */
-.header {
-  padding: 20px;
-  border-bottom: 2px solid #FFD400;
-  display: flex;
-  justify-content: space-between;
-}
+    .phone{
+      width:390px;
+      height:844px;
+      background:var(--blue);
+      border:2px solid var(--yellow);
+      overflow:hidden;
+      position:relative;
+    }
 
-.title {
-  font-size: 26px;
-  font-weight: 800;
-  color: #FFD400;
-}
+    .topbar{
+      padding:20px 22px 14px;
+      border-bottom:2px solid var(--yellow);
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+    }
 
-/* PATH BAR */
-.path-bar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
-  font-size: 22px;
-}
+    .brand h1{
+      margin:0;
+      font-size:42px;
+      line-height:0.95;
+      color:var(--yellow);
+      font-weight:800;
+      letter-spacing:-1px;
+    }
 
-.path-step {
-  opacity: 0.4;
-}
+    .brand p{
+      margin:8px 0 0;
+      font-size:14px;
+      color:var(--white);
+      letter-spacing:.4px;
+    }
 
-.active {
-  opacity: 1;
-  color: #FFD400;
-}
+    .top-icons{
+      display:flex;
+      gap:14px;
+      font-size:28px;
+      color:var(--yellow);
+      padding-top:4px;
+    }
 
-/* MINI MAP */
-.mini-map {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px;
-}
+    .hero{
+      padding:18px 22px 10px;
+    }
 
-.node {
-  width: 14px;
-  height: 14px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.3;
-}
+    .hero-card{
+      height:235px;
+      border:2px solid rgba(242,211,24,.35);
+      background:
+        linear-gradient(rgba(27,50,112,.35),rgba(27,50,112,.35)),
+        url("https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1200&auto=format&fit=crop") center/cover;
+      position:relative;
+      overflow:hidden;
+    }
 
-.node.active-node {
-  background: #FFD400;
-  opacity: 1;
-}
+    .spray{
+      position:absolute;
+      color:var(--yellow);
+      font-size:58px;
+      font-weight:800;
+      text-shadow:0 0 18px rgba(242,211,24,.45);
+      opacity:.95;
+    }
 
-/* SYMBOL INPUT */
-.symbols {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 20px;
-}
+    .s1{top:18px;left:18px;}
+    .s2{top:30px;right:26px;transform:rotate(8deg);}
+    .s3{bottom:18px;left:26px;transform:rotate(-10deg);}
+    .s4{bottom:18px;right:20px;transform:rotate(6deg);}
 
-.symbol {
-  background: #6F86B6;
-  padding: 12px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+    .cta{
+      margin:16px 22px 8px;
+      background:var(--yellow);
+      color:#111;
+      border:none;
+      width:calc(100% - 44px);
+      padding:16px;
+      border-radius:999px;
+      font-size:20px;
+      font-weight:800;
+      cursor:pointer;
+      letter-spacing:.4px;
+    }
 
-/* BUTTON */
-.cta {
-  background: #FFD400;
-  color: black;
-  padding: 14px;
-  border-radius: 30px;
-  font-weight: bold;
-  margin: 20px;
-  cursor: pointer;
-}
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      padding:12px 22px 20px;
+    }
 
-.hidden { display:none; }
+    .card{
+      background:var(--light);
+      border-radius:20px;
+      padding:18px 10px;
+      text-align:center;
+      color:var(--yellow);
+      min-height:112px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      cursor:pointer;
+    }
 
-.step {
-  font-size: 60px;
-  margin: 30px 0;
-  color: #FFD400;
-}
+    .card .icon{
+      font-size:34px;
+      line-height:1;
+      margin-bottom:10px;
+    }
 
-.choice {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-</style>
+    .card span{
+      font-size:15px;
+      font-weight:500;
+      color:var(--yellow);
+    }
+
+    .bottom{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      border-top:2px solid var(--yellow);
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      background:var(--blue);
+    }
+
+    .nav-btn{
+      padding:16px 0;
+      text-align:center;
+      color:var(--yellow);
+      font-size:34px;
+      border-right:2px solid var(--yellow);
+    }
+
+    .nav-btn:last-child{border-right:none;}
+
+    .screen{
+      display:none;
+      position:absolute;
+      inset:0;
+      background:var(--blue);
+      z-index:20;
+    }
+
+    .screen.active{display:block;}
+
+    .route-wrap{
+      padding:22px;
+    }
+
+    .route-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:2px solid var(--yellow);
+      padding-bottom:14px;
+    }
+
+    .route-head h2{
+      margin:0;
+      color:var(--yellow);
+      font-size:28px;
+      font-weight:800;
+    }
+
+    .path{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      margin:22px 0 16px;
+      color:var(--yellow);
+      font-size:26px;
+    }
+
+    .path span{opacity:.35}
+    .path span.active{opacity:1}
+
+    .mini{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:26px;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:#fff;
+      opacity:.25;
+    }
+
+    .dot.on{
+      background:var(--yellow);
+      opacity:1;
+    }
+
+    .big-step{
+      font-size:96px;
+      color:var(--yellow);
+      text-align:center;
+      margin:40px 0 8px;
+      text-shadow:0 0 18px rgba(242,211,24,.22);
+    }
+
+    .label{
+      text-align:center;
+      font-size:18px;
+      margin-bottom:28px;
+    }
+
+    .choices{
+      display:none;
+      justify-content:center;
+      gap:18px;
+      margin-bottom:28px;
+    }
+
+    .choice{
+      background:var(--light);
+      color:var(--yellow);
+      font-size:34px;
+      width:78px;
+      height:78px;
+      border-radius:18px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      cursor:pointer;
+    }
+
+    .back{
+      margin:0 auto;
+      width:160px;
+      text-align:center;
+      padding:12px;
+      border:2px solid var(--yellow);
+      border-radius:999px;
+      color:var(--yellow);
+      cursor:pointer;
+      font-weight:700;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="phone">
 
-<!-- HOME -->
-<div id="home">
-  <div class="header">
-    <div class="title">CITYFLOW</div>
+    <div id="home">
+      <div class="topbar">
+        <div class="brand">
+          <h1>CITY FLOW</h1>
+          <p>NAVIGATION MADE SIMPLE</p>
+        </div>
+        <div class="top-icons">
+          <span>⌕</span>
+          <span>★</span>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-card">
+          <div class="spray s1">↺</div>
+          <div class="spray s2">↘</div>
+          <div class="spray s3">⌇</div>
+          <div class="spray s4">→</div>
+        </div>
+      </div>
+
+      <button class="cta" onclick="startRoute()">START NAVIGATION</button>
+
+      <div class="grid">
+        <div class="card"><div class="icon">◷</div><span>Quick Routes</span></div>
+        <div class="card"><div class="icon">◎</div><span>Personalize</span></div>
+        <div class="card"><div class="icon">★</div><span>Saved Places</span></div>
+        <div class="card"><div class="icon">≡</div><span>Settings</span></div>
+      </div>
+
+      <div class="bottom">
+        <div class="nav-btn">⌂</div>
+        <div class="nav-btn">⌕</div>
+        <div class="nav-btn">♥</div>
+      </div>
+    </div>
+
+    <div id="routeScreen" class="screen">
+      <div class="route-wrap">
+        <div class="route-head">
+          <h2>LIVE ROUTE</h2>
+          <div style="color:var(--yellow);font-size:24px;">◷</div>
+        </div>
+
+        <div class="path" id="pathBar"></div>
+        <div class="mini" id="miniMap"></div>
+
+        <div class="big-step" id="step">→</div>
+        <div class="label">Follow this direction</div>
+
+        <div class="choices" id="choices">
+          <div class="choice" onclick="choose('←')">←</div>
+          <div class="choice" onclick="choose('→')">→</div>
+        </div>
+
+        <div class="back" onclick="goHome()">BACK</div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="path-bar" id="preview"></div>
+  <script>
+    let route = ["→","→","Y","↘","↺"];
+    let index = 0;
+    let timer;
 
-  <div class="symbols">
-    <div class="symbol" onclick="addSymbol('→')">→</div>
-    <div class="symbol" onclick="addSymbol('Y')">Y</div>
-    <div class="symbol" onclick="addSymbol('↘')">↘</div>
-    <div class="symbol" onclick="addSymbol('↺')">↺</div>
-  </div>
-
-  <div class="cta" onclick="startNavigation()">START</div>
-</div>
-
-<!-- ROUTE -->
-<div id="route" class="hidden">
-
-  <div class="header">
-    <div class="title">LIVE ROUTE</div>
-  </div>
-
-  <!-- PATH BAR -->
-  <div class="path-bar" id="pathBar"></div>
-
-  <!-- MINI MAP -->
-  <div class="mini-map" id="miniMap"></div>
-
-  <div id="step" class="step">→</div>
-
-  <div id="choice" class="choice hidden">
-    <div class="symbol" onclick="chooseDirection('←')">←</div>
-    <div class="symbol" onclick="chooseDirection('→')">→</div>
-  </div>
-
-  <div class="cta" onclick="goHome()">BACK</div>
-</div>
-
-<script>
-
-let route = ["→","→","Y","↘"];
-let index = 0;
-let interval;
-
-// ADD SYMBOL
-function addSymbol(sym){
-  route.push(sym);
-  renderPreview();
-}
-
-// PREVIEW
-function renderPreview(){
-  let preview = document.getElementById("preview");
-  preview.innerHTML = "";
-  route.forEach(s=>{
-    let el = document.createElement("div");
-    el.innerText = s;
-    preview.appendChild(el);
-  });
-}
-
-// START
-function startNavigation(){
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("route").classList.remove("hidden");
-  index = 0;
-  renderPathBar();
-  renderMiniMap();
-  playRoute();
-}
-
-// PATH BAR
-function renderPathBar(){
-  let bar = document.getElementById("pathBar");
-  bar.innerHTML = "";
-  route.forEach((s,i)=>{
-    let el = document.createElement("div");
-    el.innerText = s;
-    el.className = "path-step" + (i===index ? " active":"");
-    bar.appendChild(el);
-  });
-}
-
-// MINI MAP
-function renderMiniMap(){
-  let map = document.getElementById("miniMap");
-  map.innerHTML = "";
-  route.forEach((_,i)=>{
-    let el = document.createElement("div");
-    el.className = "node" + (i===index ? " active-node":"");
-    map.appendChild(el);
-  });
-}
-
-// PLAY
-function playRoute(){
-  showStep();
-
-  interval = setInterval(()=>{
-    index++;
-
-    if(index >= route.length){
-      clearInterval(interval);
-      return;
+    function startRoute(){
+      document.getElementById("routeScreen").classList.add("active");
+      index = 0;
+      renderRoute();
+      play();
     }
 
-    if(route[index] === "Y"){
-      clearInterval(interval);
-      showChoice();
-    } else {
-      showStep();
+    function renderRoute(){
+      const pathBar = document.getElementById("pathBar");
+      const miniMap = document.getElementById("miniMap");
+      pathBar.innerHTML = "";
+      miniMap.innerHTML = "";
+
+      route.forEach((item,i)=>{
+        const s = document.createElement("span");
+        s.textContent = item;
+        if(i===index) s.classList.add("active");
+        pathBar.appendChild(s);
+
+        const d = document.createElement("div");
+        d.className = "dot" + (i===index ? " on" : "");
+        miniMap.appendChild(d);
+      });
+
+      document.getElementById("step").textContent = route[index];
     }
 
-  },1500);
-}
+    function play(){
+      renderRoute();
+      timer = setInterval(()=>{
+        index++;
+        if(index >= route.length){
+          clearInterval(timer);
+          return;
+        }
 
-// SHOW STEP
-function showStep(){
-  document.getElementById("step").innerText = route[index];
-  renderPathBar();
-  renderMiniMap();
-}
+        if(route[index] === "Y"){
+          clearInterval(timer);
+          renderRoute();
+          document.getElementById("choices").style.display = "flex";
+        } else {
+          renderRoute();
+        }
+      },1500);
+    }
 
-// CHOICE
-function showChoice(){
-  document.getElementById("choice").classList.remove("hidden");
-}
+    function choose(dir){
+      document.getElementById("choices").style.display = "none";
+      route.splice(index+1,0,dir);
+      play();
+    }
 
-// USER CHOICE
-function chooseDirection(dir){
-  document.getElementById("choice").classList.add("hidden");
-  route.splice(index+1,0,dir);
-  renderPathBar();
-  renderMiniMap();
-  playRoute();
-}
-
-// BACK
-function goHome(){
-  clearInterval(interval);
-  document.getElementById("route").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
-}
-
-renderPreview();
-
-</script>
-
+    function goHome(){
+      clearInterval(timer);
+      document.getElementById("routeScreen").classList.remove("active");
+      route = ["→","→","Y","↘","↺"];
+      index = 0;
+    }
+  </script>
 </body>
 </html>
