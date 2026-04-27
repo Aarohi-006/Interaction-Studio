@@ -3,323 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#28489A" />
   <title>CityFlow</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --blue:#28489A;
-      --yellow:#F2D318;
-      --light:#A9B8E8;
-      --white:#F5F3EA;
+      --blue:#28489A; --yellow:#F2D318; --light:#A9B8E8; --white:#F5F3EA;
     }
-
     *{box-sizing:border-box}
-
     body{
-      margin:0;
-      background:var(--blue);
-      font-family:'Inter',sans-serif;
-      color:var(--white);
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
+      margin:0; background:var(--blue); font-family:'Inter',sans-serif; color:var(--white);
+      min-height:100vh; display:flex; justify-content:center; align-items:center;
     }
-
     .phone{
-      width:100%;
-      max-width:390px;
-      height:100vh;
-      max-height:844px;
-      background:var(--blue);
-      border:2px solid var(--yellow);
-      position:relative;
-      overflow:hidden;
+      width:min(100vw,390px); height:min(100vh,844px);
+      background:var(--blue); border:2px solid var(--yellow);
+      position:relative; overflow:hidden;
     }
-
-    .view{
-      position:absolute;
-      inset:0;
-      background:var(--blue);
-      display:none;
-      flex-direction:column;
-    }
-
+    .view{position:absolute; inset:0; display:none; flex-direction:column; background:var(--blue)}
     .view.active{display:flex}
-
-    .topbar{
-      padding:18px 20px 14px;
-      border-bottom:2px solid var(--yellow);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
+    .topbar,.head{
+      padding:18px 20px 14px; border-bottom:2px solid var(--yellow);
+      display:flex; justify-content:space-between; align-items:flex-start;
     }
-
-    .brand h1{
-      margin:0;
-      color:var(--yellow);
-      font-size:40px;
-      line-height:.95;
-      font-weight:800;
-    }
-
-    .brand p{
-      margin:8px 0 0;
-      font-size:13px;
-    }
-
-    .top-icons{
-      display:flex;
-      gap:14px;
-      font-size:28px;
-      color:var(--yellow);
-    }
-
+    .brand h1,.head h2{margin:0; color:var(--yellow); font-weight:800}
+    .brand h1{font-size:40px; line-height:.95}
+    .brand p{margin:8px 0 0; font-size:13px}
+    .head h2{font-size:28px}
+    .top-icons{display:flex; gap:14px; font-size:28px; color:var(--yellow)}
     .hero{padding:16px 20px 10px}
-
     .hero-card{
-      height:220px;
-      border:2px solid rgba(242,211,24,.35);
-      background:
-        linear-gradient(rgba(27,50,112,.35),rgba(27,50,112,.35)),
-        url("https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1200&auto=format&fit=crop") center/cover;
-      position:relative;
-      overflow:hidden;
+      height:220px; border:2px solid rgba(242,211,24,.35); position:relative; overflow:hidden;
+      background:linear-gradient(rgba(27,50,112,.35),rgba(27,50,112,.35)),
+      url("https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1200&auto=format&fit=crop") center/cover;
     }
-
-    .spray{
-      position:absolute;
-      color:var(--yellow);
-      font-size:56px;
-      font-weight:800;
-      text-shadow:0 0 18px rgba(242,211,24,.45);
+    .spray{position:absolute; color:var(--yellow); font-size:56px; font-weight:800; text-shadow:0 0 18px rgba(242,211,24,.45)}
+    .s1{top:16px;left:16px}.s2{top:24px;right:20px}.s3{bottom:16px;left:22px}.s4{bottom:16px;right:18px}
+    .cta,.back{
+      margin:14px 20px 8px; width:calc(100% - 40px); padding:16px; border-radius:999px;
+      font-size:18px; font-weight:800; cursor:pointer; text-align:center;
     }
-
-    .s1{top:16px;left:16px;}
-    .s2{top:24px;right:20px;}
-    .s3{bottom:16px;left:22px;}
-    .s4{bottom:16px;right:18px;}
-
-    .cta{
-      margin:14px 20px 8px;
-      background:var(--yellow);
-      color:#111;
-      border:none;
-      width:calc(100% - 40px);
-      padding:16px;
-      border-radius:999px;
-      font-size:20px;
-      font-weight:800;
-      cursor:pointer;
-    }
-
+    .cta{background:var(--yellow); color:#111; border:none}
+    .back{border:2px solid var(--yellow); color:var(--yellow)}
     .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      padding:12px 20px 20px;
-      flex:1;
-      align-content:start;
+      display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:12px 20px 20px;
+      flex:1; overflow-y:auto;
     }
-
-    .card{
-      background:var(--light);
-      border-radius:20px;
-      min-height:108px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      color:var(--yellow);
-      cursor:pointer;
-      text-align:center;
-      padding:14px;
+    .card,.choice{
+      background:var(--light); border-radius:18px; color:var(--yellow);
+      display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer;
     }
-
-    .card .icon{font-size:32px;margin-bottom:10px}
-    .card span{font-size:15px}
-
+    .card{min-height:108px; padding:14px; text-align:center}
+    .card .icon{font-size:32px; margin-bottom:10px}
     .bottom{
-      border-top:2px solid var(--yellow);
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
+      margin-top:auto; border-top:2px solid var(--yellow);
+      display:grid; grid-template-columns:1fr 1fr 1fr;
     }
-
     .nav-btn{
-      padding:14px 0;
-      text-align:center;
-      color:var(--yellow);
-      font-size:32px;
-      border-right:2px solid var(--yellow);
-      cursor:pointer;
+      padding:14px 0; text-align:center; color:var(--yellow); font-size:30px;
+      border-right:2px solid var(--yellow); cursor:pointer;
     }
-
     .nav-btn:last-child{border-right:none}
-
-    .screen-pad{padding:22px;flex:1;overflow:auto}
-
-    .head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-bottom:2px solid var(--yellow);
-      padding-bottom:12px;
-      margin-bottom:20px;
-    }
-
-    .head h2{
-      margin:0;
-      color:var(--yellow);
-      font-size:28px;
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .item{
-      border:2px solid rgba(242,211,24,.35);
-      border-radius:16px;
-      padding:14px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .item span:last-child{color:var(--yellow);font-size:22px}
-
-    .search{
-      display:flex;
-      gap:10px;
-      margin-bottom:18px;
-    }
-
+    .screen-pad{padding:22px; flex:1; overflow-y:auto}
+    .search{display:flex; gap:10px; margin-bottom:18px}
     .search input{
-      flex:1;
-      background:transparent;
-      border:2px solid var(--yellow);
-      border-radius:999px;
-      padding:14px 16px;
-      color:var(--white);
-      font-size:16px;
-      outline:none;
+      flex:1; background:transparent; border:2px solid var(--yellow); border-radius:999px;
+      padding:14px 16px; color:var(--white); outline:none;
     }
-
+    .search input::placeholder{color:rgba(245,243,234,.55)}
     .search button{
-      border:none;
-      background:var(--yellow);
-      color:#111;
-      border-radius:999px;
-      padding:0 18px;
-      font-weight:800;
-      cursor:pointer;
+      border:none; background:var(--yellow); color:#111; border-radius:999px;
+      padding:0 18px; font-weight:800; cursor:pointer;
     }
-
-    .path,.mini{display:flex;justify-content:center}
-    .path{gap:12px;margin:18px 0;color:var(--yellow);font-size:26px}
+    .list{display:flex; flex-direction:column; gap:12px}
+    .item{
+      border:2px solid rgba(242,211,24,.35); border-radius:16px;
+      padding:14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;
+    }
+    .path,.mini,.choices{display:flex; justify-content:center}
+    .path{gap:12px; margin:18px 0; color:var(--yellow); font-size:26px}
     .path span{opacity:.35}.path span.active{opacity:1}
-    .mini{gap:10px;margin-bottom:24px}
+    .mini{gap:10px; margin-bottom:24px}
     .dot{width:12px;height:12px;border-radius:50%;background:#fff;opacity:.25}
     .dot.on{background:var(--yellow);opacity:1}
-
-    .big-step{
-      font-size:92px;
-      color:var(--yellow);
-      text-align:center;
-      margin:36px 0 8px;
-    }
-
-    .label{text-align:center;margin-bottom:24px}
-    .choices{display:none;justify-content:center;gap:18px;margin-bottom:24px}
-    .choice{
-      width:78px;height:78px;border-radius:18px;
-      background:var(--light);color:var(--yellow);
-      display:flex;align-items:center;justify-content:center;
-      font-size:34px;cursor:pointer;
-    }
-
-    .back{
-      margin:10px auto 0;
-      width:160px;
-      text-align:center;
-      padding:12px;
-      border:2px solid var(--yellow);
-      border-radius:999px;
-      color:var(--yellow);
-      cursor:pointer;
-      font-weight:700;
-    }
-
+    .big-step{font-size:92px; color:var(--yellow); text-align:center; margin:36px 0 8px}
+    .label{text-align:center; margin-bottom:24px}
+    .choices{display:none; gap:18px; margin-bottom:24px}
+    .choice{width:78px;height:78px;font-size:34px}
     .toggle{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:14px 0;
-      border-bottom:1px solid rgba(255,255,255,.15);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 0; border-bottom:1px solid rgba(255,255,255,.15);
     }
-
-    .switch{
-      width:46px;height:26px;border-radius:999px;
-      background:var(--light);position:relative;cursor:pointer;
-    }
-
+    .switch{width:46px;height:26px;border-radius:999px;background:var(--light);position:relative;cursor:pointer}
     .switch::after{
-      content:"";
-      position:absolute;
-      top:3px;left:3px;
-      width:20px;height:20px;border-radius:50%;
-      background:var(--yellow);
-      transition:.2s;
+      content:""; position:absolute; top:3px; left:3px; width:20px; height:20px;
+      border-radius:50%; background:var(--yellow); transition:.2s;
     }
-
     .switch.on::after{left:23px}
+    .card:active,.item:active,.nav-btn:active,.choice:active,.cta:active,.back:active{transform:scale(.98);opacity:.9}
   </style>
 </head>
 <body>
 <div class="phone">
 
-  <!-- HOME -->
   <div id="home" class="view active">
     <div class="topbar">
-      <div class="brand">
-        <h1>CITY FLOW</h1>
-        <p>NAVIGATION MADE SIMPLE</p>
-      </div>
-      <div class="top-icons">
-        <span onclick="openView('searchView')">⌕</span>
-        <span onclick="openView('savedView')">★</span>
-      </div>
+      <div class="brand"><h1>CITY FLOW</h1><p>NAVIGATION MADE SIMPLE</p></div>
+      <div class="top-icons"><span onclick="openView('search')">⌕</span><span onclick="openView('saved')">★</span></div>
     </div>
-
     <div class="hero">
       <div class="hero-card">
-        <div class="spray s1">↺</div>
-        <div class="spray s2">↘</div>
-        <div class="spray s3">⌇</div>
-        <div class="spray s4">→</div>
+        <div class="spray s1">↺</div><div class="spray s2">↘</div>
+        <div class="spray s3">⌇</div><div class="spray s4">→</div>
       </div>
     </div>
-
     <button class="cta" onclick="startRoute()">START NAVIGATION</button>
-
     <div class="grid">
-      <div class="card" onclick="openView('quickView')"><div class="icon">◷</div><span>Quick Routes</span></div>
-      <div class="card" onclick="openView('personalizeView')"><div class="icon">◎</div><span>Personalize</span></div>
-      <div class="card" onclick="openView('savedView')"><div class="icon">★</div><span>Saved Places</span></div>
-      <div class="card" onclick="openView('settingsView')"><div class="icon">≡</div><span>Settings</span></div>
+      <div class="card" onclick="openView('quick')"><div class="icon">◷</div><span>Quick Routes</span></div>
+      <div class="card" onclick="openView('personalize')"><div class="icon">◎</div><span>Personalize</span></div>
+      <div class="card" onclick="openView('saved')"><div class="icon">★</div><span>Saved Places</span></div>
+      <div class="card" onclick="openView('settings')"><div class="icon">≡</div><span>Settings</span></div>
     </div>
-
     <div class="bottom">
       <div class="nav-btn" onclick="openView('home')">⌂</div>
-      <div class="nav-btn" onclick="openView('searchView')">⌕</div>
-      <div class="nav-btn" onclick="openView('savedView')">♥</div>
+      <div class="nav-btn" onclick="openView('search')">⌕</div>
+      <div class="nav-btn" onclick="openView('saved')">♥</div>
     </div>
   </div>
 
-  <!-- LIVE ROUTE -->
-  <div id="routeView" class="view">
+  <div id="route" class="view">
     <div class="screen-pad">
       <div class="head"><h2>LIVE ROUTE</h2><span>◷</span></div>
       <div class="path" id="pathBar"></div>
@@ -334,142 +146,62 @@
     </div>
   </div>
 
-  <!-- SEARCH -->
-  <div id="searchView" class="view">
+  <div id="search" class="view">
     <div class="screen-pad">
       <div class="head"><h2>SEARCH</h2><span onclick="openView('home')">✕</span></div>
-      <div class="search">
-        <input type="text" id="searchInput" placeholder="Search destination..." />
-        <button onclick="searchRoute()">GO</button>
-      </div>
-      <div class="list" id="searchResults">
-        <div class="item"><span>Union Square</span><span>→</span></div>
-        <div class="item"><span>Downtown Brooklyn</span><span>↘</span></div>
-        <div class="item"><span>Queens Plaza</span><span>Y</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- QUICK -->
-  <div id="quickView" class="view">
-    <div class="screen-pad">
-      <div class="head"><h2>QUICK ROUTES</h2><span onclick="openView('home')">✕</span></div>
+      <div class="search"><input placeholder="Search destination..." id="q"><button onclick="searchRoute()">GO</button></div>
       <div class="list">
-        <div class="item" onclick="startPreset(['→','→','↘'])"><span>Fastest Route</span><span>→</span></div>
-        <div class="item" onclick="startPreset(['→','Y','→'])"><span>Least Transfers</span><span>Y</span></div>
-        <div class="item" onclick="startPreset(['↺','→','↘'])"><span>Accessible Route</span><span>↺</span></div>
+        <div class="item" onclick="startPreset(['→','Y','↘'])"><span>Union Square</span><span>→</span></div>
+        <div class="item" onclick="startPreset(['→','→','Y'])"><span>Queens Plaza</span><span>Y</span></div>
       </div>
     </div>
   </div>
 
-  <!-- SAVED -->
-  <div id="savedView" class="view">
-    <div class="screen-pad">
-      <div class="head"><h2>SAVED PLACES</h2><span onclick="openView('home')">✕</span></div>
-      <div class="list">
-        <div class="item"><span>Home</span><span>⌂</span></div>
-        <div class="item"><span>Studio</span><span>★</span></div>
-        <div class="item"><span>Library</span><span>→</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PERSONALIZE -->
-  <div id="personalizeView" class="view">
-    <div class="screen-pad">
-      <div class="head"><h2>PERSONALIZE</h2><span onclick="openView('home')">✕</span></div>
-      <div class="list">
-        <div class="item"><span>Low Stimulation</span><span>◌</span></div>
-        <div class="item"><span>High Contrast</span><span>◐</span></div>
-        <div class="item"><span>Step by Step Mode</span><span>→</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SETTINGS -->
-  <div id="settingsView" class="view">
-    <div class="screen-pad">
-      <div class="head"><h2>SETTINGS</h2><span onclick="openView('home')">✕</span></div>
-      <div class="toggle"><span>Sound Cues</span><div class="switch on" onclick="toggle(this)"></div></div>
-      <div class="toggle"><span>Vibration</span><div class="switch" onclick="toggle(this)"></div></div>
-      <div class="toggle"><span>Reduce Motion</span><div class="switch" onclick="toggle(this)"></div></div>
-    </div>
-  </div>
+  <div id="quick" class="view"><div class="screen-pad"><div class="head"><h2>QUICK ROUTES</h2><span onclick="openView('home')">✕</span></div><div class="list"><div class="item" onclick="startPreset(['→','→','↘'])"><span>Fastest Route</span><span>→</span></div><div class="item" onclick="startPreset(['→','Y','→'])"><span>Least Transfers</span><span>Y</span></div></div></div></div>
+  <div id="saved" class="view"><div class="screen-pad"><div class="head"><h2>SAVED PLACES</h2><span onclick="openView('home')">✕</span></div><div class="list"><div class="item"><span>Home</span><span>⌂</span></div><div class="item"><span>Studio</span><span>★</span></div></div></div></div>
+  <div id="personalize" class="view"><div class="screen-pad"><div class="head"><h2>PERSONALIZE</h2><span onclick="openView('home')">✕</span></div><div class="list"><div class="item"><span>Low Stimulation</span><span>◌</span></div><div class="item"><span>Step by Step</span><span>→</span></div></div></div></div>
+  <div id="settings" class="view"><div class="screen-pad"><div class="head"><h2>SETTINGS</h2><span onclick="openView('home')">✕</span></div><div class="toggle"><span>Sound Cues</span><div class="switch on" onclick="this.classList.toggle('on')"></div></div><div class="toggle"><span>Vibration</span><div class="switch" onclick="this.classList.toggle('on')"></div></div></div></div>
 
 </div>
 
 <script>
-  let route = ["→","→","Y","↘","↺"], index = 0, timer;
+let route=["→","→","Y","↘","↺"], index=0, timer;
 
-  function openView(id){
-    clearInterval(timer);
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
+function openView(id){
+  clearInterval(timer);
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('choices').style.display='none';
+}
 
-  function startRoute(){
-    route = ["→","→","Y","↘","↺"];
-    index = 0;
-    openView('routeView');
-    renderRoute();
-    play();
-  }
+function startRoute(){ route=["→","→","Y","↘","↺"]; runRoute(); }
+function startPreset(r){ route=r; runRoute(); }
+function searchRoute(){ route=["→","Y","↘"]; runRoute(); }
 
-  function startPreset(arr){
-    route = arr;
-    index = 0;
-    openView('routeView');
-    renderRoute();
-    play();
-  }
+function runRoute(){ index=0; openView('route'); render(); play(); }
 
-  function renderRoute(){
-    const pathBar = document.getElementById("pathBar");
-    const miniMap = document.getElementById("miniMap");
-    pathBar.innerHTML = "";
-    miniMap.innerHTML = "";
-    route.forEach((item,i)=>{
-      const s = document.createElement("span");
-      s.textContent = item;
-      if(i===index) s.classList.add("active");
-      pathBar.appendChild(s);
-      const d = document.createElement("div");
-      d.className = "dot" + (i===index ? " on" : "");
-      miniMap.appendChild(d);
-    });
-    document.getElementById("step").textContent = route[index];
-  }
+function render(){
+  pathBar.innerHTML = route.map((s,i)=>`<span class="${i===index?'active':''}">${s}</span>`).join('');
+  miniMap.innerHTML = route.map((_,i)=>`<div class="dot ${i===index?'on':''}"></div>`).join('');
+  step.textContent = route[index];
+}
 
-  function play(){
-    renderRoute();
-    timer = setInterval(()=>{
-      index++;
-      if(index >= route.length){ clearInterval(timer); return; }
-      if(route[index] === "Y"){
-        clearInterval(timer);
-        renderRoute();
-        document.getElementById("choices").style.display = "flex";
-      } else renderRoute();
-    },1500);
-  }
+function play(){
+  render();
+  timer=setInterval(()=>{
+    index++;
+    if(index>=route.length) return clearInterval(timer);
+    if(route[index]==="Y"){
+      clearInterval(timer); render(); choices.style.display='flex';
+    } else render();
+  },1500);
+}
 
-  function choose(dir){
-    document.getElementById("choices").style.display = "none";
-    route.splice(index+1,0,dir);
-    play();
-  }
-
-  function toggle(el){ el.classList.toggle('on'); }
-
-  function searchRoute(){
-    const q = document.getElementById('searchInput').value.trim();
-    if(!q) return;
-    route = ["→","Y","↘"];
-    index = 0;
-    openView('routeView');
-    renderRoute();
-    play();
-  }
+function choose(dir){
+  choices.style.display='none';
+  route.splice(index+1,0,dir);
+  play();
+}
 </script>
 </body>
 </html>
