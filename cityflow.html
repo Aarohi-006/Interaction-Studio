@@ -11,7 +11,6 @@
       --yellow:#F2D318;
       --light:#A9B8E8;
       --white:#F5F3EA;
-      --panel:#203B82;
     }
 
     *{box-sizing:border-box}
@@ -21,23 +20,35 @@
       background:var(--blue);
       font-family:'Inter',sans-serif;
       color:var(--white);
+      min-height:100vh;
       display:flex;
       justify-content:center;
       align-items:center;
-      min-height:100vh;
     }
 
     .phone{
-      width:390px;
-      height:844px;
+      width:100%;
+      max-width:390px;
+      height:100vh;
+      max-height:844px;
       background:var(--blue);
       border:2px solid var(--yellow);
-      overflow:hidden;
       position:relative;
+      overflow:hidden;
     }
 
+    .view{
+      position:absolute;
+      inset:0;
+      background:var(--blue);
+      display:none;
+      flex-direction:column;
+    }
+
+    .view.active{display:flex}
+
     .topbar{
-      padding:20px 22px 14px;
+      padding:18px 20px 14px;
       border-bottom:2px solid var(--yellow);
       display:flex;
       justify-content:space-between;
@@ -46,18 +57,15 @@
 
     .brand h1{
       margin:0;
-      font-size:42px;
-      line-height:0.95;
       color:var(--yellow);
+      font-size:40px;
+      line-height:.95;
       font-weight:800;
-      letter-spacing:-1px;
     }
 
     .brand p{
       margin:8px 0 0;
-      font-size:14px;
-      color:var(--white);
-      letter-spacing:.4px;
+      font-size:13px;
     }
 
     .top-icons{
@@ -65,15 +73,12 @@
       gap:14px;
       font-size:28px;
       color:var(--yellow);
-      padding-top:4px;
     }
 
-    .hero{
-      padding:18px 22px 10px;
-    }
+    .hero{padding:16px 20px 10px}
 
     .hero-card{
-      height:235px;
+      height:220px;
       border:2px solid rgba(242,211,24,.35);
       background:
         linear-gradient(rgba(27,50,112,.35),rgba(27,50,112,.35)),
@@ -85,181 +90,158 @@
     .spray{
       position:absolute;
       color:var(--yellow);
-      font-size:58px;
+      font-size:56px;
       font-weight:800;
       text-shadow:0 0 18px rgba(242,211,24,.45);
-      opacity:.95;
     }
 
-    .s1{top:18px;left:18px;}
-    .s2{top:30px;right:26px;transform:rotate(8deg);}
-    .s3{bottom:18px;left:26px;transform:rotate(-10deg);}
-    .s4{bottom:18px;right:20px;transform:rotate(6deg);}
+    .s1{top:16px;left:16px;}
+    .s2{top:24px;right:20px;}
+    .s3{bottom:16px;left:22px;}
+    .s4{bottom:16px;right:18px;}
 
     .cta{
-      margin:16px 22px 8px;
+      margin:14px 20px 8px;
       background:var(--yellow);
       color:#111;
       border:none;
-      width:calc(100% - 44px);
+      width:calc(100% - 40px);
       padding:16px;
       border-radius:999px;
       font-size:20px;
       font-weight:800;
       cursor:pointer;
-      letter-spacing:.4px;
     }
 
     .grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
-      padding:12px 22px 20px;
+      padding:12px 20px 20px;
+      flex:1;
+      align-content:start;
     }
 
     .card{
       background:var(--light);
       border-radius:20px;
-      padding:18px 10px;
-      text-align:center;
-      color:var(--yellow);
-      min-height:112px;
+      min-height:108px;
       display:flex;
       flex-direction:column;
       justify-content:center;
-      cursor:pointer;
-    }
-
-    .card .icon{
-      font-size:34px;
-      line-height:1;
-      margin-bottom:10px;
-    }
-
-    .card span{
-      font-size:15px;
-      font-weight:500;
+      align-items:center;
       color:var(--yellow);
+      cursor:pointer;
+      text-align:center;
+      padding:14px;
     }
+
+    .card .icon{font-size:32px;margin-bottom:10px}
+    .card span{font-size:15px}
 
     .bottom{
-      position:absolute;
-      bottom:0;
-      left:0;
-      width:100%;
       border-top:2px solid var(--yellow);
       display:grid;
       grid-template-columns:1fr 1fr 1fr;
-      background:var(--blue);
     }
 
     .nav-btn{
-      padding:16px 0;
+      padding:14px 0;
       text-align:center;
       color:var(--yellow);
-      font-size:34px;
+      font-size:32px;
       border-right:2px solid var(--yellow);
+      cursor:pointer;
     }
 
-    .nav-btn:last-child{border-right:none;}
+    .nav-btn:last-child{border-right:none}
 
-    .screen{
-      display:none;
-      position:absolute;
-      inset:0;
-      background:var(--blue);
-      z-index:20;
-    }
+    .screen-pad{padding:22px;flex:1;overflow:auto}
 
-    .screen.active{display:block;}
-
-    .route-wrap{
-      padding:22px;
-    }
-
-    .route-head{
+    .head{
       display:flex;
       justify-content:space-between;
       align-items:center;
       border-bottom:2px solid var(--yellow);
-      padding-bottom:14px;
+      padding-bottom:12px;
+      margin-bottom:20px;
     }
 
-    .route-head h2{
+    .head h2{
       margin:0;
       color:var(--yellow);
       font-size:28px;
-      font-weight:800;
     }
 
-    .path{
+    .list{
       display:flex;
+      flex-direction:column;
       gap:12px;
-      justify-content:center;
-      margin:22px 0 16px;
-      color:var(--yellow);
-      font-size:26px;
     }
 
-    .path span{opacity:.35}
-    .path span.active{opacity:1}
-
-    .mini{
+    .item{
+      border:2px solid rgba(242,211,24,.35);
+      border-radius:16px;
+      padding:14px;
       display:flex;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:26px;
-    }
-
-    .dot{
-      width:12px;
-      height:12px;
-      border-radius:50%;
-      background:#fff;
-      opacity:.25;
-    }
-
-    .dot.on{
-      background:var(--yellow);
-      opacity:1;
-    }
-
-    .big-step{
-      font-size:96px;
-      color:var(--yellow);
-      text-align:center;
-      margin:40px 0 8px;
-      text-shadow:0 0 18px rgba(242,211,24,.22);
-    }
-
-    .label{
-      text-align:center;
-      font-size:18px;
-      margin-bottom:28px;
-    }
-
-    .choices{
-      display:none;
-      justify-content:center;
-      gap:18px;
-      margin-bottom:28px;
-    }
-
-    .choice{
-      background:var(--light);
-      color:var(--yellow);
-      font-size:34px;
-      width:78px;
-      height:78px;
-      border-radius:18px;
-      display:flex;
-      justify-content:center;
+      justify-content:space-between;
       align-items:center;
+    }
+
+    .item span:last-child{color:var(--yellow);font-size:22px}
+
+    .search{
+      display:flex;
+      gap:10px;
+      margin-bottom:18px;
+    }
+
+    .search input{
+      flex:1;
+      background:transparent;
+      border:2px solid var(--yellow);
+      border-radius:999px;
+      padding:14px 16px;
+      color:var(--white);
+      font-size:16px;
+      outline:none;
+    }
+
+    .search button{
+      border:none;
+      background:var(--yellow);
+      color:#111;
+      border-radius:999px;
+      padding:0 18px;
+      font-weight:800;
       cursor:pointer;
     }
 
+    .path,.mini{display:flex;justify-content:center}
+    .path{gap:12px;margin:18px 0;color:var(--yellow);font-size:26px}
+    .path span{opacity:.35}.path span.active{opacity:1}
+    .mini{gap:10px;margin-bottom:24px}
+    .dot{width:12px;height:12px;border-radius:50%;background:#fff;opacity:.25}
+    .dot.on{background:var(--yellow);opacity:1}
+
+    .big-step{
+      font-size:92px;
+      color:var(--yellow);
+      text-align:center;
+      margin:36px 0 8px;
+    }
+
+    .label{text-align:center;margin-bottom:24px}
+    .choices{display:none;justify-content:center;gap:18px;margin-bottom:24px}
+    .choice{
+      width:78px;height:78px;border-radius:18px;
+      background:var(--light);color:var(--yellow);
+      display:flex;align-items:center;justify-content:center;
+      font-size:34px;cursor:pointer;
+    }
+
     .back{
-      margin:0 auto;
+      margin:10px auto 0;
       width:160px;
       text-align:center;
       padding:12px;
@@ -269,135 +251,225 @@
       cursor:pointer;
       font-weight:700;
     }
+
+    .toggle{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,.15);
+    }
+
+    .switch{
+      width:46px;height:26px;border-radius:999px;
+      background:var(--light);position:relative;cursor:pointer;
+    }
+
+    .switch::after{
+      content:"";
+      position:absolute;
+      top:3px;left:3px;
+      width:20px;height:20px;border-radius:50%;
+      background:var(--yellow);
+      transition:.2s;
+    }
+
+    .switch.on::after{left:23px}
   </style>
 </head>
 <body>
-  <div class="phone">
+<div class="phone">
 
-    <div id="home">
-      <div class="topbar">
-        <div class="brand">
-          <h1>CITY FLOW</h1>
-          <p>NAVIGATION MADE SIMPLE</p>
-        </div>
-        <div class="top-icons">
-          <span>⌕</span>
-          <span>★</span>
-        </div>
+  <!-- HOME -->
+  <div id="home" class="view active">
+    <div class="topbar">
+      <div class="brand">
+        <h1>CITY FLOW</h1>
+        <p>NAVIGATION MADE SIMPLE</p>
       </div>
-
-      <div class="hero">
-        <div class="hero-card">
-          <div class="spray s1">↺</div>
-          <div class="spray s2">↘</div>
-          <div class="spray s3">⌇</div>
-          <div class="spray s4">→</div>
-        </div>
-      </div>
-
-      <button class="cta" onclick="startRoute()">START NAVIGATION</button>
-
-      <div class="grid">
-        <div class="card"><div class="icon">◷</div><span>Quick Routes</span></div>
-        <div class="card"><div class="icon">◎</div><span>Personalize</span></div>
-        <div class="card"><div class="icon">★</div><span>Saved Places</span></div>
-        <div class="card"><div class="icon">≡</div><span>Settings</span></div>
-      </div>
-
-      <div class="bottom">
-        <div class="nav-btn">⌂</div>
-        <div class="nav-btn">⌕</div>
-        <div class="nav-btn">♥</div>
+      <div class="top-icons">
+        <span onclick="openView('searchView')">⌕</span>
+        <span onclick="openView('savedView')">★</span>
       </div>
     </div>
 
-    <div id="routeScreen" class="screen">
-      <div class="route-wrap">
-        <div class="route-head">
-          <h2>LIVE ROUTE</h2>
-          <div style="color:var(--yellow);font-size:24px;">◷</div>
-        </div>
-
-        <div class="path" id="pathBar"></div>
-        <div class="mini" id="miniMap"></div>
-
-        <div class="big-step" id="step">→</div>
-        <div class="label">Follow this direction</div>
-
-        <div class="choices" id="choices">
-          <div class="choice" onclick="choose('←')">←</div>
-          <div class="choice" onclick="choose('→')">→</div>
-        </div>
-
-        <div class="back" onclick="goHome()">BACK</div>
+    <div class="hero">
+      <div class="hero-card">
+        <div class="spray s1">↺</div>
+        <div class="spray s2">↘</div>
+        <div class="spray s3">⌇</div>
+        <div class="spray s4">→</div>
       </div>
     </div>
 
+    <button class="cta" onclick="startRoute()">START NAVIGATION</button>
+
+    <div class="grid">
+      <div class="card" onclick="openView('quickView')"><div class="icon">◷</div><span>Quick Routes</span></div>
+      <div class="card" onclick="openView('personalizeView')"><div class="icon">◎</div><span>Personalize</span></div>
+      <div class="card" onclick="openView('savedView')"><div class="icon">★</div><span>Saved Places</span></div>
+      <div class="card" onclick="openView('settingsView')"><div class="icon">≡</div><span>Settings</span></div>
+    </div>
+
+    <div class="bottom">
+      <div class="nav-btn" onclick="openView('home')">⌂</div>
+      <div class="nav-btn" onclick="openView('searchView')">⌕</div>
+      <div class="nav-btn" onclick="openView('savedView')">♥</div>
+    </div>
   </div>
 
-  <script>
-    let route = ["→","→","Y","↘","↺"];
-    let index = 0;
-    let timer;
+  <!-- LIVE ROUTE -->
+  <div id="routeView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>LIVE ROUTE</h2><span>◷</span></div>
+      <div class="path" id="pathBar"></div>
+      <div class="mini" id="miniMap"></div>
+      <div class="big-step" id="step">→</div>
+      <div class="label">Follow this direction</div>
+      <div class="choices" id="choices">
+        <div class="choice" onclick="choose('←')">←</div>
+        <div class="choice" onclick="choose('→')">→</div>
+      </div>
+      <div class="back" onclick="openView('home')">BACK</div>
+    </div>
+  </div>
 
-    function startRoute(){
-      document.getElementById("routeScreen").classList.add("active");
-      index = 0;
-      renderRoute();
-      play();
-    }
+  <!-- SEARCH -->
+  <div id="searchView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>SEARCH</h2><span onclick="openView('home')">✕</span></div>
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search destination..." />
+        <button onclick="searchRoute()">GO</button>
+      </div>
+      <div class="list" id="searchResults">
+        <div class="item"><span>Union Square</span><span>→</span></div>
+        <div class="item"><span>Downtown Brooklyn</span><span>↘</span></div>
+        <div class="item"><span>Queens Plaza</span><span>Y</span></div>
+      </div>
+    </div>
+  </div>
 
-    function renderRoute(){
-      const pathBar = document.getElementById("pathBar");
-      const miniMap = document.getElementById("miniMap");
-      pathBar.innerHTML = "";
-      miniMap.innerHTML = "";
+  <!-- QUICK -->
+  <div id="quickView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>QUICK ROUTES</h2><span onclick="openView('home')">✕</span></div>
+      <div class="list">
+        <div class="item" onclick="startPreset(['→','→','↘'])"><span>Fastest Route</span><span>→</span></div>
+        <div class="item" onclick="startPreset(['→','Y','→'])"><span>Least Transfers</span><span>Y</span></div>
+        <div class="item" onclick="startPreset(['↺','→','↘'])"><span>Accessible Route</span><span>↺</span></div>
+      </div>
+    </div>
+  </div>
 
-      route.forEach((item,i)=>{
-        const s = document.createElement("span");
-        s.textContent = item;
-        if(i===index) s.classList.add("active");
-        pathBar.appendChild(s);
+  <!-- SAVED -->
+  <div id="savedView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>SAVED PLACES</h2><span onclick="openView('home')">✕</span></div>
+      <div class="list">
+        <div class="item"><span>Home</span><span>⌂</span></div>
+        <div class="item"><span>Studio</span><span>★</span></div>
+        <div class="item"><span>Library</span><span>→</span></div>
+      </div>
+    </div>
+  </div>
 
-        const d = document.createElement("div");
-        d.className = "dot" + (i===index ? " on" : "");
-        miniMap.appendChild(d);
-      });
+  <!-- PERSONALIZE -->
+  <div id="personalizeView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>PERSONALIZE</h2><span onclick="openView('home')">✕</span></div>
+      <div class="list">
+        <div class="item"><span>Low Stimulation</span><span>◌</span></div>
+        <div class="item"><span>High Contrast</span><span>◐</span></div>
+        <div class="item"><span>Step by Step Mode</span><span>→</span></div>
+      </div>
+    </div>
+  </div>
 
-      document.getElementById("step").textContent = route[index];
-    }
+  <!-- SETTINGS -->
+  <div id="settingsView" class="view">
+    <div class="screen-pad">
+      <div class="head"><h2>SETTINGS</h2><span onclick="openView('home')">✕</span></div>
+      <div class="toggle"><span>Sound Cues</span><div class="switch on" onclick="toggle(this)"></div></div>
+      <div class="toggle"><span>Vibration</span><div class="switch" onclick="toggle(this)"></div></div>
+      <div class="toggle"><span>Reduce Motion</span><div class="switch" onclick="toggle(this)"></div></div>
+    </div>
+  </div>
 
-    function play(){
-      renderRoute();
-      timer = setInterval(()=>{
-        index++;
-        if(index >= route.length){
-          clearInterval(timer);
-          return;
-        }
+</div>
 
-        if(route[index] === "Y"){
-          clearInterval(timer);
-          renderRoute();
-          document.getElementById("choices").style.display = "flex";
-        } else {
-          renderRoute();
-        }
-      },1500);
-    }
+<script>
+  let route = ["→","→","Y","↘","↺"], index = 0, timer;
 
-    function choose(dir){
-      document.getElementById("choices").style.display = "none";
-      route.splice(index+1,0,dir);
-      play();
-    }
+  function openView(id){
+    clearInterval(timer);
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
 
-    function goHome(){
-      clearInterval(timer);
-      document.getElementById("routeScreen").classList.remove("active");
-      route = ["→","→","Y","↘","↺"];
-      index = 0;
-    }
-  </script>
+  function startRoute(){
+    route = ["→","→","Y","↘","↺"];
+    index = 0;
+    openView('routeView');
+    renderRoute();
+    play();
+  }
+
+  function startPreset(arr){
+    route = arr;
+    index = 0;
+    openView('routeView');
+    renderRoute();
+    play();
+  }
+
+  function renderRoute(){
+    const pathBar = document.getElementById("pathBar");
+    const miniMap = document.getElementById("miniMap");
+    pathBar.innerHTML = "";
+    miniMap.innerHTML = "";
+    route.forEach((item,i)=>{
+      const s = document.createElement("span");
+      s.textContent = item;
+      if(i===index) s.classList.add("active");
+      pathBar.appendChild(s);
+      const d = document.createElement("div");
+      d.className = "dot" + (i===index ? " on" : "");
+      miniMap.appendChild(d);
+    });
+    document.getElementById("step").textContent = route[index];
+  }
+
+  function play(){
+    renderRoute();
+    timer = setInterval(()=>{
+      index++;
+      if(index >= route.length){ clearInterval(timer); return; }
+      if(route[index] === "Y"){
+        clearInterval(timer);
+        renderRoute();
+        document.getElementById("choices").style.display = "flex";
+      } else renderRoute();
+    },1500);
+  }
+
+  function choose(dir){
+    document.getElementById("choices").style.display = "none";
+    route.splice(index+1,0,dir);
+    play();
+  }
+
+  function toggle(el){ el.classList.toggle('on'); }
+
+  function searchRoute(){
+    const q = document.getElementById('searchInput').value.trim();
+    if(!q) return;
+    route = ["→","Y","↘"];
+    index = 0;
+    openView('routeView');
+    renderRoute();
+    play();
+  }
+</script>
 </body>
 </html>
