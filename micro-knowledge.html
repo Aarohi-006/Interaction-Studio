@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Micro-Local Knowledge</title>
 
   <style>
@@ -12,7 +11,7 @@
     body {
       margin: 0;
       font-family: Helvetica, Arial, sans-serif;
-      background: #FF0000;
+      background: #e8e0c8;
     }
 
     .app {
@@ -48,12 +47,7 @@
       position: absolute;
       cursor: pointer;
       border-radius: 18px;
-      transition: 0.2s ease;
       z-index: 2;
-    }
-
-    .hotspot:hover {
-      background: rgba(255,255,255,0.08);
     }
 
     .copa-zone { top: 0; left: 0; width: 190px; height: 180px; }
@@ -74,15 +68,15 @@
       z-index: 3;
     }
 
-    .school-hotspots {
+    /* previous filter style */
+    .filters {
       display: flex;
       gap: 10px;
       padding: 14px;
       overflow-x: auto;
-      width: 100%;
     }
 
-    .school-chip {
+    .filter {
       padding: 10px 14px;
       border-radius: 24px;
       color: white;
@@ -94,12 +88,12 @@
       border: none;
     }
 
-    .all { background:#999; }
-    .lang { background:#6cc4d4; }
-    .parsons { background:#e59b64; }
-    .uc { background:red; }
-    .copa { background:#9b4de3; }
-    .nssr { background:#3fb34f; }
+    .f-all { background:#999; }
+    .f-lang { background:#6cc4d4; }
+    .f-parsons { background:#e59b64; }
+    .f-uc { background:red; }
+    .f-copa { background:#9b4de3; }
+    .f-nssr { background:#3fb34f; }
 
     .feed {
       display: none;
@@ -158,7 +152,6 @@
       z-index: 100;
     }
   </style>
-
 </head>
 
 <body>
@@ -175,13 +168,13 @@
     <div id="tips-container"></div>
   </div>
 
-  <div class="school-hotspots" id="schoolHotspots">
-    <button class="school-chip all" onclick="filterTips('all')">All</button>
-    <button class="school-chip copa" onclick="filterTips('copa')">CoPA</button>
-    <button class="school-chip lang" onclick="filterTips('lang')">Lang</button>
-    <button class="school-chip uc" onclick="filterTips('uc')">UC</button>
-    <button class="school-chip nssr" onclick="filterTips('nssr')">NSSR</button>
-    <button class="school-chip parsons" onclick="filterTips('parsons')">Parsons</button>
+  <div class="filters" id="filters">
+    <button class="filter f-all" onclick="filterTips('all')">All</button>
+    <button class="filter f-lang" onclick="filterTips('lang')">Lang</button>
+    <button class="filter f-parsons" onclick="filterTips('parsons')">Parsons</button>
+    <button class="filter f-uc" onclick="filterTips('uc')">UC</button>
+    <button class="filter f-copa" onclick="filterTips('copa')">CoPA</button>
+    <button class="filter f-nssr" onclick="filterTips('nssr')">NSSR</button>
   </div>
 
   <div class="feed" id="feed">
@@ -190,7 +183,7 @@
 
   <div class="modal" id="modal">
     <h3>Add Tip</h3>
-    <input id="tipText" placeholder="What's happening?">
+    <input id="tipText" placeholder="What's happening?" />
     <select id="tipSchool">
       <option value="uc">UC</option>
       <option value="lang">Lang</option>
@@ -209,9 +202,11 @@
 </div>
 
 <script>
-const SHEET_API = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+let tips = [
+  { tip:"Quiet study – Lang", school:"lang", time:"2:10 PM" },
+  { tip:"Free pizza – UC", school:"uc", time:"3:15 PM" }
+];
 
-let tips = [];
 let currentFilter = "all";
 
 function getPosition(school){
@@ -225,19 +220,6 @@ function getPosition(school){
   return positions[school];
 }
 
-async function loadTips(){
-  try {
-    const res = await fetch(SHEET_API);
-    tips = await res.json();
-  } catch {
-    tips = [
-      { tip:"Quiet study – Lang", school:"lang", time:"2:10 PM" },
-      { tip:"Free pizza – UC", school:"uc", time:"3:15 PM" }
-    ];
-  }
-  renderTips();
-}
-
 function renderTips(){
   const container = document.getElementById("tips-container");
   const feed = document.getElementById("feed-list");
@@ -246,80 +228,70 @@ function renderTips(){
   feed.innerHTML = "";
 
   tips.forEach(t => {
-    const school = (t.school || "").toLowerCase().trim();
-    const text = t.tip || t.text;
-
+    const school = t.school.toLowerCase();
     if(currentFilter !== "all" && school !== currentFilter) return;
 
     const pos = getPosition(school);
+
     if(pos){
-      let div = document.createElement("div");
+      const div = document.createElement("div");
       div.className = "tip";
-      div.innerText = text;
+      div.innerText = t.tip;
       div.style.top = pos.top + "px";
       div.style.left = pos.left + "px";
       container.appendChild(div);
     }
 
-    let p = document.createElement("p");
-    p.innerText = text + (t.time ? ` (${t.time})` : "");
+    const p = document.createElement("p");
+    p.innerText = `${t.tip} (${t.time})`;
     feed.appendChild(p);
   });
 }
 
-async function addTip(){
+function addTip(){
   const text = document.getElementById("tipText").value.trim();
   const school = document.getElementById("tipSchool").value;
 
   if(!text) return;
 
-  const payload = {
+  tips.push({
     tip: text,
-    school: school.toLowerCase(),
+    school: school,
     time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-  };
-
-  try {
-    await fetch(SHEET_API, {
-      method: "POST",
-      body: JSON.stringify(payload)
-    });
-    await loadTips();
-  } catch {
-    tips.push(payload);
-    renderTips();
-  }
+  });
 
   document.getElementById("tipText").value = "";
   closeModal();
-}
-
-function filterTips(school){
-  currentFilter = school.toLowerCase();
   renderTips();
 }
 
-function openModal(){ document.getElementById("modal").classList.add("active"); }
-function closeModal(){ document.getElementById("modal").classList.remove("active"); }
+function filterTips(school){
+  currentFilter = school;
+  renderTips();
+}
+
+function openModal(){
+  document.getElementById("modal").classList.add("active");
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("active");
+}
 
 function showFeed(){
   document.getElementById("feed").style.display = "block";
-  document.querySelector(".map").style.display = "none";
-  document.getElementById("schoolHotspots").style.display = "none";
+  document.getElementById("map").style.display = "none";
+  document.getElementById("filters").style.display = "none";
 }
 
 function showMap(){
   document.getElementById("feed").style.display = "none";
-  document.querySelector(".map").style.display = "block";
-  document.getElementById("schoolHotspots").style.display = "flex";
+  document.getElementById("map").style.display = "block";
+  document.getElementById("filters").style.display = "flex";
 }
 
-loadTips();
+renderTips();
 </script>
-
 </body>
 </html>
-
-
-
 
