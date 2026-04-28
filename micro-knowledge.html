@@ -48,47 +48,19 @@
       cursor: pointer;
       border-radius: 18px;
       transition: 0.2s ease;
+      z-index: 2;
     }
 
     .hotspot:hover {
       background: rgba(255,255,255,0.08);
     }
 
-    /* Corrected hotspot placements */
-    .copa-zone {
-      top: 0px;
-      left: 0px;
-      width: 190px;
-      height: 180px;
-    }
-
-    .lang-zone {
-      top: 0px;
-      right: 0px;
-      width: 170px;
-      height: 180px;
-    }
-
-    .uc-zone {
-      top: 180px;
-      left: 105px;
-      width: 210px;
-      height: 250px;
-    }
-
-    .nssr-zone {
-      bottom: 0px;
-      left: 0px;
-      width: 190px;
-      height: 210px;
-    }
-
-    .parsons-zone {
-      bottom: 0px;
-      right: 0px;
-      width: 200px;
-      height: 210px;
-    }
+    /* Building hotspots */
+    .copa-zone { top: 0; left: 0; width: 190px; height: 180px; }
+    .lang-zone { top: 0; right: 0; width: 170px; height: 180px; }
+    .uc-zone { top: 180px; left: 105px; width: 210px; height: 250px; }
+    .nssr-zone { bottom: 0; left: 0; width: 190px; height: 210px; }
+    .parsons-zone { bottom: 0; right: 0; width: 200px; height: 210px; }
 
     .tip {
       position: absolute;
@@ -99,17 +71,18 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       max-width: 130px;
       line-height: 1.3;
+      z-index: 3;
     }
 
-    .filters {
+    /* filter chips directly under map */
+    .school-hotspots {
       display: flex;
       gap: 10px;
       padding: 14px;
       overflow-x: auto;
-      margin-bottom: 90px;
     }
 
-    .filter {
+    .school-chip {
       padding: 10px 14px;
       border-radius: 24px;
       color: white;
@@ -118,24 +91,20 @@
       white-space: nowrap;
       flex-shrink: 0;
       font-weight: bold;
+      border: none;
     }
 
-    .f-all { background:#999; }
-    .f-lang { background:#6cc4d4; }
-    .f-parsons { background:#e59b64; }
-    .f-uc { background:red; }
-    .f-copa { background:#9b4de3; }
-    .f-nssr { background:#3fb34f; }
+    .all { background:#999; }
+    .lang { background:#6cc4d4; }
+    .parsons { background:#e59b64; }
+    .uc { background:red; }
+    .copa { background:#9b4de3; }
+    .nssr { background:#3fb34f; }
 
     .feed {
       display: none;
       padding: 20px;
       padding-bottom: 90px;
-    }
-
-    .feed h3, .feed h4 {
-      margin-top: 0;
-      color: #111;
     }
 
     .feed p {
@@ -193,7 +162,6 @@
 </head>
 
 <body>
-
 <div class="app">
 
   <div class="header">THE NEW SCHOOL CAMPUS</div>
@@ -205,30 +173,26 @@
     <div class="hotspot nssr-zone" onclick="filterTips('nssr')"></div>
     <div class="hotspot parsons-zone" onclick="filterTips('parsons')"></div>
 
-    
+```
 <div id="tips-container"></div>
-
+```
 
   </div>
 
-  <div class="filters">
-    <div class="filter f-all" onclick="filterTips('all')">All</div>
-    <div class="filter f-copa" onclick="filterTips('copa')">CoPA</div>
-    <div class="filter f-lang" onclick="filterTips('lang')">Lang</div>
-    <div class="filter f-uc" onclick="filterTips('uc')">UC</div>
-    <div class="filter f-nssr" onclick="filterTips('nssr')">NSSR</div>
-    <div class="filter f-parsons" onclick="filterTips('parsons')">Parsons</div>
+  <div class="school-hotspots">
+    <button class="school-chip all" onclick="filterTips('all')">All</button>
+    <button class="school-chip copa" onclick="filterTips('copa')">CoPA</button>
+    <button class="school-chip lang" onclick="filterTips('lang')">Lang</button>
+    <button class="school-chip uc" onclick="filterTips('uc')">UC</button>
+    <button class="school-chip nssr" onclick="filterTips('nssr')">NSSR</button>
+    <button class="school-chip parsons" onclick="filterTips('parsons')">Parsons</button>
   </div>
 
   <div class="feed" id="feed">
     <h3>Feed</h3>
     <div id="feed-list"></div>
-
-
-<h4>References</h4>
-<div id="arena-list"></div>
-
-
+    <h4>References</h4>
+    <div id="arena-list"></div>
   </div>
 
   <div class="modal" id="modal">
@@ -249,7 +213,6 @@
     <div onclick="openModal()">＋</div>
     <div onclick="showFeed()">Feed</div>
   </div>
-
 </div>
 
 <script>
@@ -261,11 +224,11 @@ let currentFilter = "all";
 
 function getPosition(school){
   const positions = {
-    copa: {top:140, left:70},
-    lang: {top:140, left:285},
-    uc: {top:360, left:170},
-    nssr: {top:575, left:70},
-    parsons: {top:575, left:285}
+    copa: {top:120, left:45},
+    lang: {top:120, left:270},
+    uc: {top:360, left:165},
+    nssr: {top:585, left:45},
+    parsons: {top:585, left:255}
   };
   return positions[school];
 }
@@ -274,62 +237,40 @@ async function loadTips(){
   try {
     const res = await fetch(SHEET_API);
     tips = await res.json();
-    renderTips();
   } catch {
     tips = [
       { tip:"Quiet study – Lang", school:"lang", time:"2:10 PM" },
       { tip:"Free pizza – UC", school:"uc", time:"3:15 PM" }
     ];
-    renderTips();
   }
-}
-
-async function loadArena(){
-  try {
-    const res = await fetch(`https://api.are.na/v2/channels/${ARENA_CHANNEL}`);
-    const data = await res.json();
-
-    const arena = document.getElementById("arena-list");
-    arena.innerHTML = "";
-
-    data.contents.slice(0,3).forEach(item => {
-      const p = document.createElement("p");
-      p.innerText = item.title || "Untitled";
-      arena.appendChild(p);
-    });
-  } catch {
-    document.getElementById("arena-list").innerHTML = "<p>No references loaded.</p>";
-  }
+  renderTips();
 }
 
 function renderTips(){
   const container = document.getElementById("tips-container");
-  container.innerHTML = "";
-
-  tips.forEach(t => {
-    if(currentFilter !== "all" && t.school !== currentFilter) return;
-
-    let div = document.createElement("div");
-    div.className = "tip";
-    div.innerText = t.tip || t.text;
-
-    let pos = getPosition(t.school);
-    if (!pos) return;
-
-    div.style.top = pos.top + "px";
-    div.style.left = pos.left + "px";
-
-    container.appendChild(div);
-  });
-
   const feed = document.getElementById("feed-list");
+
+  container.innerHTML = "";
   feed.innerHTML = "";
 
   tips.forEach(t => {
-    if(currentFilter !== "all" && t.school !== currentFilter) return;
+    const school = (t.school || "").toLowerCase().trim();
+    const text = t.tip || t.text;
+
+    if(currentFilter !== "all" && school !== currentFilter) return;
+
+    const pos = getPosition(school);
+    if(pos){
+      let div = document.createElement("div");
+      div.className = "tip";
+      div.innerText = text;
+      div.style.top = pos.top + "px";
+      div.style.left = pos.left + "px";
+      container.appendChild(div);
+    }
 
     let p = document.createElement("p");
-    p.innerText = (t.tip || t.text) + (t.time ? ` (${t.time})` : "");
+    p.innerText = text + (t.time ? ` (${t.time})` : "");
     feed.appendChild(p);
   });
 }
@@ -338,12 +279,12 @@ async function addTip(){
   const text = document.getElementById("tipText").value.trim();
   const school = document.getElementById("tipSchool").value;
 
-  if(text === "") return;
+  if(!text) return;
 
   const payload = {
     tip: text,
-    school: school,
-    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+    school: school.toLowerCase(),
+    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
   };
 
   try {
@@ -351,7 +292,7 @@ async function addTip(){
       method: "POST",
       body: JSON.stringify(payload)
     });
-    loadTips();
+    await loadTips();
   } catch {
     tips.push(payload);
     renderTips();
@@ -362,34 +303,31 @@ async function addTip(){
 }
 
 function filterTips(school){
-  currentFilter = school;
+  currentFilter = school.toLowerCase();
   renderTips();
 }
 
-function openModal(){
-  document.getElementById("modal").classList.add("active");
-}
-
-function closeModal(){
-  document.getElementById("modal").classList.remove("active");
-}
+function openModal(){ document.getElementById("modal").classList.add("active"); }
+function closeModal(){ document.getElementById("modal").classList.remove("active"); }
 
 function showFeed(){
   document.getElementById("feed").style.display = "block";
-  document.getElementById("map").style.display = "none";
+  document.querySelector(".map").style.display = "none";
+  document.querySelector(".school-hotspots").style.display = "none";
 }
 
 function showMap(){
   document.getElementById("feed").style.display = "none";
-  document.getElementById("map").style.display = "block";
+  document.querySelector(".map").style.display = "block";
+  document.querySelector(".school-hotspots").style.display = "flex";
 }
 
 loadTips();
-loadArena();
 </script>
 
 </body>
 </html>
+
 
 
 
