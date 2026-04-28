@@ -24,21 +24,22 @@
 
     .header {
       text-align: center;
-      padding: 16px;
+      padding: 22px 16px;
       font-weight: bold;
-      background: #e9d9a8;
-      margin: 12px;
-      border-radius: 10px;
-      color: #c43b2f;
-      font-size: 20px;
+      background: #e3d8a8;
+      margin: 14px;
+      border-radius: 20px;
+      color: #111;
+      font-size: 18px;
     }
 
     .map {
       position: relative;
-      height: 420px;
-      margin: 0 12px;
-      border-radius: 10px;
-      background: url('map.png') center/cover no-repeat;
+      height: 720px;
+      margin: 0 14px;
+      border-radius: 22px;
+      background: url('map.png') center top / contain no-repeat;
+      background-color: #efefef;
       overflow: hidden;
     }
 
@@ -46,74 +47,77 @@
     .hotspot {
       position: absolute;
       cursor: pointer;
-      border-radius: 14px;
+      border-radius: 18px;
       transition: 0.2s ease;
     }
 
     .hotspot:hover {
-      outline: 3px solid rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.08);
     }
 
+    /* adjusted to match full building collage */
     .lang-zone {
-      top: 18px;
-      left: 235px;
-      width: 120px;
-      height: 130px;
-    }
-
-    .parsons-zone {
-      top: 235px;
-      left: 10px;
-      width: 145px;
-      height: 95px;
-    }
-
-    .uc-zone {
-      top: 110px;
-      left: 135px;
-      width: 150px;
-      height: 170px;
+      top: 0px;
+      left: 0px;
+      width: 180px;
+      height: 180px;
     }
 
     .nssr-zone {
-      top: 255px;
-      left: 20px;
-      width: 150px;
-      height: 110px;
+      top: 0px;
+      right: 0px;
+      width: 170px;
+      height: 200px;
+    }
+
+    .uc-zone {
+      top: 190px;
+      left: 110px;
+      width: 210px;
+      height: 260px;
+    }
+
+    .parsons-zone {
+      bottom: 0px;
+      left: 0px;
+      width: 200px;
+      height: 210px;
     }
 
     .copa-zone {
-      top: 230px;
-      left: 270px;
-      width: 130px;
-      height: 135px;
+      bottom: 0px;
+      right: 0px;
+      width: 210px;
+      height: 210px;
     }
 
     .tip {
       position: absolute;
-      background: #ffe08a;
-      padding: 5px 8px;
-      border-radius: 10px;
+      background: #f6d97b;
+      padding: 8px 12px;
+      border-radius: 18px;
       font-size: 11px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      max-width: 130px;
+      line-height: 1.3;
     }
 
     .filters {
       display: flex;
-      gap: 8px;
-      padding: 14px 12px;
+      gap: 10px;
+      padding: 14px;
       overflow-x: auto;
     }
 
     .filter {
-      padding: 8px 12px;
-      border-radius: 20px;
+      padding: 10px 14px;
+      border-radius: 24px;
       color: white;
-      font-size: 11px;
+      font-size: 12px;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      font-weight: bold;
     }
 
     .f-all { background:#999; }
@@ -131,7 +135,7 @@
 
     .feed h3, .feed h4 {
       margin-top: 0;
-      color: #c43b2f;
+      color: #111;
     }
 
     .feed p {
@@ -195,11 +199,10 @@
   <div class="header">THE NEW SCHOOL CAMPUS</div>
 
   <div class="map" id="map">
-    <!-- Invisible building hotspots -->
     <div class="hotspot lang-zone" onclick="filterTips('lang')"></div>
-    <div class="hotspot parsons-zone" onclick="filterTips('parsons')"></div>
-    <div class="hotspot uc-zone" onclick="filterTips('uc')"></div>
     <div class="hotspot nssr-zone" onclick="filterTips('nssr')"></div>
+    <div class="hotspot uc-zone" onclick="filterTips('uc')"></div>
+    <div class="hotspot parsons-zone" onclick="filterTips('parsons')"></div>
     <div class="hotspot copa-zone" onclick="filterTips('copa')"></div>
 
 ```
@@ -258,11 +261,11 @@ let currentFilter = "all";
 
 function getPosition(school){
   const positions = {
-    uc: {top:190, left:165},
-    lang: {top:60, left:250},
-    parsons: {top:255, left:20},
-    nssr: {top:300, left:35},
-    copa: {top:270, left:285}
+    lang: {top:180, left:80},
+    nssr: {top:180, left:285},
+    uc: {top:360, left:170},
+    parsons: {top:540, left:70},
+    copa: {top:560, left:285}
   };
   return positions[school];
 }
@@ -274,8 +277,8 @@ async function loadTips(){
     renderTips();
   } catch {
     tips = [
-      { tip:"Free pizza at UC", school:"uc", time:"3:15 PM" },
-      { tip:"Quiet study upstairs", school:"lang", time:"2:10 PM" }
+      { tip:"Quiet study – Lang", school:"lang", time:"2:10 PM" },
+      { tip:"Free pizza – UC", school:"uc", time:"3:15 PM" }
     ];
     renderTips();
   }
@@ -387,6 +390,7 @@ loadArena();
 
 </body>
 </html>
+
 
 
 
