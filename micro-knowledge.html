@@ -2,115 +2,189 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Micro-Local Knowledge</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Micro-Local Knowledge</title>
 
-<style>
-* { box-sizing: border-box; }
+  <style>
+    * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  font-family: Helvetica, Arial, sans-serif;
-  background: #e8e0c8;
-}
+    body {
+      margin: 0;
+      font-family: Helvetica, Arial, sans-serif;
+      background: #e8e0c8;
+    }
 
-.app {
-  max-width: 420px;
-  margin: auto;
-  min-height: 100vh;
-  background: #f5f0dc;
-}
+    .app {
+      max-width: 420px;
+      margin: auto;
+      min-height: 100vh;
+      background: #f5f0dc;
+    }
 
-.header {
-  text-align: center;
-  padding: 16px;
-  font-weight: bold;
-  background: #e9d9a8;
-  margin: 12px;
-  border-radius: 10px;
-}
+    .header {
+      text-align: center;
+      padding: 16px;
+      font-weight: bold;
+      background: #e9d9a8;
+      margin: 12px;
+      border-radius: 10px;
+      color: #c43b2f;
+      font-size: 20px;
+    }
 
-.map {
-  position: relative;
-  height: 360px;
-  margin: 0 12px;
-  border-radius: 10px;
-  background: url('map.png') center/cover no-repeat;
-}
+    .map {
+      position: relative;
+      height: 420px;
+      margin: 0 12px;
+      border-radius: 10px;
+      background: url('map.png') center/cover no-repeat;
+      overflow: hidden;
+    }
 
-.label {
-  position: absolute;
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  background: white;
-  cursor: pointer;
-}
+    /* Invisible building hotspots */
+    .hotspot {
+      position: absolute;
+      cursor: pointer;
+      border-radius: 14px;
+      transition: 0.2s ease;
+    }
 
-.lang { top:40px; left:30px; }
-.parsons { top:180px; left:20px; }
-.uc { top:150px; left:160px; background:red; color:white; }
-.nssr { top:40px; right:20px; }
-.copa { bottom:70px; right:20px; }
+    .hotspot:hover {
+      outline: 3px solid rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.08);
+    }
 
-.tip {
-  position:absolute;
-  background:#ffe08a;
-  padding:5px 8px;
-  border-radius:10px;
-  font-size:11px;
-}
+    .lang-zone {
+      top: 18px;
+      left: 235px;
+      width: 120px;
+      height: 130px;
+    }
 
-.filters {
-  display:flex;
-  gap:8px;
-  padding:12px;
-}
+    .parsons-zone {
+      top: 235px;
+      left: 10px;
+      width: 145px;
+      height: 95px;
+    }
 
-.filter {
-  padding:6px 10px;
-  border-radius:20px;
-  color:white;
-  font-size:11px;
-  cursor:pointer;
-}
+    .uc-zone {
+      top: 110px;
+      left: 135px;
+      width: 150px;
+      height: 170px;
+    }
 
-.f-all { background:#999; }
-.f-lang { background:#6cc4d4; }
-.f-parsons { background:#e59b64; }
-.f-uc { background:red; }
-.f-copa { background:#9b4de3; }
-.f-nssr { background:#3fb34f; }
+    .nssr-zone {
+      top: 255px;
+      left: 20px;
+      width: 150px;
+      height: 110px;
+    }
 
-.feed {
-  display:none;
-  padding:20px;
-}
+    .copa-zone {
+      top: 230px;
+      left: 270px;
+      width: 130px;
+      height: 135px;
+    }
 
-.modal {
-  position:fixed;
-  bottom:-100%;
-  left:0;
-  width:100%;
-  max-width:420px;
-  background:white;
-  padding:20px;
-  transition:0.3s;
-}
-.modal.active { bottom:0; }
+    .tip {
+      position: absolute;
+      background: #ffe08a;
+      padding: 5px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
 
-.nav {
-  position:fixed;
-  bottom:0;
-  width:100%;
-  max-width:420px;
-  background:#8cc7c3;
-  display:flex;
-  justify-content:space-around;
-  padding:12px;
-}
-</style>
+    .filters {
+      display: flex;
+      gap: 8px;
+      padding: 14px 12px;
+      overflow-x: auto;
+    }
+
+    .filter {
+      padding: 8px 12px;
+      border-radius: 20px;
+      color: white;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .f-all { background:#999; }
+    .f-lang { background:#6cc4d4; }
+    .f-parsons { background:#e59b64; }
+    .f-uc { background:red; }
+    .f-copa { background:#9b4de3; }
+    .f-nssr { background:#3fb34f; }
+
+    .feed {
+      display: none;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .feed h3, .feed h4 {
+      margin-top: 0;
+      color: #c43b2f;
+    }
+
+    .feed p {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .modal {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 20px;
+      transition: 0.3s;
+      border-radius: 16px 16px 0 0;
+      z-index: 99;
+    }
+
+    .modal.active { bottom: 0; }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      border: none;
+      background: #e9d9a8;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 420px;
+      background: #8cc7c3;
+      display: flex;
+      justify-content: space-around;
+      padding: 14px;
+      font-weight: bold;
+    }
+  </style>
 
 </head>
 
@@ -118,84 +192,127 @@ body {
 
 <div class="app">
 
-<div class="header">THE NEW SCHOOL CAMPUS</div>
+  <div class="header">THE NEW SCHOOL CAMPUS</div>
 
-<div class="map" id="map">
-  <div class="label lang" onclick="filterTips('lang')">Lang</div>
-  <div class="label parsons" onclick="filterTips('parsons')">Parsons</div>
-  <div class="label uc" onclick="filterTips('uc')">UC</div>
-  <div class="label nssr" onclick="filterTips('nssr')">NSSR</div>
-  <div class="label copa" onclick="filterTips('copa')">CoPA</div>
+  <div class="map" id="map">
+    <!-- Invisible building hotspots -->
+    <div class="hotspot lang-zone" onclick="filterTips('lang')"></div>
+    <div class="hotspot parsons-zone" onclick="filterTips('parsons')"></div>
+    <div class="hotspot uc-zone" onclick="filterTips('uc')"></div>
+    <div class="hotspot nssr-zone" onclick="filterTips('nssr')"></div>
+    <div class="hotspot copa-zone" onclick="filterTips('copa')"></div>
 
-  <div id="tips-container"></div>
-</div>
+```
+<div id="tips-container"></div>
+```
 
-<div class="filters">
-  <div class="filter f-all" onclick="filterTips('all')">All</div>
-  <div class="filter f-lang" onclick="filterTips('lang')">Lang</div>
-  <div class="filter f-parsons" onclick="filterTips('parsons')">Parsons</div>
-  <div class="filter f-uc" onclick="filterTips('uc')">UC</div>
-  <div class="filter f-copa" onclick="filterTips('copa')">CoPA</div>
-  <div class="filter f-nssr" onclick="filterTips('nssr')">NSSR</div>
-</div>
+  </div>
 
-<div class="feed" id="feed">
-  <h3>Feed</h3>
-  <div id="feed-list"></div>
-</div>
+  <div class="filters">
+    <div class="filter f-all" onclick="filterTips('all')">All</div>
+    <div class="filter f-lang" onclick="filterTips('lang')">Lang</div>
+    <div class="filter f-parsons" onclick="filterTips('parsons')">Parsons</div>
+    <div class="filter f-uc" onclick="filterTips('uc')">UC</div>
+    <div class="filter f-copa" onclick="filterTips('copa')">CoPA</div>
+    <div class="filter f-nssr" onclick="filterTips('nssr')">NSSR</div>
+  </div>
 
-<div class="modal" id="modal">
-  <h3>Add Tip</h3>
-  <input id="tipText" placeholder="What's happening?">
-  <select id="tipSchool">
-    <option value="uc">UC</option>
-    <option value="lang">Lang</option>
-    <option value="parsons">Parsons</option>
-    <option value="copa">CoPA</option>
-    <option value="nssr">NSSR</option>
-  </select>
-  <button onclick="addTip()">Post</button>
-</div>
+  <div class="feed" id="feed">
+    <h3>Feed</h3>
+    <div id="feed-list"></div>
 
-<div class="nav">
-  <div onclick="showMap()">Map</div>
-  <div onclick="openModal()">＋</div>
-  <div onclick="showFeed()">Feed</div>
-</div>
+```
+<h4>References</h4>
+<div id="arena-list"></div>
+```
+
+  </div>
+
+  <div class="modal" id="modal">
+    <h3>Add Tip</h3>
+    <input id="tipText" placeholder="What's happening?">
+    <select id="tipSchool">
+      <option value="uc">UC</option>
+      <option value="lang">Lang</option>
+      <option value="parsons">Parsons</option>
+      <option value="copa">CoPA</option>
+      <option value="nssr">NSSR</option>
+    </select>
+    <button onclick="addTip()">Post</button>
+  </div>
+
+  <div class="nav">
+    <div onclick="showMap()">Map</div>
+    <div onclick="openModal()">＋</div>
+    <div onclick="showFeed()">Feed</div>
+  </div>
 
 </div>
 
 <script>
-let tips = [
-  {text:"Free pizza – UC", school:"uc"},
-  {text:"Quiet study – Lang", school:"lang"}
-];
+const SHEET_API = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const ARENA_CHANNEL = "design";
 
+let tips = [];
 let currentFilter = "all";
 
 function getPosition(school){
   const positions = {
-    uc: {top:230, left:150},
-    lang: {top:100, left:40},
-    parsons: {top:200, left:30},
-    nssr: {top:80, left:250},
-    copa: {top:260, left:260}
+    uc: {top:190, left:165},
+    lang: {top:60, left:250},
+    parsons: {top:255, left:20},
+    nssr: {top:300, left:35},
+    copa: {top:270, left:285}
   };
   return positions[school];
+}
+
+async function loadTips(){
+  try {
+    const res = await fetch(SHEET_API);
+    tips = await res.json();
+    renderTips();
+  } catch {
+    tips = [
+      { tip:"Free pizza at UC", school:"uc", time:"3:15 PM" },
+      { tip:"Quiet study upstairs", school:"lang", time:"2:10 PM" }
+    ];
+    renderTips();
+  }
+}
+
+async function loadArena(){
+  try {
+    const res = await fetch(`https://api.are.na/v2/channels/${ARENA_CHANNEL}`);
+    const data = await res.json();
+
+    const arena = document.getElementById("arena-list");
+    arena.innerHTML = "";
+
+    data.contents.slice(0,3).forEach(item => {
+      const p = document.createElement("p");
+      p.innerText = item.title || "Untitled";
+      arena.appendChild(p);
+    });
+  } catch {
+    document.getElementById("arena-list").innerHTML = "<p>No references loaded.</p>";
+  }
 }
 
 function renderTips(){
   const container = document.getElementById("tips-container");
   container.innerHTML = "";
 
-  tips.forEach((t, i)=>{
+  tips.forEach(t => {
     if(currentFilter !== "all" && t.school !== currentFilter) return;
 
     let div = document.createElement("div");
     div.className = "tip";
-    div.innerText = t.text;
+    div.innerText = t.tip || t.text;
 
     let pos = getPosition(t.school);
+    if (!pos) return;
+
     div.style.top = pos.top + "px";
     div.style.left = pos.left + "px";
 
@@ -204,25 +321,40 @@ function renderTips(){
 
   const feed = document.getElementById("feed-list");
   feed.innerHTML = "";
-  tips.forEach(t=>{
+
+  tips.forEach(t => {
     if(currentFilter !== "all" && t.school !== currentFilter) return;
 
     let p = document.createElement("p");
-    p.innerText = t.text;
+    p.innerText = (t.tip || t.text) + (t.time ? ` (${t.time})` : "");
     feed.appendChild(p);
   });
 }
 
-function addTip(){
+async function addTip(){
   const text = document.getElementById("tipText").value.trim();
   const school = document.getElementById("tipSchool").value;
 
   if(text === "") return;
 
-  tips.push({text, school});
-  document.getElementById("tipText").value = "";
+  const payload = {
+    tip: text,
+    school: school,
+    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+  };
 
-  renderTips();
+  try {
+    await fetch(SHEET_API, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+    loadTips();
+  } catch {
+    tips.push(payload);
+    renderTips();
+  }
+
+  document.getElementById("tipText").value = "";
   closeModal();
 }
 
@@ -249,7 +381,8 @@ function showMap(){
   document.getElementById("map").style.display = "block";
 }
 
-renderTips();
+loadTips();
+loadArena();
 </script>
 
 </body>
