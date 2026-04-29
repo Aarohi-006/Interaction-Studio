@@ -10,8 +10,8 @@
 
     body {
       margin: 0;
-      font-family: Neue Display Black, sans-serif;
-      background: #000000;
+      font-family: Helvetica, Arial, sans-serif;
+      background: #e8e0c8;
     }
 
     .app {
@@ -107,10 +107,20 @@
       margin-bottom: 8px;
     }
 
-    .arena-card img {
+    .arena-card img,
+    .arena-card iframe {
       width: 100%;
       border-radius: 10px;
       margin-bottom: 8px;
+      border: none;
+    }
+
+    .arena-card a {
+      display: block;
+      margin-top: 8px;
+      color: #111;
+      font-weight: bold;
+      text-decoration: underline;
     }
 
     .modal {
@@ -310,7 +320,7 @@ async function loadArena(building){
   try {
     const response = await fetch(arenaChannels[building]);
     const result = await response.json();
-    const items = result.contents || [];
+    const items = result.contents || result.items || result.data || [];
 
     container.innerHTML = "";
 
@@ -318,10 +328,22 @@ async function loadArena(building){
       const card = document.createElement("div");
       card.className = "arena-card";
 
-      if (block.image?.display?.url) {
+      const imageUrl =
+        block.image?.display?.url ||
+        block.image?.original?.url ||
+        block.attachment?.url;
+
+      if (imageUrl) {
         const img = document.createElement("img");
-        img.src = block.image.display.url;
+        img.src = imageUrl;
         card.appendChild(img);
+      }
+
+      if (block.embed?.url) {
+        const iframe = document.createElement("iframe");
+        iframe.src = block.embed.url;
+        iframe.height = "200";
+        card.appendChild(iframe);
       }
 
       const title = document.createElement("div");
@@ -338,6 +360,14 @@ async function loadArena(building){
         const text = document.createElement("p");
         text.innerText = block.content;
         card.appendChild(text);
+      }
+
+      if (block.source?.url) {
+        const link = document.createElement("a");
+        link.href = block.source.url;
+        link.target = "_blank";
+        link.innerText = "Open Link";
+        card.appendChild(link);
       }
 
       container.appendChild(card);
