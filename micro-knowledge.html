@@ -10,8 +10,8 @@
 
     body {
       margin: 0;
-      font-family: Helvetica, Arial, sans-serif;
-      background: #e8e0c8;
+      font-family: Neue Display Black, sans-serif;
+      background: #000000;
     }
 
     .app {
@@ -99,7 +99,7 @@
       padding: 20px;
     }
 
-    .feed p, .arena-card {
+    .feed p, .arena-card, .floor {
       background: white;
       padding: 10px;
       border-radius: 10px;
@@ -107,12 +107,10 @@
       margin-bottom: 8px;
     }
 
-    .floor {
-      background: white;
-      padding: 12px;
-      border-radius: 12px;
+    .arena-card img {
+      width: 100%;
+      border-radius: 10px;
       margin-bottom: 8px;
-      font-size: 13px;
     }
 
     .modal {
@@ -192,7 +190,6 @@
     <button onclick="showHome()">← Back</button>
     <h2 id="buildingTitle"></h2>
     <div id="floorList"></div>
-    <h3>References</h3>
     <div id="arena-content"></div>
   </div>
 
@@ -311,18 +308,44 @@ async function loadArena(building){
   container.innerHTML = "Loading references...";
 
   try {
-    const res = await fetch(arenaChannels[building]);
-    const data = await res.json();
+    const response = await fetch(arenaChannels[building]);
+    const result = await response.json();
+    const items = result.contents || [];
 
     container.innerHTML = "";
-    data.contents.slice(0,3).forEach(item => {
-      const div = document.createElement("div");
-      div.className = "arena-card";
-      div.innerText = item.title || item.generated_title || "Untitled";
-      container.appendChild(div);
+
+    items.slice(0, 3).forEach(block => {
+      const card = document.createElement("div");
+      card.className = "arena-card";
+
+      if (block.image?.display?.url) {
+        const img = document.createElement("img");
+        img.src = block.image.display.url;
+        card.appendChild(img);
+      }
+
+      const title = document.createElement("div");
+      title.style.fontWeight = "bold";
+      title.style.marginBottom = "6px";
+      title.innerText =
+        block.title ||
+        block.generated_title ||
+        block.source?.title ||
+        "Untitled";
+      card.appendChild(title);
+
+      if (block.content) {
+        const text = document.createElement("p");
+        text.innerText = block.content;
+        card.appendChild(text);
+      }
+
+      container.appendChild(card);
     });
-  } catch {
+
+  } catch (error) {
     container.innerHTML = "<div class='arena-card'>No references available.</div>";
+    console.error(error);
   }
 }
 
